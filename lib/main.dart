@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:number_read/result.dart';
 
 void main() {
   runApp(MyApp());
@@ -66,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
-
         children: [
           SizedBox(height: 30),
           Row(
@@ -148,9 +148,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-
           SizedBox(height: 30),
-          Card( // Question
+          Card(
+            // Question
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +170,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           SizedBox(height: 10),
-
           Card(
             child: Container(
               child: Column(
@@ -191,9 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           SizedBox(height: 30),
-
           Row(
-            
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
@@ -238,32 +235,26 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
           SizedBox(height: 20),
-
           Row(
-
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                  height: 50,
-                  child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 15),
-                    primary: Colors.green
-
-                ),
-                onPressed: () {},
-                child: const Text('兆'),
-              ),
-    ),
-    SizedBox(width: 10),
               SizedBox(
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15),
-                      primary: Colors.green
-
-                  ),
+                      primary: Colors.green),
+                  onPressed: () {},
+                  child: const Text('兆'),
+                ),
+              ),
+              SizedBox(width: 10),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 15),
+                      primary: Colors.green),
                   onPressed: () {},
                   child: const Text('億'),
                 ),
@@ -274,8 +265,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15),
-                  primary: Colors.green
-                  ),
+                      primary: Colors.green),
                   onPressed: () {},
                   child: const Text('万'),
                 ),
