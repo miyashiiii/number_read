@@ -265,16 +265,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15),
                       primary: Colors.green),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade, child: MyHomePage()));
-                  },
+                  onPressed: () {},
                   child: const Text('万'),
                 ),
               ),
             ],
+          ),
+          SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade, child: ResultPage()));
+            },
+            child: const Icon(Icons.navigate_next),
+            backgroundColor: Colors.blue,
           ),
         ],
       ),
