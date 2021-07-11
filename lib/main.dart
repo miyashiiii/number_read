@@ -46,16 +46,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String answer = "";
+  String number = "";
+  String unit = "";
 
-  void _incrementCounter() {
+
+  void _updateNumber(String tmpNumber) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      number=tmpNumber;
+      answer=tmpNumber+unit;
+    });
+  }
+  void _updateUnit(String tmpUnit) {
+    setState(() {
+      unit=tmpUnit;
+      answer=number+tmpUnit;
     });
   }
 
@@ -83,11 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               Text(
                                 "highscore",
-                                style: TextStyle(fontSize: 20),
                               ),
                               Text(
                                 "10",
-                                style: TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: 20),
                               ),
                             ],
                           ),
@@ -106,11 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: [
                               Text(
                                 "score",
-                                style: TextStyle(fontSize: 20),
                               ),
                               Text(
                                 "10",
-                                style: TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: 20),
                               ),
                             ],
                           ),
@@ -131,11 +134,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Text(
                             "time",
-                            style: TextStyle(fontSize: 20),
                           ),
                           Text(
                             "10",
-                            style: TextStyle(fontSize: 30),
+                            style: TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
@@ -148,6 +150,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
           SizedBox(height: 30),
+          Text("Question"),
+
           Card(
             // Question
             child: Container(
@@ -158,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text(
                         "10,000,000",
-                        style: TextStyle(fontSize: 30),
+                        style: TextStyle(fontSize: 20),
                       ),
                     ],
                   ),
@@ -168,7 +172,9 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 80,
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
+          Text("Answer"),
+
           Card(
             child: Container(
               child: Column(
@@ -177,8 +183,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Column(
                     children: [
                       Text(
-                        "1000万",
-                        style: TextStyle(fontSize: 30),
+                        answer,
+                        style: TextStyle(fontSize: 20),
                       ),
                     ],
                   ),
@@ -197,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {},
+                  onPressed: () {_updateNumber("1000");},
                   child: const Text('1000'),
                 ),
               ),
@@ -207,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {},
+                  onPressed: () {_updateNumber("100");},
                   child: const Text('100'),
                 ),
               ),
@@ -217,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {},
+                  onPressed: () {_updateNumber("10");},
                   child: const Text('10'),
                 ),
               ),
@@ -227,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {},
+                  onPressed: () {_updateNumber("1");},
                   child: const Text('1'),
                 ),
               ),
@@ -243,7 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15),
                       primary: Colors.green),
-                  onPressed: () {},
+                  onPressed: () {_updateUnit("兆");},
                   child: const Text('兆'),
                 ),
               ),
@@ -254,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15),
                       primary: Colors.green),
-                  onPressed: () {},
+                  onPressed: () {_updateUnit("億");},
                   child: const Text('億'),
                 ),
               ),
@@ -265,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15),
                       primary: Colors.green),
-                  onPressed: () {},
+                  onPressed: () {_updateUnit("万");},
                   child: const Text('万'),
                 ),
               ),
