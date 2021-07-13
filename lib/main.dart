@@ -47,6 +47,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int highScore = 0;
+  int score = 0;
+  int time = 0;
+
   String answer = "";
   String answerNumber = "";
   String answerUnit = "";
@@ -54,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String firstNumber = "";
 
   String questionNumber = "";
+  int questionNumber1=0;
+  int questionNumber2=0;
 
   void _refresh() {
     setState(() {
@@ -69,8 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
     var random = new Random();
 
     setState(() {
-      questionNumber = firstNumber+"0"*random.nextInt(2)+",000"*_weightedChoice([1,3,3]);
-
+      questionNumber1 =random.nextInt(2);
+      questionNumber2 =_weightedChoice([1, 3, 3]);
+      questionNumber = firstNumber +
+          "0" * questionNumber1 +
+          ",000" * questionNumber2;
     });
   }
 
@@ -80,11 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
       firstNumber = (1 + random.nextInt(9 - 1)).toString();
     });
   }
+
   int _weightedChoice(List<int> weights) {
-
-
     List<int> l = [];
-    weights.asMap().forEach((int idx, int weight) { // weightsの各要素とそのindexを取得
+    weights.asMap().forEach((int idx, int weight) {
+      // weightsの各要素とそのindexを取得
       l += List.filled(weight, idx); // 長さ:weight, 全要素がidxの作成してlに連結していく
     });
     //print(l); // ["0", "1", "1", "2", "2", "2", "3", "3", "3", "3", ]
@@ -92,8 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // 上記で生成した配列から1つ選ぶことで、重みつきのchoiceを実行
     var _random = new Random();
     return l[_random.nextInt(l.length)];
-
   }
+
   void _updateNumber(String tmpNumber) {
     setState(() {
       answerNumber = tmpNumber;
@@ -106,6 +115,24 @@ class _MyHomePageState extends State<MyHomePage> {
       answerUnit = tmpUnit;
       answer = answerNumber + tmpUnit;
     });
+  }
+  List<String> units=["","万","億"];
+  void _checkAnswer() async {
+    setState(() {
+      var digits=questionNumber1+questionNumber2*3;
+      var number = digits%4;
+      var unit_idx = digits~/4;
+      var unit =units[unit_idx];
+      if (digits>0){
+
+      }
+      questionNumber =firstNumber.toString()+"0"*number+unit;
+    });
+    await new Future.delayed(new Duration(seconds: 2));
+    setState(() {
+      score += 10;
+    });
+    _refresh();
   }
 
   @override
@@ -140,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 "highscore",
                               ),
                               Text(
-                                "10",
+                                "$highScore",
                                 style: TextStyle(fontSize: 20),
                               ),
                             ],
@@ -162,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 "score",
                               ),
                               Text(
-                                "10",
+                                score.toString(),
                                 style: TextStyle(fontSize: 20),
                               ),
                             ],
@@ -186,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             "time",
                           ),
                           Text(
-                            "10",
+                            time.toString(),
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
@@ -295,16 +322,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(width: 10),
               SizedBox(
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15),
-                      primary: Colors.green),
+                    textStyle: const TextStyle(fontSize: 15),
+                  ),
                   onPressed: () {
                     _updateUnit("億");
                   },
@@ -316,8 +344,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15),
-                      primary: Colors.green),
+                    textStyle: const TextStyle(fontSize: 15),
+                  ),
                   onPressed: () {
                     _updateUnit("万");
                   },
@@ -329,8 +357,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15),
-                      primary: Colors.green),
+                    textStyle: const TextStyle(fontSize: 15),
+                  ),
                   onPressed: () {
                     _updateUnit("");
                   },
@@ -339,17 +367,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          SizedBox(height: 10),
-          FloatingActionButton(
-            onPressed: () {
-              _refresh();
-              // Navigator.push(
-              //     context,
-              //     PageTransition(
-              //         type: PageTransitionType.fade, child: ResultPage()));
-            },
-            child: const Icon(Icons.navigate_next),
-            backgroundColor: Colors.blue,
+          SizedBox(height: 20),
+          SizedBox(
+            height: 50,
+            width: 100,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 15),
+              ),
+              onPressed: () {
+                _checkAnswer();
+              },
+              child: const Text('OK'),
+            ),
           ),
         ],
       ),
