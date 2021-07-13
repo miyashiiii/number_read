@@ -53,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String firstNumber = "";
 
+  String questionNumber = "";
 
   void _refresh() {
     setState(() {
@@ -61,9 +62,17 @@ class _MyHomePageState extends State<MyHomePage> {
       answerUnit = "";
     });
     _randomFirstNumber();
+    _randomQuestionNumber();
   }
 
+  void _randomQuestionNumber() {
+    var random = new Random();
 
+    setState(() {
+      questionNumber = firstNumber+"0"*random.nextInt(2)+",000"*_weightedChoice([1,3,3]);
+
+    });
+  }
 
   void _randomFirstNumber() {
     var random = new Random();
@@ -71,11 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
       firstNumber = (1 + random.nextInt(9 - 1)).toString();
     });
   }
-
   int _weightedChoice(List<int> weights) {
+
+
     List<int> l = [];
-    weights.asMap().forEach((int idx, int weight) {
-      // weightsの各要素とそのindexを取得
+    weights.asMap().forEach((int idx, int weight) { // weightsの各要素とそのindexを取得
       l += List.filled(weight, idx); // 長さ:weight, 全要素がidxの作成してlに連結していく
     });
     //print(l); // ["0", "1", "1", "2", "2", "2", "3", "3", "3", "3", ]
@@ -83,8 +92,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // 上記で生成した配列から1つ選ぶことで、重みつきのchoiceを実行
     var _random = new Random();
     return l[_random.nextInt(l.length)];
-  }
 
+  }
   void _updateNumber(String tmpNumber) {
     setState(() {
       answerNumber = tmpNumber;
@@ -201,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Column(
                     children: [
                       Text(
-                        firstNumber+"00,000,000",
+                        questionNumber,
                         style: TextStyle(fontSize: 20),
                       ),
                     ],
