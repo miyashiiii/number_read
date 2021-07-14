@@ -58,14 +58,22 @@ class _MyHomePageState extends State<MyHomePage> {
   String firstNumber = "";
 
   String questionNumber = "";
-  int questionNumber1=0;
-  int questionNumber2=0;
+  int questionNumber1 = 0;
+  int questionNumber2 = 0;
+
+  final Color correctColor = Colors.lightGreen;
+  final Color incorrectColor = Colors.red.shade300;
+
+  final Color baseColor = Colors.white;
+
+  Color numberCardColor = Colors.white;
 
   void _refresh() {
     setState(() {
       answer = "";
       answerNumber = "";
       answerUnit = "";
+      numberCardColor=baseColor;
     });
     _randomFirstNumber();
     _randomQuestionNumber();
@@ -75,11 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
     var random = new Random();
 
     setState(() {
-      questionNumber1 =random.nextInt(2);
-      questionNumber2 =_weightedChoice([1, 3, 3]);
-      questionNumber = firstNumber +
-          "0" * questionNumber1 +
-          ",000" * questionNumber2;
+      questionNumber1 = random.nextInt(2);
+      questionNumber2 = _weightedChoice([1, 3, 3]);
+      questionNumber =
+          firstNumber + "0" * questionNumber1 + ",000" * questionNumber2;
     });
   }
 
@@ -116,21 +123,40 @@ class _MyHomePageState extends State<MyHomePage> {
       answer = answerNumber + tmpUnit;
     });
   }
-  List<String> units=["","万","億"];
+
+  List<String> units = ["", "万", "億"];
+
+  bool _check() {
+    // return true;
+    return questionNumber == answer;
+  }
+
   void _checkAnswer() async {
     setState(() {
-      var digits=questionNumber1+questionNumber2*3;
-      var number = digits%4;
-      var unit_idx = digits~/4;
-      var unit =units[unit_idx];
-      if (digits>0){
-
-      }
-      questionNumber =firstNumber.toString()+"0"*number+unit;
+      var digits = questionNumber1 + questionNumber2 * 3;
+      var number = digits % 4;
+      var unitIdx = digits ~/ 4;
+      var unit = units[unitIdx];
+      if (digits > 0) {}
+      questionNumber = firstNumber.toString() + "0" * number + unit;
     });
-    await new Future.delayed(new Duration(seconds: 2));
+    var result = _check();
+    var addScore = 0;
+    Color color;
+    if (result) {
+      addScore = 10;
+      color=correctColor;
+    }else{
+      color=incorrectColor;
+    }
+    await new Future.delayed(new Duration(milliseconds: 500));
     setState(() {
-      score += 10;
+      numberCardColor  = color;
+    });
+
+    await new Future.delayed(new Duration(milliseconds: 500));
+    setState(() {
+      score += addScore;
     });
     _refresh();
   }
@@ -229,6 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(height: 30),
           Text("Question"),
           Card(
+            color: numberCardColor,
             // Question
             child: Container(
               child: Column(
@@ -251,6 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(height: 20),
           Text("Answer"),
           Card(
+            color: numberCardColor,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
