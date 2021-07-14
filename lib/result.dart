@@ -3,7 +3,16 @@ import 'package:page_transition/page_transition.dart';
 
 import 'main.dart';
 
-class ResultPage extends StatelessWidget {
+class ResultPage extends StatefulWidget {
+  final int score;
+
+  ResultPage({required this.score});
+
+  @override
+  _ResultPageState createState() => _ResultPageState();
+}
+
+class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +24,8 @@ class ResultPage extends StatelessWidget {
         padding: EdgeInsets.all(32.0),
         child: Center(
           child: Column(
-            children: <Widget>[
+            children: [
+              Text(widget.score.toString()),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(

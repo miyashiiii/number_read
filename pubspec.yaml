@@ -23,7 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  page_transition: "^2.0.2"
+  page_transition: ^2.0.2
+  shared_preferences: ^2.0.6
 
 
 

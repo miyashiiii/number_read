@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       answer = "";
       answerNumber = "";
       answerUnit = "";
-      numberCardColor=baseColor;
+      numberCardColor = baseColor;
     });
     _randomFirstNumber();
     _randomQuestionNumber();
@@ -126,12 +126,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> units = ["", "万", "億"];
 
-  bool _check() {
+  bool _checkAnswer() {
     // return true;
     return questionNumber == answer;
   }
 
-  void _checkAnswer() async {
+  void _judgeAnswerAndRefresh() async {
+    if (answerNumber == "") return;
     setState(() {
       var digits = questionNumber1 + questionNumber2 * 3;
       var number = digits % 4;
@@ -140,25 +141,35 @@ class _MyHomePageState extends State<MyHomePage> {
       if (digits > 0) {}
       questionNumber = firstNumber.toString() + "0" * number + unit;
     });
-    var result = _check();
+    var result = _checkAnswer();
     var addScore = 0;
     Color color;
     if (result) {
       addScore = 10;
-      color=correctColor;
-    }else{
-      color=incorrectColor;
+      color = correctColor;
+    } else {
+      color = incorrectColor;
     }
     await new Future.delayed(new Duration(milliseconds: 500));
     setState(() {
-      numberCardColor  = color;
+      numberCardColor = color;
     });
-
-    await new Future.delayed(new Duration(milliseconds: 500));
-    setState(() {
-      score += addScore;
-    });
-    _refresh();
+    if (result) {
+      await new Future.delayed(new Duration(milliseconds: 500));
+      setState(() {
+        score += addScore;
+      });
+      _refresh();
+    } else {
+      await new Future.delayed(new Duration(milliseconds: 2000));
+      Navigator.push(
+          context,
+          PageTransition(
+              type: PageTransitionType.fade,
+              child: ResultPage(
+                score: score,
+              )));
+    }
   }
 
   @override
@@ -404,7 +415,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 textStyle: const TextStyle(fontSize: 15),
               ),
               onPressed: () {
-                _checkAnswer();
+                _judgeAnswerAndRefresh();
               },
               child: const Text('OK'),
             ),
