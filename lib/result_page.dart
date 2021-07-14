@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'game_page.dart';
+
 class ResultPage extends StatefulWidget {
-  final int score;
-
-  ResultPage({required this.score});
-
   @override
   _ResultPageState createState() => _ResultPageState();
 }
@@ -14,6 +11,8 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
+    final score = ModalRoute.of(context)!.settings.arguments as int;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('結果発表!'),
@@ -24,13 +23,10 @@ class _ResultPageState extends State<ResultPage> {
         child: Center(
           child: Column(
             children: [
-              Text("得点:" +widget.score.toString()),
+              Text("得点:" + score.toString()),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade, child: GamePage()));
+                  Navigator.pushNamed(context, "/game");
                 },
                 child: Text('mainページに戻る'),
               )

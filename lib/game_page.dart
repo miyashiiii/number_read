@@ -126,13 +126,7 @@ class _GamePageState extends State<GamePage> {
       _refresh();
     } else {
       await new Future.delayed(new Duration(milliseconds: 2000));
-      Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType.fade,
-              child: ResultPage(
-                score: score,
-              )));
+      Navigator.pushNamed(context, "/result", arguments: score);
     }
   }
 
