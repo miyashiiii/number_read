@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import 'main.dart';
-
+import 'game_page.dart';
 class ResultPage extends StatefulWidget {
   final int score;
 
@@ -32,7 +30,7 @@ class _ResultPageState extends State<ResultPage> {
                   Navigator.push(
                       context,
                       PageTransition(
-                          type: PageTransitionType.fade, child: MyHomePage()));
+                          type: PageTransitionType.fade, child: GamePage()));
                 },
                 child: Text('mainページに戻る'),
               )
