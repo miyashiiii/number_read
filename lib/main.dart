@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:number_read/result.dart';
 import 'package:page_transition/page_transition.dart';
 import "dart:math";
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,6 +12,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    const locale = Locale("ja", "JP");
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -25,6 +28,15 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      locale: locale,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        locale,
+      ],
       home: MyHomePage(),
     );
   }
@@ -182,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("number read training"),
+        title: Text("数字読みトレーニング"),
       ),
       body: Column(
         children: [

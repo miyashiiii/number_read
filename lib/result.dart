@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'main.dart';
 
@@ -17,7 +18,7 @@ class _ResultPageState extends State<ResultPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('NextPage'),
+        title: Text('結果発表!'),
         centerTitle: true,
       ),
       body: Container(
@@ -25,7 +26,7 @@ class _ResultPageState extends State<ResultPage> {
         child: Center(
           child: Column(
             children: [
-              Text(widget.score.toString()),
+              Text("得点:" +widget.score.toString()),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
