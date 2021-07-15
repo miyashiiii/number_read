@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:number_read/result_page.dart';
 import 'package:page_transition/page_transition.dart';
@@ -13,7 +15,6 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   int highScore = 0;
   int score = 0;
-  int time = 0;
 
   String answer = "";
   String answerNumber = "";
@@ -40,10 +41,29 @@ class _GamePageState extends State<GamePage> {
       numberCardColor = baseColor;
       _isJudgeEnabled=false;
     });
+    setTimer();
     _randomFirstNumber();
     _randomQuestionNumber();
   }
+  Timer? _timer;
+  int remainTime=3;
+  void setTimer(){
+    _timer?.cancel();
+    setState(() {
+      remainTime=3;
+    });
 
+    _timer = Timer.periodic(
+      // 定期実行する間隔の設定.
+      Duration(seconds: 1),
+      // 定期実行関数.
+        (Timer t){
+        setState(() {
+          remainTime-=1;
+        });
+      }
+    );
+  }
   void _randomQuestionNumber() {
     var random = new Random();
 
@@ -210,7 +230,7 @@ class _GamePageState extends State<GamePage> {
                             "time",
                           ),
                           Text(
-                            time.toString(),
+                            remainTime.toString(),
                             style: TextStyle(fontSize: 20),
                           ),
                         ],
