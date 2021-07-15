@@ -31,13 +31,14 @@ class _GamePageState extends State<GamePage> {
   final Color baseColor = Colors.white;
 
   Color numberCardColor = Colors.white;
-
+  bool _isJudgeEnabled = false;
   void _refresh() {
     setState(() {
       answer = "";
       answerNumber = "";
       answerUnit = "";
       numberCardColor = baseColor;
+      _isJudgeEnabled=false;
     });
     _randomFirstNumber();
     _randomQuestionNumber();
@@ -78,6 +79,7 @@ class _GamePageState extends State<GamePage> {
     setState(() {
       answerNumber = tmpNumber;
       answer = tmpNumber + answerUnit;
+      _isJudgeEnabled=true;
     });
   }
 
@@ -372,7 +374,7 @@ class _GamePageState extends State<GamePage> {
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 15),
               ),
-              onPressed: () {
+              onPressed:  !_isJudgeEnabled ? null :  () {
                 _judgeAnswerAndRefresh();
               },
               child: const Text('OK'),
