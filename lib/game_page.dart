@@ -32,38 +32,56 @@ class _GamePageState extends State<GamePage> {
   final Color baseColor = Colors.white;
 
   Color numberCardColor = Colors.white;
+  Color timeCardColor = Colors.white;
   bool _isJudgeEnabled = false;
+
   void _refresh() {
     setState(() {
       answer = "";
       answerNumber = "";
       answerUnit = "";
       numberCardColor = baseColor;
-      _isJudgeEnabled=false;
+      timeCardColor = baseColor;
+      _isJudgeEnabled = false;
     });
     setTimer();
     _randomFirstNumber();
     _randomQuestionNumber();
   }
+
   Timer? _timer;
-  int remainTime=3;
-  void setTimer(){
+  int remainTime = 3;
+
+  void setTimer() {
     _timer?.cancel();
     setState(() {
-      remainTime=3;
+      remainTime = 3;
     });
 
     _timer = Timer.periodic(
-      // 定期実行する間隔の設定.
-      Duration(seconds: 1),
-      // 定期実行関数.
-        (Timer t){
+        // 定期実行する間隔の設定.
+        Duration(seconds: 1),
+        // 定期実行関数.
+        (Timer t) {
+      setState(() {
+        remainTime -= 1;
+      });
+      if (remainTime == 0) {
+        _timer?.cancel();
         setState(() {
-          remainTime-=1;
+          timeCardColor = incorrectColor;
         });
+
+        _onFinish();
       }
-    );
+    });
   }
+
+  void _onFinish() async{
+    await new Future.delayed(new Duration(milliseconds: 2000));
+    Navigator.pushNamed(context, "/result", arguments: score);
+  }
+
   void _randomQuestionNumber() {
     var random = new Random();
 
@@ -99,7 +117,7 @@ class _GamePageState extends State<GamePage> {
     setState(() {
       answerNumber = tmpNumber;
       answer = tmpNumber + answerUnit;
-      _isJudgeEnabled=true;
+      _isJudgeEnabled = true;
     });
   }
 
@@ -147,8 +165,7 @@ class _GamePageState extends State<GamePage> {
       });
       _refresh();
     } else {
-      await new Future.delayed(new Duration(milliseconds: 2000));
-      Navigator.pushNamed(context, "/result", arguments: score);
+      _onFinish();
     }
   }
 
@@ -220,6 +237,7 @@ class _GamePageState extends State<GamePage> {
                 ],
               ),
               Card(
+                color: timeCardColor,
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -394,9 +412,11 @@ class _GamePageState extends State<GamePage> {
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 15),
               ),
-              onPressed:  !_isJudgeEnabled ? null :  () {
-                _judgeAnswerAndRefresh();
-              },
+              onPressed: !_isJudgeEnabled
+                  ? null
+                  : () {
+                      _judgeAnswerAndRefresh();
+                    },
               child: const Text('OK'),
             ),
           ),
