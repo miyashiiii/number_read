@@ -3,19 +3,18 @@ import 'package:page_transition/page_transition.dart';
 
 import 'game_page.dart';
 
-class ResultPage extends StatefulWidget {
+class FirstPage extends StatefulWidget {
   @override
-  _ResultPageState createState() => _ResultPageState();
+  _FirstPageState createState() => _FirstPageState();
 }
 
-class _ResultPageState extends State<ResultPage> {
+class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
-    final score = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('結果発表!'),
+        title: Text('数字読みトレーニング'),
         centerTitle: true,
       ),
       body: Container(
@@ -23,18 +22,12 @@ class _ResultPageState extends State<ResultPage> {
         child: Center(
           child: Column(
             children: [
-              Text("得点:" + score.toString()),
+              Text("数字読みトレーニング"),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, "/game");
                 },
-                child: Text("リトライ"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/first");
-                },
-                child: Text('トップに戻る'),
+                child: Text('ゲーム開始'),
               )
             ],
           ),
