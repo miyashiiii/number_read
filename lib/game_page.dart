@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:number_read/result_page.dart';
-import 'package:page_transition/page_transition.dart';
 import "dart:math";
 
 class GamePage extends StatefulWidget {

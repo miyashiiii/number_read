@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-
-import 'game_page.dart';
 
 class FirstPage extends StatefulWidget {
   @override
@@ -11,7 +8,6 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('数字読みトレーニング'),

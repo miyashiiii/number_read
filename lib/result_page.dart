@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-
-import 'game_page.dart';
 
 class ResultPage extends StatefulWidget {
   @override
@@ -26,13 +23,13 @@ class _ResultPageState extends State<ResultPage> {
               Text("得点:" + score.toString()),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/game");
+                  Navigator.pop(context);
                 },
                 child: Text("リトライ"),
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/first");
+                  Navigator.popUntil(context, ModalRoute.withName('/first'));
                 },
                 child: Text('トップに戻る'),
               )
