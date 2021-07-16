@@ -29,8 +29,10 @@ class _FirstPageState extends State<FirstPage> {
         child: Center(
           child: Column(
             children: [
-              Text("数読 -SUDOKU-"),
+              SizedBox(height: 10),
+
               Text("ハイスコア:" + _highScore.toString()),
+              SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, "/game");

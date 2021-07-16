@@ -71,7 +71,9 @@ class _GamePageState extends State<GamePage> {
         _timer?.cancel();
         setState(() {
           timeCardColor = incorrectColor;
+          numberCardColor=incorrectColor;
         });
+        showAnswer();
 
         _onFinish();
       }
@@ -142,16 +144,19 @@ class _GamePageState extends State<GamePage> {
     return questionNumber == answer;
   }
 
+  void showAnswer(){
+    setState(() {
+    var digits = questionNumber1 + questionNumber2 * 3;
+    var number = digits % 4;
+    var unitIdx = digits ~/ 4;
+    var unit = units[unitIdx];
+    if (digits > 0) {}
+    questionNumber = firstNumber.toString() + "0" * number + unit;
+    });
+  }
   void _judgeAnswerAndRefresh() async {
     if (answerNumber == "") return;
-    setState(() {
-      var digits = questionNumber1 + questionNumber2 * 3;
-      var number = digits % 4;
-      var unitIdx = digits ~/ 4;
-      var unit = units[unitIdx];
-      if (digits > 0) {}
-      questionNumber = firstNumber.toString() + "0" * number + unit;
-    });
+    showAnswer();
     var result = _checkAnswer();
     var addScore = 0;
     Color color;
@@ -170,8 +175,8 @@ class _GamePageState extends State<GamePage> {
       await new Future.delayed(new Duration(milliseconds: 500));
       setState(() {
         score += addScore;
-        if(score>highScore ){
-          highScore=score;
+        if (score > highScore) {
+          highScore = score;
         }
       });
       _refresh();
