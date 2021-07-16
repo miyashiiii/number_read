@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import "dart:math";
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class GamePage extends StatefulWidget {
   GamePage({Key? key}) : super(key: key);
 
@@ -168,6 +170,9 @@ class _GamePageState extends State<GamePage> {
       await new Future.delayed(new Duration(milliseconds: 500));
       setState(() {
         score += addScore;
+        if(score>highScore ){
+          highScore=score;
+        }
       });
       _refresh();
     } else {
@@ -181,8 +186,16 @@ class _GamePageState extends State<GamePage> {
     _refresh();
   }
 
+  void getHighScore() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      highScore = (prefs.getInt('HighScore') ?? 0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getHighScore();
     return Scaffold(
       appBar: AppBar(
         title: Text("数字読みトレーニング"),

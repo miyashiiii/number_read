@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstPage extends StatefulWidget {
   @override
@@ -6,8 +7,18 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
+  int _highScore = 0;
+
+  void checkHighScore() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _highScore = (prefs.getInt('HighScore') ?? 0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkHighScore();
     return Scaffold(
       appBar: AppBar(
         title: Text('数字読みトレーニング'),
@@ -19,6 +30,7 @@ class _FirstPageState extends State<FirstPage> {
           child: Column(
             children: [
               Text("数字読みトレーニング"),
+              Text("ハイスコア:" + _highScore.toString()),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, "/game");
