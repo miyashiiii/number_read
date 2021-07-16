@@ -56,7 +56,7 @@ class _GamePageState extends State<GamePage> {
   void setTimer() {
     _timer?.cancel();
     setState(() {
-      remainTime = 3;
+      remainTime = 5;
     });
 
     _timer = Timer.periodic(
@@ -83,6 +83,7 @@ class _GamePageState extends State<GamePage> {
       _isJudgeEnabled = false;
       _isButtonsEnabled = false;
     });
+    _timer?.cancel();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
     Navigator.pushNamed(context, "/result", arguments: score);
@@ -157,6 +158,7 @@ class _GamePageState extends State<GamePage> {
     if (result) {
       addScore = 10;
       color = correctColor;
+      _timer?.cancel();
     } else {
       color = incorrectColor;
     }
