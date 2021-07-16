@@ -34,6 +34,7 @@ class _GamePageState extends State<GamePage> {
   Color numberCardColor = Colors.white;
   Color timeCardColor = Colors.white;
   bool _isJudgeEnabled = false;
+  bool _isButtonsEnabled = true;
 
   void _refresh() {
     setState(() {
@@ -77,7 +78,12 @@ class _GamePageState extends State<GamePage> {
     });
   }
 
-  void _onFinish() async{
+  void _onFinish() async {
+    setState(() {
+      _isJudgeEnabled = false;
+      _isButtonsEnabled = false;
+    });
+
     await new Future.delayed(new Duration(milliseconds: 2000));
     Navigator.pushNamed(context, "/result", arguments: score);
   }
@@ -315,9 +321,11 @@ class _GamePageState extends State<GamePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {
-                    _updateNumber("${firstNumber}000");
-                  },
+                  onPressed: !_isButtonsEnabled
+                      ? null
+                      : () {
+                          _updateNumber("${firstNumber}000");
+                        },
                   child: Text("${firstNumber}000"),
                 ),
               ),
@@ -327,9 +335,11 @@ class _GamePageState extends State<GamePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {
-                    _updateNumber("${firstNumber}00");
-                  },
+                  onPressed: !_isButtonsEnabled
+                      ? null
+                      : () {
+                          _updateNumber("${firstNumber}00");
+                        },
                   child: Text('${firstNumber}00'),
                 ),
               ),
@@ -339,9 +349,11 @@ class _GamePageState extends State<GamePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {
-                    _updateNumber("${firstNumber}0");
-                  },
+                  onPressed: !_isButtonsEnabled
+                      ? null
+                      : () {
+                          _updateNumber("${firstNumber}0");
+                        },
                   child: Text('${firstNumber}0'),
                 ),
               ),
@@ -351,9 +363,11 @@ class _GamePageState extends State<GamePage> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: () {
-                    _updateNumber("$firstNumber");
-                  },
+                  onPressed: !_isButtonsEnabled
+                      ? null
+                      : () {
+                          _updateNumber("$firstNumber");
+                        },
                   child: Text('$firstNumber'),
                 ),
               ),
@@ -370,9 +384,11 @@ class _GamePageState extends State<GamePage> {
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
                   ),
-                  onPressed: () {
-                    _updateUnit("億");
-                  },
+                  onPressed: !_isButtonsEnabled
+                      ? null
+                      : () {
+                          _updateUnit("億");
+                        },
                   child: const Text('億'),
                 ),
               ),
@@ -383,9 +399,11 @@ class _GamePageState extends State<GamePage> {
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
                   ),
-                  onPressed: () {
-                    _updateUnit("万");
-                  },
+                  onPressed: !_isButtonsEnabled
+                      ? null
+                      : () {
+                          _updateUnit("万");
+                        },
                   child: const Text('万'),
                 ),
               ),
@@ -396,9 +414,11 @@ class _GamePageState extends State<GamePage> {
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
                   ),
-                  onPressed: () {
-                    _updateUnit("");
-                  },
+                  onPressed: !_isButtonsEnabled
+                      ? null
+                      : () {
+                          _updateUnit("");
+                        },
                   child: const Text('(なし)'),
                 ),
               ),
