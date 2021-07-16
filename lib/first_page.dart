@@ -21,7 +21,7 @@ class _FirstPageState extends State<FirstPage> {
     checkHighScore();
     return Scaffold(
       appBar: AppBar(
-        title: Text('数字読みトレーニング'),
+        title: Text('数読 -SUDOKU-'),
         centerTitle: true,
       ),
       body: Container(
@@ -29,7 +29,7 @@ class _FirstPageState extends State<FirstPage> {
         child: Center(
           child: Column(
             children: [
-              Text("数字読みトレーニング"),
+              Text("数読 -SUDOKU-"),
               Text("ハイスコア:" + _highScore.toString()),
               ElevatedButton(
                 onPressed: () {

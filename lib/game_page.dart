@@ -198,7 +198,7 @@ class _GamePageState extends State<GamePage> {
     getHighScore();
     return Scaffold(
       appBar: AppBar(
-        title: Text("数字読みトレーニング"),
+        title: Text("数読 -SUDOKU-"),
       ),
       body: Column(
         children: [
