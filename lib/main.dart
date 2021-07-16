@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:number_read/first_page.dart';
 import 'package:number_read/result_page.dart';
+import 'package:number_read/util.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'game_page.dart';

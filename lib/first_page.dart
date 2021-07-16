@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:number_read/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstPage extends StatefulWidget {
@@ -18,6 +19,8 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig(context);
+
     checkHighScore();
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +33,6 @@ class _FirstPageState extends State<FirstPage> {
           child: Column(
             children: [
               SizedBox(height: 10),
-
               Text("ハイスコア:" + _highScore.toString()),
               SizedBox(height: 10),
               ElevatedButton(

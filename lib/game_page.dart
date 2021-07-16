@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:number_read/util.dart';
 import "dart:math";
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,7 +45,7 @@ class _GamePageState extends State<GamePage> {
       timeCardColor = baseColor;
       _isJudgeEnabled = false;
     });
-    setTimer();
+    // setTimer();
     _randomFirstNumber();
     _randomQuestionNumber();
   }
@@ -207,7 +208,7 @@ class _GamePageState extends State<GamePage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 30),
+          SizedBox(height: SizeConfig.getSizePerHeight(3)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -216,25 +217,24 @@ class _GamePageState extends State<GamePage> {
                 children: [
                   Card(
                     child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                "highscore",
-                              ),
-                              Text(
-                                "$highScore",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      width: 180,
-                      height: 80,
-                    ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "highscore",
+                                ),
+                                Text(
+                                  "$highScore",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        width: SizeConfig.getSizePerHeight(18),
+                        height: SizeConfig.getSizePerHeight(8)),
                   ),
                   Card(
                     child: Container(
@@ -254,8 +254,8 @@ class _GamePageState extends State<GamePage> {
                           ),
                         ],
                       ),
-                      width: 180,
-                      height: 80,
+                      width: SizeConfig.getSizePerHeight(18),
+                      height: SizeConfig.getSizePerHeight(8),
                     ),
                   ),
                 ],
@@ -273,19 +273,21 @@ class _GamePageState extends State<GamePage> {
                           ),
                           Text(
                             remainTime.toString(),
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 30),
                           ),
                         ],
                       ),
                     ],
                   ),
-                  width: 180,
-                  height: 180,
+                  width: SizeConfig.getSizePerHeight(20),
+                  height: SizeConfig.getSizePerHeight(17),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 30),
+          SizedBox(
+            height: SizeConfig.getSizePerHeight(4),
+          ),
           Text("Question"),
           Card(
             color: numberCardColor,
@@ -304,11 +306,13 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ],
               ),
-              width: 300,
-              height: 80,
+              width: SizeConfig.getSizePerHeight(40),
+              height: SizeConfig.getSizePerHeight(10),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(
+            height: SizeConfig.getSizePerHeight(2),
+          ),
           Text("Answer"),
           Card(
             color: numberCardColor,
@@ -326,16 +330,18 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ],
               ),
-              width: 300,
-              height: 80,
+              width: SizeConfig.getSizePerHeight(40),
+              height: SizeConfig.getSizePerHeight(10),
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(
+            height: SizeConfig.getSizePerHeight(6),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 50,
+                height: SizeConfig.getSizePerHeight(7),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -347,9 +353,11 @@ class _GamePageState extends State<GamePage> {
                   child: Text("${firstNumber}000"),
                 ),
               ),
-              SizedBox(width: 10),
               SizedBox(
-                height: 50,
+                width: SizeConfig.getSizePerHeight(2),
+              ),
+              SizedBox(
+                height: SizeConfig.getSizePerHeight(7),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -361,9 +369,11 @@ class _GamePageState extends State<GamePage> {
                   child: Text('${firstNumber}00'),
                 ),
               ),
-              SizedBox(width: 10),
               SizedBox(
-                height: 50,
+                width: SizeConfig.getSizePerHeight(2),
+              ),
+              SizedBox(
+                height: SizeConfig.getSizePerHeight(7),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -375,9 +385,11 @@ class _GamePageState extends State<GamePage> {
                   child: Text('${firstNumber}0'),
                 ),
               ),
-              SizedBox(width: 10),
               SizedBox(
-                height: 50,
+                width: SizeConfig.getSizePerHeight(2),
+              ),
+              SizedBox(
+                height: SizeConfig.getSizePerHeight(7),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -391,13 +403,17 @@ class _GamePageState extends State<GamePage> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(
+            height: SizeConfig.getSizePerHeight(2),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(width: 10),
               SizedBox(
-                height: 50,
+                width: SizeConfig.getSizePerHeight(2),
+              ),
+              SizedBox(
+                height: SizeConfig.getSizePerHeight(7),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
@@ -410,9 +426,11 @@ class _GamePageState extends State<GamePage> {
                   child: const Text('億'),
                 ),
               ),
-              SizedBox(width: 10),
               SizedBox(
-                height: 50,
+                width: SizeConfig.getSizePerHeight(2),
+              ),
+              SizedBox(
+                height: SizeConfig.getSizePerHeight(7),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
@@ -425,9 +443,11 @@ class _GamePageState extends State<GamePage> {
                   child: const Text('万'),
                 ),
               ),
-              SizedBox(width: 10),
               SizedBox(
-                height: 50,
+                width: SizeConfig.getSizePerHeight(2),
+              ),
+              SizedBox(
+                height: SizeConfig.getSizePerHeight(7),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
@@ -442,10 +462,12 @@ class _GamePageState extends State<GamePage> {
               ),
             ],
           ),
-          SizedBox(height: 20),
           SizedBox(
-            height: 50,
-            width: 100,
+            height: SizeConfig.getSizePerHeight(2),
+          ),
+          SizedBox(
+            height: SizeConfig.getSizePerHeight(7),
+            width: SizeConfig.getSizePerHeight(15),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 15),
