@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import "dart:math";
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class GamePage extends StatefulWidget {
   GamePage({Key? key}) : super(key: key);
@@ -23,8 +24,6 @@ class _GamePageState extends State<GamePage> {
   String firstNumber = "";
 
   String questionNumber = "";
-  int questionNumber1 = 0;
-  int questionNumber2 = 0;
 
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;
@@ -71,7 +70,7 @@ class _GamePageState extends State<GamePage> {
         _timer?.cancel();
         setState(() {
           timeCardColor = incorrectColor;
-          numberCardColor=incorrectColor;
+          numberCardColor = incorrectColor;
         });
         showAnswer();
 
@@ -95,10 +94,10 @@ class _GamePageState extends State<GamePage> {
     var random = new Random();
 
     setState(() {
-      questionNumber1 = random.nextInt(2);
-      questionNumber2 = _weightedChoice([1, 3, 3]);
-      questionNumber =
-          firstNumber + "0" * questionNumber1 + ",000" * questionNumber2;
+      var zeros = _weightedChoice([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+      var questionNumStr = firstNumber + "0" * zeros;
+      final formatter = NumberFormat("#,###");
+      questionNumber = formatter.format(int.parse(questionNumStr));
     });
   }
 
@@ -144,16 +143,17 @@ class _GamePageState extends State<GamePage> {
     return questionNumber == answer;
   }
 
-  void showAnswer(){
+  void showAnswer() {
     setState(() {
-    var digits = questionNumber1 + questionNumber2 * 3;
-    var number = digits % 4;
-    var unitIdx = digits ~/ 4;
-    var unit = units[unitIdx];
-    if (digits > 0) {}
-    questionNumber = firstNumber.toString() + "0" * number + unit;
+      var digits = questionNumber.replaceAll(",", "").length - 1;
+      var number = digits % 4;
+      var unitIdx = digits ~/ 4;
+      var unit = units[unitIdx];
+      if (digits > 0) {}
+      questionNumber = firstNumber.toString() + "0" * number + unit;
     });
   }
+
   void _judgeAnswerAndRefresh() async {
     if (answerNumber == "") return;
     showAnswer();
