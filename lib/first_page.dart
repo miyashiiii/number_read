@@ -37,6 +37,12 @@ class _FirstPageState extends State<FirstPage> {
               SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, "/hint");
+                },
+                child: Text('ヒント'),
+              ),
+              ElevatedButton(
+                onPressed: () {
                   Navigator.pushNamed(context, "/game");
                 },
                 child: Text('ゲーム開始'),

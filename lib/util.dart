@@ -12,7 +12,7 @@ class SizeConfig {
     screenHeight = _mediaQueryData!.size.height;
   }
 
-  static double getSizePerHeight(int percent) {
+  static double getSizePerHeight(double percent) {
     return screenHeight! * percent / 100;
   }
 

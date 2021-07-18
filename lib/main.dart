@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:number_read/first_page.dart';
 import 'package:number_read/result_page.dart';
-import 'package:number_read/util.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'game_page.dart';
+import 'hint_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,6 +37,12 @@ class MyApp extends StatelessWidget {
             case '/first':
               return PageTransition(
                 child: FirstPage(),
+                type: PageTransitionType.fade,
+                settings: settings,
+              );
+            case '/hint':
+              return PageTransition(
+                child: HintPage(),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
