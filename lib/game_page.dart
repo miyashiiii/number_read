@@ -36,6 +36,11 @@ class _GamePageState extends State<GamePage> {
   bool _isJudgeEnabled = false;
   bool _isButtonsEnabled = true;
 
+  @override
+  void didPopNext() {
+    _refresh();
+  }
+
   void _refresh() {
     setState(() {
       answer = "";
@@ -88,7 +93,7 @@ class _GamePageState extends State<GamePage> {
     _timer?.cancel();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
-    Navigator.pushNamed(context, "/result", arguments: score);
+    pushAndInitStateWhenPop();
   }
 
   void _randomQuestionNumber() {
@@ -107,6 +112,11 @@ class _GamePageState extends State<GamePage> {
     setState(() {
       firstNumber = (1 + random.nextInt(9 - 1)).toString();
     });
+  }
+
+  void pushAndInitStateWhenPop() async {
+    await Navigator.pushNamed(context, "/result", arguments: score);
+    _refresh();
   }
 
   int _weightedChoice(List<int> weights) {
