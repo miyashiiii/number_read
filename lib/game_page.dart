@@ -45,7 +45,7 @@ class _GamePageState extends State<GamePage> {
       timeCardColor = baseColor;
       _isJudgeEnabled = false;
     });
-    // setTimer();
+    setTimer();
     _randomFirstNumber();
     _randomQuestionNumber();
   }

@@ -48,13 +48,16 @@ class _ResultPageState extends State<ResultPage> {
               Text("得点:" + score.toString()),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  Navigator.of(context).pushNamedAndRemoveUntil("/game", ModalRoute.withName("/first"));
+
                 },
                 child: Text("リトライ"),
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/first'));
+
+                  Navigator.pushNamedAndRemoveUntil(context, "/first", (r) => false);
                 },
                 child: Text('トップに戻る'),
               )
