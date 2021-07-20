@@ -38,11 +38,11 @@ class HintPage extends StatelessWidget {
           height: SizeConfig.getSizePerHeight(topMargin),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
                 alignment: Alignment.centerRight,
-                width: SizeConfig.getSizePerHeight(13),
+                width: 60,
                 child: Text(
                   key,
                   style: TextStyle(
@@ -51,11 +51,11 @@ class HintPage extends StatelessWidget {
                 )),
             Container(
                 alignment: Alignment.center,
-                width: SizeConfig.getSizePerHeight(8),
+                width: 60,
                 child: Text(isHeader ? "" : "→")),
             Container(
                 alignment: Alignment.centerRight,
-                width: SizeConfig.getSizePerHeight(16),
+                width: 120,
                 child: Text(
                   value,
                   style: TextStyle(
