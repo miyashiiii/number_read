@@ -1,4 +1,4 @@
-name: number_read
+name: sudoku
 description: The game of reading number.
 
 # The following line prevents the package from being accidentally published to

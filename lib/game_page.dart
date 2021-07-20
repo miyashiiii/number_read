@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:number_read/util.dart';
+import 'package:sudoku/util.dart';
 import "dart:math";
 
 import 'package:shared_preferences/shared_preferences.dart';

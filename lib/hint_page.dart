@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:number_read/util.dart';
+import 'package:sudoku/util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HintPage extends StatelessWidget {
