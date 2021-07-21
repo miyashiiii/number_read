@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.miyashiiii.NumberRead.number_read">
+    package="com.miyashiiii.sudoku">
    <application
         android:label="数読"
         android:icon="@mipmap/ic_launcher">

@@ -1,4 +1,4 @@
-package com.miyashiiii.NumberRead.number_read
+package com.miyashiiii.sudoku
 
 import io.flutter.embedding.android.FlutterActivity
 
