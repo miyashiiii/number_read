@@ -1,5 +1,7 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sudoku/first_page.dart';
 import 'package:sudoku/result_page.dart';
 import 'package:page_transition/page_transition.dart';
@@ -36,7 +38,8 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/first':
               return PageTransition(
-                child: FirstPage(),
+                child: FirstPage(
+                ),
                 type: PageTransitionType.fade,
                 settings: settings,
               );

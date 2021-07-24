@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sudoku/util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import "dart:math";
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -218,7 +218,7 @@ class _GamePageState extends State<GamePage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: SizeConfig.getSizePerHeight(3)),
+          SizedBox(height: 60.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -243,8 +243,8 @@ class _GamePageState extends State<GamePage> {
                             ),
                           ],
                         ),
-                        width: SizeConfig.getSizePerHeight(18),
-                        height: SizeConfig.getSizePerHeight(8)),
+                        width: 360.h,
+                        height: 160.h),
                   ),
                   Card(
                     child: Container(
@@ -264,8 +264,8 @@ class _GamePageState extends State<GamePage> {
                           ),
                         ],
                       ),
-                      width: SizeConfig.getSizePerHeight(18),
-                      height: SizeConfig.getSizePerHeight(8),
+                      width: 360.h,
+                      height: 160.h,
                     ),
                   ),
                 ],
@@ -289,14 +289,14 @@ class _GamePageState extends State<GamePage> {
                       ),
                     ],
                   ),
-                  width: SizeConfig.getSizePerHeight(20),
-                  height: SizeConfig.getSizePerHeight(17),
+                  width: 400.h,
+                  height: 340.h,
                 ),
               ),
             ],
           ),
           SizedBox(
-            height: SizeConfig.getSizePerHeight(4),
+            height: 80.h,
           ),
           Text("Question"),
           Card(
@@ -316,12 +316,12 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ],
               ),
-              width: SizeConfig.getSizePerHeight(40),
-              height: SizeConfig.getSizePerHeight(10),
+              width: 800.h,
+              height: 200.h,
             ),
           ),
           SizedBox(
-            height: SizeConfig.getSizePerHeight(2),
+            height: 40.h,
           ),
           Text("Answer"),
           Card(
@@ -340,18 +340,18 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ],
               ),
-              width: SizeConfig.getSizePerHeight(40),
-              height: SizeConfig.getSizePerHeight(10),
+              width: 800.h,
+              height: 200.h,
             ),
           ),
           SizedBox(
-            height: SizeConfig.getSizePerHeight(6),
+            height: 120.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: SizeConfig.getSizePerHeight(7),
+                height: 140.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -364,10 +364,10 @@ class _GamePageState extends State<GamePage> {
                 ),
               ),
               SizedBox(
-                width: SizeConfig.getSizePerHeight(2),
+                width: 40.h,
               ),
               SizedBox(
-                height: SizeConfig.getSizePerHeight(7),
+                height: 140.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -380,10 +380,10 @@ class _GamePageState extends State<GamePage> {
                 ),
               ),
               SizedBox(
-                width: SizeConfig.getSizePerHeight(2),
+                width: 40.h,
               ),
               SizedBox(
-                height: SizeConfig.getSizePerHeight(7),
+                height: 140.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -396,10 +396,10 @@ class _GamePageState extends State<GamePage> {
                 ),
               ),
               SizedBox(
-                width: SizeConfig.getSizePerHeight(2),
+                width: 40.h,
               ),
               SizedBox(
-                height: SizeConfig.getSizePerHeight(7),
+                height: 140.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 15)),
@@ -414,16 +414,16 @@ class _GamePageState extends State<GamePage> {
             ],
           ),
           SizedBox(
-            height: SizeConfig.getSizePerHeight(2),
+            height: 20.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: SizeConfig.getSizePerHeight(2),
+                width: 40.h,
               ),
               SizedBox(
-                height: SizeConfig.getSizePerHeight(7),
+                height: 140.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
@@ -437,10 +437,10 @@ class _GamePageState extends State<GamePage> {
                 ),
               ),
               SizedBox(
-                width: SizeConfig.getSizePerHeight(2),
+                width: 40.h,
               ),
               SizedBox(
-                height: SizeConfig.getSizePerHeight(7),
+                height: 140.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
@@ -454,10 +454,10 @@ class _GamePageState extends State<GamePage> {
                 ),
               ),
               SizedBox(
-                width: SizeConfig.getSizePerHeight(2),
+                width: 40.h,
               ),
               SizedBox(
-                height: SizeConfig.getSizePerHeight(7),
+                height: 140.h,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 15),
@@ -473,11 +473,11 @@ class _GamePageState extends State<GamePage> {
             ],
           ),
           SizedBox(
-            height: SizeConfig.getSizePerHeight(2),
+            height: 40.h,
           ),
           SizedBox(
-            height: SizeConfig.getSizePerHeight(7),
-            width: SizeConfig.getSizePerHeight(15),
+            height: 140.h,
+            width: 300.h,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 15),

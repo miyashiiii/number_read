@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku/util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HintPage extends StatelessWidget {
   List<Widget> hintTable(context) {
@@ -23,11 +22,11 @@ class HintPage extends StatelessWidget {
     var count = 0;
     var isHeader = true;
     map.forEach((var key, var value) {
-      var topMargin = 0.5;
+      var topMargin = 10;
       double dividerThickness = 1;
       Color dividerColor = Colors.black12;
       if (count % 4 == 1) {
-        topMargin = 1;
+        topMargin = 20;
       } else if (count % 4 == 0) {
         dividerThickness = 2;
         dividerColor = Colors.black26;
@@ -35,7 +34,7 @@ class HintPage extends StatelessWidget {
       count++;
       list.addAll([
         SizedBox(
-          height: SizeConfig.getSizePerHeight(topMargin),
+          height: topMargin.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -67,8 +66,8 @@ class HintPage extends StatelessWidget {
         Divider(
           thickness: dividerThickness,
           color: dividerColor,
-          indent: SizeConfig.getSizePerHeight(3),
-          endIndent: SizeConfig.getSizePerHeight(3),
+          indent: 60.h,
+          endIndent: 60.h,
         )
       ]);
       isHeader = false;
@@ -87,7 +86,6 @@ class HintPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig(context);
 
     return Scaffold(
       appBar: AppBar(

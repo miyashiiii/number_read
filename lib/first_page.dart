@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sudoku/util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstPage extends StatefulWidget {
@@ -51,9 +51,12 @@ class _FirstPageState extends State<FirstPage> {
     if (!_initialized) {
       // error log
     }
-
-    SizeConfig(context);
-
+    ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(1080, 2160),
+        orientation: Orientation.portrait);
     checkHighScore();
     return Scaffold(
       appBar: AppBar(
