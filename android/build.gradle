@@ -25,11 +25,6 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
     project.evaluationDependsOn(':app')
 }
-rootProject.ext {
-    set('FlutterFire', [
-            FirebaseSDKVersion: '25.12.0'
-    ])
-}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
