@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sudoku/analytics.dart';
 
 class ResultPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _ResultPageState extends State<ResultPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     _highScore = (prefs.getInt('HighScore') ?? 0);
     if (score > _highScore) {
+      Analytics.analytics.logPostScore(score: score);
       setState(() {
         _isHighScore = true;
       });
