@@ -3,10 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import "dart:math";
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
 
 import 'game_model.dart';
 
@@ -21,15 +19,15 @@ class _GamePageState extends State<GamePage> {
   int highScore = 0;
   int score = 0;
 
-
   bool _isButtonsEnabled = true;
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;
 
   final Color baseColor = Colors.white;
+
   void _init() {
     setState(() {
-;
+      ;
     });
     setTimer();
   }
@@ -102,7 +100,7 @@ class _GamePageState extends State<GamePage> {
       color = incorrectColor;
     }
     await new Future.delayed(new Duration(milliseconds: 500));
-      gameModel.numberCardColor = color;
+    gameModel.numberCardColor = color;
     if (result) {
       await new Future.delayed(new Duration(milliseconds: 500));
       setState(() {
@@ -192,88 +190,86 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ],
               ),
-              Consumer<GameModel>(
-              builder: (context, model, child) {
-    return Card(
-                color: model.timeCardColor,
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            "time",
-                          ),
-                          Text(
-                            remainTime.toString(),
-                            style: TextStyle(fontSize: 30),
-                          ),
-                        ],
-                      ),
-                    ],
+              Consumer<GameModel>(builder: (context, model, child) {
+                return Card(
+                  color: model.timeCardColor,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              "time",
+                            ),
+                            Text(
+                              remainTime.toString(),
+                              style: TextStyle(fontSize: 30),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    width: 400.h,
+                    height: 340.h,
                   ),
-                  width: 400.h,
-                  height: 340.h,
-                ),
-              );})
+                );
+              })
             ],
           ),
           SizedBox(
             height: 80.h,
           ),
           Text("Question"),
-          Consumer<GameModel>(
-            builder: (context, model, child) {
-              return Card(
-                color: model.numberCardColor,
-                // Question
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-
-                          Text(
-                            model.questionNumber,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  width: 800.h,
-                  height: 200.h,
+          Consumer<GameModel>(builder: (context, model, child) {
+            return Card(
+              color: model.numberCardColor,
+              // Question
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          model.questionNumber,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              );
-            }),
+                width: 800.h,
+                height: 200.h,
+              ),
+            );
+          }),
           SizedBox(
             height: 40.h,
           ),
           Text("Answer"),
-          Consumer<GameModel>(
-    builder: (context, model, child) {
-    return Card(
-    color: model.numberCardColor,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                 Text(
-                            model.answer,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                    ],
-                  ),
-                ],
+          Consumer<GameModel>(builder: (context, model, child) {
+            return Card(
+              color: model.numberCardColor,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          model.answer,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                width: 800.h,
+                height: 200.h,
               ),
-              width: 800.h,
-              height: 200.h,
-            ),
-          );}),
+            );
+          }),
           SizedBox(
             height: 120.h,
           ),
@@ -392,8 +388,8 @@ class _GamePageState extends State<GamePage> {
                       onPressed: !_isButtonsEnabled
                           ? null
                           : () {
-                        model.updateUnit("万");
-                      },
+                              model.updateUnit("万");
+                            },
                       child: const Text('万'),
                     );
                   })),
@@ -410,8 +406,8 @@ class _GamePageState extends State<GamePage> {
                       onPressed: !_isButtonsEnabled
                           ? null
                           : () {
-                        model.updateUnit("");
-                      },
+                              model.updateUnit("");
+                            },
                       child: const Text('なし'),
                     );
                   })),

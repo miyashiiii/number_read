@@ -59,8 +59,8 @@ class HintPage extends StatelessWidget {
                         topMargin = 30.h;
                       }
                       return Container(
-                          height: 100.h+topMargin,
-                          padding: EdgeInsets.only(top:topMargin),
+                          height: 100.h + topMargin,
+                          padding: EdgeInsets.only(top: topMargin),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

@@ -22,18 +22,20 @@ class _FirstPageState extends State<FirstPage> {
       setState(() {
         _initialized = true;
       });
-    } catch(e) {
+    } catch (e) {
       // Set `_error` state to true if Firebase initialization fails
       setState(() {
         _error = true;
       });
     }
   }
+
   @override
   void initState() {
     initializeFlutterFire();
     super.initState();
   }
+
   void checkHighScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -43,8 +45,8 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(_error) {
-       // error log
+    if (_error) {
+      // error log
     }
 
     // Show a loader until FlutterFire is initialized
