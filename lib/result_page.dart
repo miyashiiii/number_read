@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku/analytics.dart';
 
-class ResultPage extends StatefulWidget {
-  @override
-  _ResultPageState createState() => _ResultPageState();
-}
-
-class _ResultPageState extends State<ResultPage> {
+class ResultPage extends StatelessWidget {
   int _highScore = 0;
   bool _isHighScore = false;
 
@@ -16,16 +11,9 @@ class _ResultPageState extends State<ResultPage> {
     _highScore = (prefs.getInt('HighScore') ?? 0);
     if (score > _highScore) {
       Analytics.analytics.logPostScore(score: score);
-      setState(() {
-        _isHighScore = true;
-      });
+      _isHighScore = true;
       await prefs.setInt('HighScore', score);
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -51,15 +39,15 @@ class _ResultPageState extends State<ResultPage> {
               ElevatedButton(
                 onPressed: () {
                   // Navigator.pop(context);
-                  Navigator.of(context).pushNamedAndRemoveUntil("/game", ModalRoute.withName("/first"));
-
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      "/game", ModalRoute.withName("/first"));
                 },
                 child: Text("リトライ"),
               ),
               ElevatedButton(
                 onPressed: () {
-
-                  Navigator.pushNamedAndRemoveUntil(context, "/first", (r) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/first", (r) => false);
                 },
                 child: Text('トップに戻る'),
               )
