@@ -5,18 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 class GameModel extends ChangeNotifier {
   String firstNumber = "";
-
   String questionNumber = "";
+
+  String answer = "";
+  String answerNumber = "";
+  String answerUnit = "";
+
+  bool canAnswer = false;
 
   GameModel(){
     refresh();
   }
   void refresh(){
+    answer = "";
+    answerNumber = "";
+    answerUnit = "";
+    bool _isJudgeEnabled = false;
     _randomFirstNumber();
     _randomQuestionNumber();
     notifyListeners();
-
-
+  }
+  void onFinish(){
+    canAnswer = false;
   }
   void _randomFirstNumber() {
     var random = new Random();
@@ -56,4 +66,17 @@ class GameModel extends ChangeNotifier {
       notifyListeners();
 
   }
+  void updateNumber(String tmpNumber) {
+      answerNumber = tmpNumber;
+      answer = tmpNumber + answerUnit;
+      canAnswer = true;
+      notifyListeners();
+
+  }
+  void updateUnit(String tmpUnit) {
+      answerUnit = tmpUnit;
+      answer = answerNumber + tmpUnit;
+      notifyListeners();
+  }
+d
 }

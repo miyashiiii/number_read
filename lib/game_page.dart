@@ -21,10 +21,6 @@ class _GamePageState extends State<GamePage> {
   int highScore = 0;
   int score = 0;
 
-  String answer = "";
-  String answerNumber = "";
-  String answerUnit = "";
-
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;
 
@@ -32,20 +28,16 @@ class _GamePageState extends State<GamePage> {
 
   Color numberCardColor = Colors.white;
   Color timeCardColor = Colors.white;
-  bool _isJudgeEnabled = false;
   bool _isButtonsEnabled = true;
 
   void _init() {
     setState(() {
-      answer = "";
-      answerNumber = "";
-      answerUnit = "";
       numberCardColor = baseColor;
       timeCardColor = baseColor;
-      _isJudgeEnabled = false;
     });
     setTimer();
   }
+
   void _refresh() {
     _init();
     gameModel.refresh();
@@ -85,10 +77,10 @@ class _GamePageState extends State<GamePage> {
 
   void _onFinish() async {
     setState(() {
-      _isJudgeEnabled = false;
       _isButtonsEnabled = false;
     });
     _timer?.cancel();
+    gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
     pushAndInitStateWhenPop();
@@ -99,26 +91,9 @@ class _GamePageState extends State<GamePage> {
     _init();
   }
 
-  void _updateNumber(String tmpNumber) {
-    setState(() {
-      answerNumber = tmpNumber;
-      answer = tmpNumber + answerUnit;
-      _isJudgeEnabled = true;
-    });
-  }
-
-  void _updateUnit(String tmpUnit) {
-    setState(() {
-      answerUnit = tmpUnit;
-      answer = answerNumber + tmpUnit;
-    });
-  }
-
   void _judgeAnswerAndRefresh() async {
-    if (answerNumber == "") return;
-
     gameModel.showAnswer();
-    var result = gameModel.questionNumber == answer;
+    var result = gameModel.questionNumber == gameModel.answer;
     print(gameModel.questionNumber);
 
     var addScore = 0;
@@ -289,9 +264,13 @@ class _GamePageState extends State<GamePage> {
                 children: [
                   Column(
                     children: [
-                      Text(
-                        answer,
-                        style: TextStyle(fontSize: 20),
+                      Consumer<GameModel>(
+                        builder: (context, model, child) {
+                          return Text(
+                            model.answer,
+                            style: TextStyle(fontSize: 20),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -317,7 +296,7 @@ class _GamePageState extends State<GamePage> {
                         onPressed: !_isButtonsEnabled
                             ? null
                             : () {
-                                _updateNumber("${model.firstNumber}000");
+                                model.updateNumber("${model.firstNumber}000");
                               },
                         child: Text("${model.firstNumber}000"),
                       );
@@ -336,8 +315,8 @@ class _GamePageState extends State<GamePage> {
                         onPressed: !_isButtonsEnabled
                             ? null
                             : () {
-                          _updateNumber("${model.firstNumber}00");
-                        },
+                                model.updateNumber("${model.firstNumber}00");
+                              },
                         child: Text("${model.firstNumber}00"),
                       );
                     },
@@ -355,8 +334,8 @@ class _GamePageState extends State<GamePage> {
                         onPressed: !_isButtonsEnabled
                             ? null
                             : () {
-                          _updateNumber("${model.firstNumber}0");
-                        },
+                                model.updateNumber("${model.firstNumber}0");
+                              },
                         child: Text("${model.firstNumber}0"),
                       );
                     },
@@ -374,8 +353,8 @@ class _GamePageState extends State<GamePage> {
                         onPressed: !_isButtonsEnabled
                             ? null
                             : () {
-                          _updateNumber("${model.firstNumber}");
-                        },
+                                model.updateNumber("${model.firstNumber}");
+                              },
                         child: Text("${model.firstNumber}"),
                       );
                     },
@@ -392,53 +371,56 @@ class _GamePageState extends State<GamePage> {
                 width: 40.h,
               ),
               SizedBox(
-                height: 140.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 15),
-                  ),
-                  onPressed: !_isButtonsEnabled
-                      ? null
-                      : () {
-                          _updateUnit("億");
-                        },
-                  child: const Text('億'),
-                ),
-              ),
+                  height: 140.h,
+                  child: Consumer<GameModel>(builder: (context, model, child) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 15),
+                      ),
+                      onPressed: !_isButtonsEnabled
+                          ? null
+                          : () {
+                              model.updateUnit("億");
+                            },
+                      child: const Text('億'),
+                    );
+                  })),
               SizedBox(
                 width: 40.h,
               ),
               SizedBox(
-                height: 140.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 15),
-                  ),
-                  onPressed: !_isButtonsEnabled
-                      ? null
-                      : () {
-                          _updateUnit("万");
-                        },
-                  child: const Text('万'),
-                ),
-              ),
+                  height: 140.h,
+                  child: Consumer<GameModel>(builder: (context, model, child) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 15),
+                      ),
+                      onPressed: !_isButtonsEnabled
+                          ? null
+                          : () {
+                        model.updateUnit("万");
+                      },
+                      child: const Text('万'),
+                    );
+                  })),
               SizedBox(
                 width: 40.h,
               ),
               SizedBox(
-                height: 140.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 15),
-                  ),
-                  onPressed: !_isButtonsEnabled
-                      ? null
-                      : () {
-                          _updateUnit("");
-                        },
-                  child: const Text('(なし)'),
-                ),
-              ),
+                  height: 140.h,
+                  child: Consumer<GameModel>(builder: (context, model, child) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 15),
+                      ),
+                      onPressed: !_isButtonsEnabled
+                          ? null
+                          : () {
+                        model.updateUnit("");
+                      },
+                      child: const Text('なし'),
+                    );
+                  })),
             ],
           ),
           SizedBox(
@@ -451,7 +433,7 @@ class _GamePageState extends State<GamePage> {
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 15),
               ),
-              onPressed: !_isJudgeEnabled
+              onPressed: !gameModel.canAnswer
                   ? null
                   : () {
                       _judgeAnswerAndRefresh();
