@@ -19,48 +19,36 @@ class _GamePageState extends State<GamePage> {
   int highScore = 0;
   int score = 0;
 
-  final Color correctColor = Colors.lightGreen;
-  final Color incorrectColor = Colors.red.shade300;
-
   final Color baseColor = Colors.white;
 
   void _init() {
-    setState(() {
-      ;
-    });
-    setTimer();
+    initTimer();
   }
 
   void _refresh() {
-    _init();
+    updateTimer();
     gameModel.refresh();
   }
 
   Timer? _timer;
-  int remainTime = 3;
 
-  void setTimer() {
+  void updateTimer() {
     _timer?.cancel();
-    setState(() {
-      remainTime = 5;
-    });
+    gameModel.remainTime = 5;
+    initTimer();
+  }
 
+  void initTimer() {
     _timer = Timer.periodic(
         // 定期実行する間隔の設定.
         Duration(seconds: 1),
         // 定期実行関数.
         (Timer t) {
-      setState(() {
-        remainTime -= 1;
-      });
-      if (remainTime == 0) {
+      gameModel.remainTime -= 1;
+      if (gameModel.remainTime == 0) {
         _timer?.cancel();
-        setState(() {
-          gameModel.timeCardColor = incorrectColor;
-          gameModel.numberCardColor = incorrectColor;
-        });
+        gameModel.onTimeOver();
 
-        gameModel.showAnswer();
         _onFinish();
       }
     });
@@ -91,13 +79,10 @@ class _GamePageState extends State<GamePage> {
     Color color;
     if (result) {
       addScore = 10;
-      color = correctColor;
       _timer?.cancel();
-    } else {
-      color = incorrectColor;
-    }
+    } else {}
     await new Future.delayed(new Duration(milliseconds: 500));
-    gameModel.numberCardColor = color;
+    gameModel.changeCardColor(result);
     if (result) {
       await new Future.delayed(new Duration(milliseconds: 500));
       setState(() {
@@ -200,7 +185,7 @@ class _GamePageState extends State<GamePage> {
                               "time",
                             ),
                             Text(
-                              remainTime.toString(),
+                              model.remainTime.toString(),
                               style: TextStyle(fontSize: 30),
                             ),
                           ],

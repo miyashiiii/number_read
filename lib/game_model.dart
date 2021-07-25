@@ -18,6 +18,11 @@ class GameModel extends ChangeNotifier {
 
   bool isButtonsEnabled = true;
 
+  int remainTime = 5;
+
+  final Color correctColor = Colors.lightGreen;
+  final Color incorrectColor = Colors.red.shade300;
+
   GameModel() {
     refresh();
   }
@@ -87,6 +92,18 @@ class GameModel extends ChangeNotifier {
   void updateUnit(String tmpUnit) {
     answerUnit = tmpUnit;
     answer = answerNumber + tmpUnit;
+    notifyListeners();
+  }
+
+  void onTimeOver() {
+    timeCardColor = incorrectColor;
+    numberCardColor = incorrectColor;
+
+    showAnswer();
+  }
+
+  void changeCardColor(bool result) {
+    numberCardColor = result ? correctColor : incorrectColor;
     notifyListeners();
   }
 }
