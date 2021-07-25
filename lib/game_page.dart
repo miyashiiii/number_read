@@ -344,55 +344,64 @@ class _GamePageState extends State<GamePage> {
               ),
               SizedBox(
                   height: 140.h,
-                  child: Consumer<GameModel>(builder: (context, model, child) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 15),
-                      ),
-                      onPressed: !model.isButtonsEnabled
-                          ? null
-                          : () {
-                              model.updateUnit("億");
-                            },
-                      child: const Text('億'),
-                    );
-                  })),
+                  child: Consumer<GameModel>(
+                    builder: (context, model, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 15),
+                        ),
+                        onPressed: !model.isButtonsEnabled
+                            ? null
+                            : () {
+                                model.updateUnit("億");
+                              },
+                        child: child,
+                      );
+                    },
+                    child: const Text('億'),
+                  )),
               SizedBox(
                 width: 40.h,
               ),
               SizedBox(
                   height: 140.h,
-                  child: Consumer<GameModel>(builder: (context, model, child) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 15),
-                      ),
-                      onPressed: !model.isButtonsEnabled
-                          ? null
-                          : () {
-                              model.updateUnit("万");
-                            },
-                      child: const Text('万'),
-                    );
-                  })),
+                  child: Consumer<GameModel>(
+                    builder: (context, model, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 15),
+                        ),
+                        onPressed: !model.isButtonsEnabled
+                            ? null
+                            : () {
+                                model.updateUnit("万");
+                              },
+                        child: child,
+                      );
+                    },
+                    child: const Text('万'),
+                  )),
               SizedBox(
                 width: 40.h,
               ),
               SizedBox(
                   height: 140.h,
-                  child: Consumer<GameModel>(builder: (context, model, child) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 15),
-                      ),
-                      onPressed: !model.isButtonsEnabled
-                          ? null
-                          : () {
-                              model.updateUnit("");
-                            },
-                      child: const Text('なし'),
-                    );
-                  })),
+                  child: Consumer<GameModel>(
+                    builder: (context, model, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 15),
+                        ),
+                        onPressed: !model.isButtonsEnabled
+                            ? null
+                            : () {
+                                model.updateUnit("");
+                              },
+                        child: child,
+                      );
+                    },
+                    child: const Text('なし'),
+                  )),
             ],
           ),
           SizedBox(
@@ -413,8 +422,6 @@ class _GamePageState extends State<GamePage> {
               child: const Text('OK'),
             ),
           ),
-        ],
-      ),
-    );
+        ]));
   }
 }
