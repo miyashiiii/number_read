@@ -21,19 +21,15 @@ class _GamePageState extends State<GamePage> {
   int highScore = 0;
   int score = 0;
 
+
+  bool _isButtonsEnabled = true;
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;
 
   final Color baseColor = Colors.white;
-
-  Color numberCardColor = Colors.white;
-  Color timeCardColor = Colors.white;
-  bool _isButtonsEnabled = true;
-
   void _init() {
     setState(() {
-      numberCardColor = baseColor;
-      timeCardColor = baseColor;
+;
     });
     setTimer();
   }
@@ -63,8 +59,8 @@ class _GamePageState extends State<GamePage> {
       if (remainTime == 0) {
         _timer?.cancel();
         setState(() {
-          timeCardColor = incorrectColor;
-          numberCardColor = incorrectColor;
+          gameModel.timeCardColor = incorrectColor;
+          gameModel.numberCardColor = incorrectColor;
         });
 
         gameModel.showAnswer();
@@ -106,9 +102,7 @@ class _GamePageState extends State<GamePage> {
       color = incorrectColor;
     }
     await new Future.delayed(new Duration(milliseconds: 500));
-    setState(() {
-      numberCardColor = color;
-    });
+      gameModel.numberCardColor = color;
     if (result) {
       await new Future.delayed(new Duration(milliseconds: 500));
       setState(() {
@@ -198,8 +192,10 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ],
               ),
-              Card(
-                color: timeCardColor,
+              Consumer<GameModel>(
+              builder: (context, model, child) {
+    return Card(
+                color: model.timeCardColor,
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -220,58 +216,56 @@ class _GamePageState extends State<GamePage> {
                   width: 400.h,
                   height: 340.h,
                 ),
-              ),
+              );})
             ],
           ),
           SizedBox(
             height: 80.h,
           ),
           Text("Question"),
-          Card(
-            color: numberCardColor,
-            // Question
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
+          Consumer<GameModel>(
+            builder: (context, model, child) {
+              return Card(
+                color: model.numberCardColor,
+                // Question
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Consumer<GameModel>(
-                        builder: (context, model, child) {
-                          return Text(
+                      Column(
+                        children: [
+
+                          Text(
                             model.questionNumber,
                             style: TextStyle(fontSize: 20),
-                          );
-                        },
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-              width: 800.h,
-              height: 200.h,
-            ),
-          ),
+                  width: 800.h,
+                  height: 200.h,
+                ),
+              );
+            }),
           SizedBox(
             height: 40.h,
           ),
           Text("Answer"),
-          Card(
-            color: numberCardColor,
+          Consumer<GameModel>(
+    builder: (context, model, child) {
+    return Card(
+    color: model.numberCardColor,
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
                     children: [
-                      Consumer<GameModel>(
-                        builder: (context, model, child) {
-                          return Text(
+                 Text(
                             model.answer,
                             style: TextStyle(fontSize: 20),
-                          );
-                        },
-                      ),
+                          ),
                     ],
                   ),
                 ],
@@ -279,7 +273,7 @@ class _GamePageState extends State<GamePage> {
               width: 800.h,
               height: 200.h,
             ),
-          ),
+          );}),
           SizedBox(
             height: 120.h,
           ),

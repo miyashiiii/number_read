@@ -13,6 +13,9 @@ class GameModel extends ChangeNotifier {
 
   bool canAnswer = false;
 
+
+  Color numberCardColor = Colors.white;
+  Color timeCardColor = Colors.white;
   GameModel(){
     refresh();
   }
@@ -20,7 +23,8 @@ class GameModel extends ChangeNotifier {
     answer = "";
     answerNumber = "";
     answerUnit = "";
-    bool _isJudgeEnabled = false;
+    numberCardColor = Colors.white;
+    timeCardColor = Colors.white;
     _randomFirstNumber();
     _randomQuestionNumber();
     notifyListeners();
@@ -78,5 +82,5 @@ class GameModel extends ChangeNotifier {
       answer = answerNumber + tmpUnit;
       notifyListeners();
   }
-d
+
 }
