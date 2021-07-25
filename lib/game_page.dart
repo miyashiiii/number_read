@@ -410,17 +410,19 @@ class _GamePageState extends State<GamePage> {
           SizedBox(
             height: 140.h,
             width: 300.h,
-            child: ElevatedButton(
+            child: Consumer<GameModel>(
+                builder: (context, model, child){
+                return ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 15),
               ),
-              onPressed: !gameModel.canAnswer
+              onPressed: !model.canAnswer
                   ? null
                   : () {
                       _judgeAnswerAndRefresh();
                     },
               child: const Text('OK'),
-            ),
+            );})
           ),
         ]));
   }
