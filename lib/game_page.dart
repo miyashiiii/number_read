@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import "dart:math";
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+
+import 'game_model.dart';
 
 class GamePage extends StatefulWidget {
   GamePage({Key? key}) : super(key: key);
@@ -22,10 +25,6 @@ class _GamePageState extends State<GamePage> {
   String answerNumber = "";
   String answerUnit = "";
 
-  String firstNumber = "";
-
-  String questionNumber = "";
-
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;
 
@@ -36,12 +35,7 @@ class _GamePageState extends State<GamePage> {
   bool _isJudgeEnabled = false;
   bool _isButtonsEnabled = true;
 
-  @override
-  void didPopNext() {
-    _refresh();
-  }
-
-  void _refresh() {
+  void _init() {
     setState(() {
       answer = "";
       answerNumber = "";
@@ -51,8 +45,10 @@ class _GamePageState extends State<GamePage> {
       _isJudgeEnabled = false;
     });
     setTimer();
-    _randomFirstNumber();
-    _randomQuestionNumber();
+  }
+  void _refresh() {
+    _init();
+    gameModel.refresh();
   }
 
   Timer? _timer;
@@ -78,12 +74,14 @@ class _GamePageState extends State<GamePage> {
           timeCardColor = incorrectColor;
           numberCardColor = incorrectColor;
         });
-        showAnswer();
 
+        gameModel.showAnswer();
         _onFinish();
       }
     });
   }
+
+  late GameModel gameModel;
 
   void _onFinish() async {
     setState(() {
@@ -96,40 +94,9 @@ class _GamePageState extends State<GamePage> {
     pushAndInitStateWhenPop();
   }
 
-  void _randomQuestionNumber() {
-    var random = new Random();
-
-    setState(() {
-      var zeros = _weightedChoice([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-      var questionNumStr = firstNumber + "0" * zeros;
-      final formatter = NumberFormat("#,###");
-      questionNumber = formatter.format(int.parse(questionNumStr));
-    });
-  }
-
-  void _randomFirstNumber() {
-    var random = new Random();
-    setState(() {
-      firstNumber = (1 + random.nextInt(9 - 1)).toString();
-    });
-  }
-
   void pushAndInitStateWhenPop() async {
     await Navigator.pushNamed(context, "/result", arguments: score);
-    _refresh();
-  }
-
-  int _weightedChoice(List<int> weights) {
-    List<int> l = [];
-    weights.asMap().forEach((int idx, int weight) {
-      // weightsの各要素とそのindexを取得
-      l += List.filled(weight, idx); // 長さ:weight, 全要素がidxの作成してlに連結していく
-    });
-    //print(l); // ["0", "1", "1", "2", "2", "2", "3", "3", "3", "3", ]
-
-    // 上記で生成した配列から1つ選ぶことで、重みつきのchoiceを実行
-    var _random = new Random();
-    return l[_random.nextInt(l.length)];
+    _init();
   }
 
   void _updateNumber(String tmpNumber) {
@@ -147,28 +114,13 @@ class _GamePageState extends State<GamePage> {
     });
   }
 
-  List<String> units = ["", "万", "億"];
-
-  bool _checkAnswer() {
-    // return true;
-    return questionNumber == answer;
-  }
-
-  void showAnswer() {
-    setState(() {
-      var digits = questionNumber.replaceAll(",", "").length - 1;
-      var number = digits % 4;
-      var unitIdx = digits ~/ 4;
-      var unit = units[unitIdx];
-      if (digits > 0) {}
-      questionNumber = firstNumber.toString() + "0" * number + unit;
-    });
-  }
-
   void _judgeAnswerAndRefresh() async {
     if (answerNumber == "") return;
-    showAnswer();
-    var result = _checkAnswer();
+
+    gameModel.showAnswer();
+    var result = gameModel.questionNumber == answer;
+    print(gameModel.questionNumber);
+
     var addScore = 0;
     Color color;
     if (result) {
@@ -199,7 +151,7 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    _refresh();
+    _init();
   }
 
   void getHighScore() async {
@@ -211,6 +163,7 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
+    gameModel = Provider.of<GameModel>(context);
     getHighScore();
     return Scaffold(
       appBar: AppBar(
@@ -308,9 +261,13 @@ class _GamePageState extends State<GamePage> {
                 children: [
                   Column(
                     children: [
-                      Text(
-                        questionNumber,
-                        style: TextStyle(fontSize: 20),
+                      Consumer<GameModel>(
+                        builder: (context, model, child) {
+                          return Text(
+                            model.questionNumber,
+                            style: TextStyle(fontSize: 20),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -351,66 +308,78 @@ class _GamePageState extends State<GamePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: 140.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: !_isButtonsEnabled
-                      ? null
-                      : () {
-                          _updateNumber("${firstNumber}000");
-                        },
-                  child: Text("${firstNumber}000"),
-                ),
-              ),
+                  height: 140.h,
+                  child: Consumer<GameModel>(
+                    builder: (context, model, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 15)),
+                        onPressed: !_isButtonsEnabled
+                            ? null
+                            : () {
+                                _updateNumber("${model.firstNumber}000");
+                              },
+                        child: Text("${model.firstNumber}000"),
+                      );
+                    },
+                  )),
               SizedBox(
                 width: 40.h,
               ),
               SizedBox(
-                height: 140.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: !_isButtonsEnabled
-                      ? null
-                      : () {
-                          _updateNumber("${firstNumber}00");
+                  height: 140.h,
+                  child: Consumer<GameModel>(
+                    builder: (context, model, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 15)),
+                        onPressed: !_isButtonsEnabled
+                            ? null
+                            : () {
+                          _updateNumber("${model.firstNumber}00");
                         },
-                  child: Text('${firstNumber}00'),
-                ),
-              ),
+                        child: Text("${model.firstNumber}00"),
+                      );
+                    },
+                  )),
               SizedBox(
                 width: 40.h,
               ),
               SizedBox(
-                height: 140.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: !_isButtonsEnabled
-                      ? null
-                      : () {
-                          _updateNumber("${firstNumber}0");
+                  height: 140.h,
+                  child: Consumer<GameModel>(
+                    builder: (context, model, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 15)),
+                        onPressed: !_isButtonsEnabled
+                            ? null
+                            : () {
+                          _updateNumber("${model.firstNumber}0");
                         },
-                  child: Text('${firstNumber}0'),
-                ),
-              ),
+                        child: Text("${model.firstNumber}0"),
+                      );
+                    },
+                  )),
               SizedBox(
                 width: 40.h,
               ),
               SizedBox(
-                height: 140.h,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 15)),
-                  onPressed: !_isButtonsEnabled
-                      ? null
-                      : () {
-                          _updateNumber("$firstNumber");
+                  height: 140.h,
+                  child: Consumer<GameModel>(
+                    builder: (context, model, child) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 15)),
+                        onPressed: !_isButtonsEnabled
+                            ? null
+                            : () {
+                          _updateNumber("${model.firstNumber}");
                         },
-                  child: Text('$firstNumber'),
-                ),
-              ),
+                        child: Text("${model.firstNumber}"),
+                      );
+                    },
+                  )),
             ],
           ),
           SizedBox(
