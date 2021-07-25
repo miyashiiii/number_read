@@ -16,6 +16,8 @@ class GameModel extends ChangeNotifier {
   Color numberCardColor = Colors.white;
   Color timeCardColor = Colors.white;
 
+  bool isButtonsEnabled = true;
+
   GameModel() {
     refresh();
   }

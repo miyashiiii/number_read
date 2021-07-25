@@ -19,7 +19,6 @@ class _GamePageState extends State<GamePage> {
   int highScore = 0;
   int score = 0;
 
-  bool _isButtonsEnabled = true;
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;
 
@@ -70,9 +69,7 @@ class _GamePageState extends State<GamePage> {
   late GameModel gameModel;
 
   void _onFinish() async {
-    setState(() {
-      _isButtonsEnabled = false;
-    });
+    gameModel.isButtonsEnabled = false;
     _timer?.cancel();
     gameModel.onFinish();
 
@@ -283,7 +280,7 @@ class _GamePageState extends State<GamePage> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !_isButtonsEnabled
+                        onPressed: !model.isButtonsEnabled
                             ? null
                             : () {
                                 model.updateNumber("${model.firstNumber}000");
@@ -302,7 +299,7 @@ class _GamePageState extends State<GamePage> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !_isButtonsEnabled
+                        onPressed: !model.isButtonsEnabled
                             ? null
                             : () {
                                 model.updateNumber("${model.firstNumber}00");
@@ -321,7 +318,7 @@ class _GamePageState extends State<GamePage> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !_isButtonsEnabled
+                        onPressed: !model.isButtonsEnabled
                             ? null
                             : () {
                                 model.updateNumber("${model.firstNumber}0");
@@ -340,7 +337,7 @@ class _GamePageState extends State<GamePage> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !_isButtonsEnabled
+                        onPressed: !model.isButtonsEnabled
                             ? null
                             : () {
                                 model.updateNumber("${model.firstNumber}");
@@ -367,7 +364,7 @@ class _GamePageState extends State<GamePage> {
                       style: ElevatedButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 15),
                       ),
-                      onPressed: !_isButtonsEnabled
+                      onPressed: !model.isButtonsEnabled
                           ? null
                           : () {
                               model.updateUnit("億");
@@ -385,7 +382,7 @@ class _GamePageState extends State<GamePage> {
                       style: ElevatedButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 15),
                       ),
-                      onPressed: !_isButtonsEnabled
+                      onPressed: !model.isButtonsEnabled
                           ? null
                           : () {
                               model.updateUnit("万");
@@ -403,7 +400,7 @@ class _GamePageState extends State<GamePage> {
                       style: ElevatedButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 15),
                       ),
-                      onPressed: !_isButtonsEnabled
+                      onPressed: !model.isButtonsEnabled
                           ? null
                           : () {
                               model.updateUnit("");
