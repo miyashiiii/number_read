@@ -115,11 +115,10 @@ class _GamePageState extends State<GamePage> {
     gameModel = Provider.of<GameModel>(context);
     getHighScore();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("数読 -SUDOKU-"),
-      ),
-      body: Column(
-        children: [
+        appBar: AppBar(
+          title: Text("数読 -SUDOKU-"),
+        ),
+        body: Column(children: [
           SizedBox(height: 60.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -258,79 +257,19 @@ class _GamePageState extends State<GamePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                  height: 140.h,
-                  child: Consumer<GameModel>(
-                    builder: (context, model, child) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !model.isButtonsEnabled
-                            ? null
-                            : () {
-                                model.updateNumber("${model.firstNumber}000");
-                              },
-                        child: Text("${model.firstNumber}000"),
-                      );
-                    },
-                  )),
+              NumberButton(zeros: "000"),
               SizedBox(
                 width: 40.h,
               ),
-              SizedBox(
-                  height: 140.h,
-                  child: Consumer<GameModel>(
-                    builder: (context, model, child) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !model.isButtonsEnabled
-                            ? null
-                            : () {
-                                model.updateNumber("${model.firstNumber}00");
-                              },
-                        child: Text("${model.firstNumber}00"),
-                      );
-                    },
-                  )),
+              NumberButton(zeros: "00"),
               SizedBox(
                 width: 40.h,
               ),
-              SizedBox(
-                  height: 140.h,
-                  child: Consumer<GameModel>(
-                    builder: (context, model, child) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !model.isButtonsEnabled
-                            ? null
-                            : () {
-                                model.updateNumber("${model.firstNumber}0");
-                              },
-                        child: Text("${model.firstNumber}0"),
-                      );
-                    },
-                  )),
+              NumberButton(zeros: "0"),
               SizedBox(
                 width: 40.h,
               ),
-              SizedBox(
-                  height: 140.h,
-                  child: Consumer<GameModel>(
-                    builder: (context, model, child) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            textStyle: const TextStyle(fontSize: 15)),
-                        onPressed: !model.isButtonsEnabled
-                            ? null
-                            : () {
-                                model.updateNumber("${model.firstNumber}");
-                              },
-                        child: Text("${model.firstNumber}"),
-                      );
-                    },
-                  )),
+              NumberButton(zeros: ""),
             ],
           ),
           SizedBox(
@@ -342,88 +281,90 @@ class _GamePageState extends State<GamePage> {
               SizedBox(
                 width: 40.h,
               ),
-              SizedBox(
-                  height: 140.h,
-                  child: Consumer<GameModel>(
-                    builder: (context, model, child) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 15),
-                        ),
-                        onPressed: !model.isButtonsEnabled
-                            ? null
-                            : () {
-                                model.updateUnit("億");
-                              },
-                        child: child,
-                      );
-                    },
-                    child: const Text('億'),
-                  )),
+              UnitButton(unit: "億"),
               SizedBox(
                 width: 40.h,
               ),
-              SizedBox(
-                  height: 140.h,
-                  child: Consumer<GameModel>(
-                    builder: (context, model, child) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 15),
-                        ),
-                        onPressed: !model.isButtonsEnabled
-                            ? null
-                            : () {
-                                model.updateUnit("万");
-                              },
-                        child: child,
-                      );
-                    },
-                    child: const Text('万'),
-                  )),
+              UnitButton(unit: "万"),
               SizedBox(
                 width: 40.h,
               ),
-              SizedBox(
-                  height: 140.h,
-                  child: Consumer<GameModel>(
-                    builder: (context, model, child) {
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 15),
-                        ),
-                        onPressed: !model.isButtonsEnabled
-                            ? null
-                            : () {
-                                model.updateUnit("");
-                              },
-                        child: child,
-                      );
-                    },
-                    child: const Text('なし'),
-                  )),
+              UnitButton(unit: "")
             ],
           ),
           SizedBox(
             height: 40.h,
           ),
           SizedBox(
-            height: 140.h,
-            width: 300.h,
-            child: Consumer<GameModel>(
-                builder: (context, model, child){
+              height: 140.h,
+              width: 300.h,
+              child: Consumer<GameModel>(builder: (context, model, child) {
                 return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 15),
+                  ),
+                  onPressed: !model.canAnswer
+                      ? null
+                      : () {
+                          _judgeAnswerAndRefresh();
+                        },
+                  child: const Text('OK'),
+                );
+              })),
+        ]));
+  }
+}
+
+class NumberButton extends StatelessWidget {
+  final String zeros;
+
+  const NumberButton({required this.zeros, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 140.h,
+        child: Consumer<GameModel>(
+          builder: (context, model, child) {
+            return ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 15)),
+              onPressed: !model.isButtonsEnabled
+                  ? null
+                  : () {
+                      model.updateNumber("${model.firstNumber}$zeros");
+                    },
+              child: Text("${model.firstNumber}$zeros"),
+            );
+          },
+        ));
+  }
+}
+
+class UnitButton extends StatelessWidget {
+  final String unit;
+
+  const UnitButton({required this.unit, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 140.h,
+        child: Consumer<GameModel>(
+          builder: (context, model, child) {
+            return ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 15),
               ),
-              onPressed: !model.canAnswer
+              onPressed: !model.isButtonsEnabled
                   ? null
                   : () {
-                      _judgeAnswerAndRefresh();
+                      model.updateUnit(unit);
                     },
-              child: const Text('OK'),
-            );})
-          ),
-        ]));
+              child: child,
+            );
+          },
+          child: Text(unit != "" ? unit : "(なし)"),
+        ));
   }
 }
