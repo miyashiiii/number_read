@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'admob_widget.dart';
+
 class HintPage extends StatelessWidget {
   Divider createDivider(index) {
     double dividerThickness = 1;
@@ -95,7 +97,9 @@ class HintPage extends StatelessWidget {
               },
               child: Text('戻る'),
             ),
-            SizedBox(height: 150.h),
+            SizedBox(height: 50.h),
+            AdmobBannerAdWidget(),
+
           ])),
     );
   }

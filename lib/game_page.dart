@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'admob_widget.dart';
 import 'game_model.dart';
 
 class GamePage extends StatefulWidget {
@@ -118,62 +119,97 @@ class _GamePageState extends State<GamePage> {
         appBar: AppBar(
           title: Text("数読 -SUDOKU-"),
         ),
-        body: Column(children: [
-          SizedBox(height: 60.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(children: [
+              SizedBox(height: 60.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Card(
-                    child: Container(
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Card(
+                        child: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "highscore",
+                                    ),
+                                    Text(
+                                      "$highScore",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            width: 360.h,
+                            height: 160.h),
+                      ),
+                      Card(
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    "score",
+                                  ),
+                                  Text(
+                                    score.toString(),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          width: 360.h,
+                          height: 160.h,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Consumer<GameModel>(builder: (context, model, child) {
+                    return Card(
+                      color: model.timeCardColor,
+                      child: Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Column(
                               children: [
                                 Text(
-                                  "highscore",
+                                  "time",
                                 ),
                                 Text(
-                                  "$highScore",
-                                  style: TextStyle(fontSize: 20),
+                                  model.remainTime.toString(),
+                                  style: TextStyle(fontSize: 30),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        width: 360.h,
-                        height: 160.h),
-                  ),
-                  Card(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                "score",
-                              ),
-                              Text(
-                                score.toString(),
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ],
+                        width: 400.h,
+                        height: 340.h,
                       ),
-                      width: 360.h,
-                      height: 160.h,
-                    ),
-                  ),
+                    );
+                  })
                 ],
               ),
+              SizedBox(
+                height: 80.h,
+              ),
+              Text("Question"),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
-                  color: model.timeCardColor,
+                  color: model.numberCardColor,
+                  // Question
                   child: Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -181,137 +217,108 @@ class _GamePageState extends State<GamePage> {
                         Column(
                           children: [
                             Text(
-                              "time",
-                            ),
-                            Text(
-                              model.remainTime.toString(),
-                              style: TextStyle(fontSize: 30),
+                              model.questionNumber,
+                              style: TextStyle(fontSize: 20),
                             ),
                           ],
                         ),
                       ],
                     ),
-                    width: 400.h,
-                    height: 340.h,
+                    width: 800.h,
+                    height: 200.h,
                   ),
                 );
-              })
-            ],
-          ),
-          SizedBox(
-            height: 80.h,
-          ),
-          Text("Question"),
-          Consumer<GameModel>(builder: (context, model, child) {
-            return Card(
-              color: model.numberCardColor,
-              // Question
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
+              }),
+              SizedBox(
+                height: 40.h,
+              ),
+              Text("Answer"),
+              Consumer<GameModel>(builder: (context, model, child) {
+                return Card(
+                  color: model.numberCardColor,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          model.questionNumber,
-                          style: TextStyle(fontSize: 20),
+                        Column(
+                          children: [
+                            Text(
+                              model.answer,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-                width: 800.h,
-                height: 200.h,
-              ),
-            );
-          }),
-          SizedBox(
-            height: 40.h,
-          ),
-          Text("Answer"),
-          Consumer<GameModel>(builder: (context, model, child) {
-            return Card(
-              color: model.numberCardColor,
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          model.answer,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                width: 800.h,
-                height: 200.h,
-              ),
-            );
-          }),
-          SizedBox(
-            height: 120.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              NumberButton(zeros: "000"),
-              SizedBox(
-                width: 40.h,
-              ),
-              NumberButton(zeros: "00"),
-              SizedBox(
-                width: 40.h,
-              ),
-              NumberButton(zeros: "0"),
-              SizedBox(
-                width: 40.h,
-              ),
-              NumberButton(zeros: ""),
-            ],
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 40.h,
-              ),
-              UnitButton(unit: "億"),
-              SizedBox(
-                width: 40.h,
-              ),
-              UnitButton(unit: "万"),
-              SizedBox(
-                width: 40.h,
-              ),
-              UnitButton(unit: "")
-            ],
-          ),
-          SizedBox(
-            height: 40.h,
-          ),
-          SizedBox(
-              height: 140.h,
-              width: 300.h,
-              child: Consumer<GameModel>(builder: (context, model, child) {
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 15),
+                    width: 800.h,
+                    height: 200.h,
                   ),
-                  onPressed: !model.canAnswer
-                      ? null
-                      : () {
-                          _judgeAnswerAndRefresh();
-                        },
-                  child: const Text('OK'),
                 );
-              })),
-        ]));
+              }),
+              SizedBox(
+                height: 120.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  NumberButton(zeros: "000"),
+                  SizedBox(
+                    width: 40.h,
+                  ),
+                  NumberButton(zeros: "00"),
+                  SizedBox(
+                    width: 40.h,
+                  ),
+                  NumberButton(zeros: "0"),
+                  SizedBox(
+                    width: 40.h,
+                  ),
+                  NumberButton(zeros: ""),
+                ],
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 40.h,
+                  ),
+                  UnitButton(unit: "億"),
+                  SizedBox(
+                    width: 40.h,
+                  ),
+                  UnitButton(unit: "万"),
+                  SizedBox(
+                    width: 40.h,
+                  ),
+                  UnitButton(unit: "")
+                ],
+              ),
+              SizedBox(
+                height: 40.h,
+              ),
+              SizedBox(
+                  height: 140.h,
+                  width: 300.h,
+                  child: Consumer<GameModel>(builder: (context, model, child) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 15),
+                      ),
+                      onPressed: !model.canAnswer
+                          ? null
+                          : () {
+                              _judgeAnswerAndRefresh();
+                            },
+                      child: const Text('OK'),
+                    );
+                  })),
+            ]),
+            AdmobBannerAdWidget(),
+          ],
+        ));
   }
 }
 

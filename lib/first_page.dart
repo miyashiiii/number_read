@@ -97,12 +97,7 @@ class _FirstPageState extends State<FirstPage> {
 
                 ],
               ),
-      Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        child: AdmobBannerAdWidget(),
-        height: 75,
-      ))
+        AdmobBannerAdWidget(),
             ],
           ),
         ),

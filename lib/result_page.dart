@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku/analytics.dart';
 
+import 'admob_widget.dart';
+
 class ResultPage extends StatelessWidget {
   int _highScore = 0;
   bool _isHighScore = false;
@@ -27,30 +29,37 @@ class ResultPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.all(32.0),
+        // padding: EdgeInsets.all(32.0),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Visibility(
-                child: Text('ハイスコア更新！'),
-                visible: _isHighScore,
+              Column(
+                children: [
+                  Visibility(
+                    child: Text('ハイスコア更新！'),
+                    visible: _isHighScore,
+                  ),
+                  Text("得点:" + score.toString()),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigator.pop(context);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          "/game", ModalRoute.withName("/first"));
+                    },
+                    child: Text("リトライ"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "/first", (r) => false);
+                    },
+                    child: Text('トップに戻る'),
+                  ),
+
+                ],
               ),
-              Text("得点:" + score.toString()),
-              ElevatedButton(
-                onPressed: () {
-                  // Navigator.pop(context);
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      "/game", ModalRoute.withName("/first"));
-                },
-                child: Text("リトライ"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, "/first", (r) => false);
-                },
-                child: Text('トップに戻る'),
-              )
+              AdmobBannerAdWidget(),
             ],
           ),
         ),
