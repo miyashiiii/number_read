@@ -77,9 +77,11 @@ class _FirstPageState extends State<FirstPage> {
             children: [
               Column(
                 children: [
-                  SizedBox(height: 10),
+                  SizedBox(height: 400.h),
+                  SizedBox(child: Image(image: AssetImage('assets/images/sudoku_logo.png')),height:500.h,width:500.h),
+                  SizedBox(height: 200.h),
                   Text("ハイスコア:" + _highScore.toString()),
-                  SizedBox(height: 10),
+                  SizedBox(height: 100.h),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, "/hint");
@@ -92,7 +94,6 @@ class _FirstPageState extends State<FirstPage> {
                     },
                     child: Text('ゲーム開始'),
                   ),
-
                 ],
               ),
         AdmobBannerAdWidget(),
