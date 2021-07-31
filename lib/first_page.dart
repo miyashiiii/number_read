@@ -8,6 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'admob_widget.dart';
+import 'empty_app_bar.dart';
 
 class FirstPage extends StatefulWidget {
   @override
@@ -67,10 +68,7 @@ class _FirstPageState extends State<FirstPage> {
         orientation: Orientation.portrait);
     checkHighScore();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('数読 -SUDOKU-'),
-        centerTitle: true,
-      ),
+      appBar: EmptyAppBar(),
       body: Container(
         padding: EdgeInsets.only(top:32.0),
         child: Center(

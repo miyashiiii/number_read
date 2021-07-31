@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'admob_widget.dart';
+import 'empty_app_bar.dart';
 import 'game_model.dart';
 
 class GamePage extends StatefulWidget {
@@ -116,9 +117,7 @@ class _GamePageState extends State<GamePage> {
     gameModel = Provider.of<GameModel>(context);
     getHighScore();
     return Scaffold(
-        appBar: AppBar(
-          title: Text("数読 -SUDOKU-"),
-        ),
+        appBar: EmptyAppBar(),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

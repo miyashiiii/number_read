@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku/analytics.dart';
 
 import 'admob_widget.dart';
+import 'empty_app_bar.dart';
 
 class ResultPage extends StatelessWidget {
   int _highScore = 0;
@@ -24,10 +25,7 @@ class ResultPage extends StatelessWidget {
     checkHighScore(score);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('結果発表!'),
-        centerTitle: true,
-      ),
+      appBar: EmptyAppBar(),
       body: Container(
         // padding: EdgeInsets.all(32.0),
         child: Center(

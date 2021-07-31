@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'admob_widget.dart';
+import 'empty_app_bar.dart';
 
 class HintPage extends StatelessWidget {
   Divider createDivider(index) {
@@ -39,9 +40,7 @@ class HintPage extends StatelessWidget {
     };
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('ヒント'),
-          ),
+          appBar: EmptyAppBar(),
           body: Column(children: [
             Expanded(
                 child: ListView.separated(
