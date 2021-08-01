@@ -4,6 +4,7 @@ import 'package:sudoku/analytics.dart';
 
 import 'admob_widget.dart';
 import 'empty_app_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ResultPage extends StatelessWidget {
   int _highScore = 0;
@@ -34,6 +35,9 @@ class ResultPage extends StatelessWidget {
             children: [
               Column(
                 children: [
+                  SizedBox(
+                    height: 300.h,
+                  ),
                   Visibility(
                     child: Text('ハイスコア更新！'),
                     visible: _isHighScore,

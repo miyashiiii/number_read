@@ -41,6 +41,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   void initTimer() {
+    return;
     _timer = Timer.periodic(
         // 定期実行する間隔の設定.
         Duration(seconds: 1),
@@ -138,6 +139,7 @@ class _GamePageState extends State<GamePage> {
                                   children: [
                                     Text(
                                       "highscore",
+                                      style: TextStyle(color: Colors.blue),
                                     ),
                                     Text(
                                       "$highScore",
@@ -159,6 +161,7 @@ class _GamePageState extends State<GamePage> {
                                 children: [
                                   Text(
                                     "score",
+                                    style: TextStyle(color: Colors.blue),
                                   ),
                                   Text(
                                     score.toString(),
@@ -185,6 +188,10 @@ class _GamePageState extends State<GamePage> {
                               children: [
                                 Text(
                                   "time",
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                                SizedBox(
+                                  height: 30.h,
                                 ),
                                 Text(
                                   model.remainTime.toString(),
@@ -204,7 +211,9 @@ class _GamePageState extends State<GamePage> {
               SizedBox(
                 height: 80.h,
               ),
-              Text("Question"),
+              Text("Question",
+                  style: TextStyle(color: Colors.blue),
+    ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
                   color: model.numberCardColor,
@@ -217,7 +226,7 @@ class _GamePageState extends State<GamePage> {
                           children: [
                             Text(
                               model.questionNumber,
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ],
                         ),
@@ -231,7 +240,9 @@ class _GamePageState extends State<GamePage> {
               SizedBox(
                 height: 40.h,
               ),
-              Text("Answer"),
+              Text("Answer",
+                style: TextStyle(color: Colors.blue),
+              ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
                   color: model.numberCardColor,
@@ -243,7 +254,7 @@ class _GamePageState extends State<GamePage> {
                           children: [
                             Text(
                               model.answer,
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 30),
                             ),
                           ],
                         ),

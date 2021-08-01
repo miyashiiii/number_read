@@ -80,7 +80,7 @@ class _FirstPageState extends State<FirstPage> {
                   SizedBox(height: 400.h),
                   SizedBox(child: Image(image: AssetImage('assets/images/sudoku_logo.png')),height:500.h,width:500.h),
                   SizedBox(height: 200.h),
-                  Text("ハイスコア:" + _highScore.toString()),
+                  Text("ハイスコア: " + _highScore.toString()),
                   SizedBox(height: 100.h),
                   ElevatedButton(
                     onPressed: () {
