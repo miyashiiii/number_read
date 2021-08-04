@@ -18,7 +18,7 @@ class GameModel extends ChangeNotifier {
 
   bool isButtonsEnabled = true;
 
-  int remainTime = 5;
+  int remainTime = -1;
 
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;

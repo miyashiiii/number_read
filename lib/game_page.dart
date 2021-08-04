@@ -23,8 +23,11 @@ class _GamePageState extends State<GamePage> {
 
   final Color baseColor = Colors.white;
 
+  bool isFirst=true;
+
   void _init() {
-    initTimer();
+    // initTimer();
+
   }
 
   void _refresh() {
@@ -41,7 +44,6 @@ class _GamePageState extends State<GamePage> {
   }
 
   void initTimer() {
-    return;
     _timer = Timer.periodic(
         // 定期実行する間隔の設定.
         Duration(seconds: 1),
@@ -194,7 +196,8 @@ class _GamePageState extends State<GamePage> {
                                   height: 30.h,
                                 ),
                                 Text(
-                                  model.remainTime.toString(),
+                                  model.remainTime>=0?model.remainTime.toString():"-",
+                                  // model.remainTime.toString(),
                                   style: TextStyle(fontSize: 30),
                                 ),
                               ],
