@@ -18,6 +18,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+  late final int _highScore;
   int highScore = 0;
   int score = 0;
 
@@ -92,7 +93,7 @@ class _GamePageState extends State<GamePage> {
       await new Future.delayed(new Duration(milliseconds: 500));
       setState(() {
         score += addScore;
-        if (score > highScore) {
+        if (score > _highScore) {
           highScore = score;
         }
       });
@@ -110,9 +111,7 @@ class _GamePageState extends State<GamePage> {
 
   void getHighScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      highScore = (prefs.getInt('HighScore') ?? 0);
-    });
+    _highScore = (prefs.getInt('HighScore') ?? 0);
   }
 
   @override
