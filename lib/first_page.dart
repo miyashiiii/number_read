@@ -70,7 +70,6 @@ class _FirstPageState extends State<FirstPage> {
     return Scaffold(
       appBar: EmptyAppBar(),
       body: Container(
-        padding: EdgeInsets.only(top:32.0),
         child: Center(
           child: Column(
             mainAxisAlignment:MainAxisAlignment.spaceBetween,
@@ -82,17 +81,26 @@ class _FirstPageState extends State<FirstPage> {
                   SizedBox(height: 200.h),
                   Text("ハイスコア: " + _highScore.toString()),
                   SizedBox(height: 100.h),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/hint");
-                    },
-                    child: Text('ヒント'),
+                  SizedBox(
+                    height:120.h,
+                    width: 500.h,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/hint");
+                      },
+                      child: Text('ヒント'),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/game");
-                    },
-                    child: Text('ゲーム開始'),
+                  SizedBox(height: 50.h,),
+                  SizedBox(
+                    height:120.h,
+                    width: 500.h,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/game");
+                      },
+                      child: Text('ゲーム開始'),
+                    ),
                   ),
                 ],
               ),

@@ -34,29 +34,40 @@ class ResultPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: 300.h,
-                  ),
+                  SizedBox( height: 300.h, ),
+                  Text("結果発表!",style: TextStyle(fontSize: 20),),
+                  SizedBox( height: 100.h, ),
                   Visibility(
                     child: Text('ハイスコア更新！'),
                     visible: _isHighScore,
                   ),
-                  Text("得点:" + score.toString()),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Navigator.pop(context);
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          "/game", ModalRoute.withName("/first"));
-                    },
-                    child: Text("リトライ"),
+                  Text("正解数: " + score.toString(),style:TextStyle(fontSize: 20)),
+                  SizedBox( height: 300.h, ),
+                  SizedBox(
+                    height:120.h,
+                    width: 500.h,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Navigator.pop(context);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            "/game", ModalRoute.withName("/first"));
+                      },
+                      child: Text("リトライ"),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, "/first", (r) => false);
-                    },
-                    child: Text('トップに戻る'),
+                  SizedBox(height:50.h),
+                  SizedBox(
+                    height:120.h,
+                    width: 500.h,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/first", (r) => false);
+                      },
+                      child: Text('トップに戻る'),
+                    ),
                   ),
 
                 ],

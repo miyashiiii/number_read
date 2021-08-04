@@ -83,7 +83,7 @@ class _GamePageState extends State<GamePage> {
     var addScore = 0;
     Color color;
     if (result) {
-      addScore = 10;
+      addScore = 1;
       _timer?.cancel();
     } else {}
     await new Future.delayed(new Duration(milliseconds: 500));
@@ -125,7 +125,9 @@ class _GamePageState extends State<GamePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(children: [
-              SizedBox(height: 60.h),
+              SizedBox(
+                height: 100.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -140,12 +142,13 @@ class _GamePageState extends State<GamePage> {
                                 Column(
                                   children: [
                                     Text(
-                                      "highscore",
+                                      "ハイスコア",
                                       style: TextStyle(color: Colors.blue),
                                     ),
+                                    SizedBox(height:15.h),
                                     Text(
                                       "$highScore",
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(fontSize: 25),
                                     ),
                                   ],
                                 ),
@@ -162,12 +165,13 @@ class _GamePageState extends State<GamePage> {
                               Column(
                                 children: [
                                   Text(
-                                    "score",
+                                    "正解数",
                                     style: TextStyle(color: Colors.blue),
                                   ),
+                                  SizedBox(height:15.h),
                                   Text(
                                     score.toString(),
-                                    style: TextStyle(fontSize: 20),
+                                    style: TextStyle(fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -189,7 +193,7 @@ class _GamePageState extends State<GamePage> {
                             Column(
                               children: [
                                 Text(
-                                  "time",
+                                  "残り時間",
                                   style: TextStyle(color: Colors.blue),
                                 ),
                                 SizedBox(
@@ -211,12 +215,16 @@ class _GamePageState extends State<GamePage> {
                   })
                 ],
               ),
+    //           Text("Question",
+    //               style: TextStyle(color: Colors.blue),
+    // ),
               SizedBox(
-                height: 80.h,
+                height: 50.h,
               ),
-              Text("Question",
-                  style: TextStyle(color: Colors.blue),
-    ),
+              Divider(thickness:2,indent:100.h,endIndent: 100.h,),
+              SizedBox(
+                height: 50.h,
+              ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
                   color: model.numberCardColor,
@@ -241,10 +249,14 @@ class _GamePageState extends State<GamePage> {
                 );
               }),
               SizedBox(
-                height: 40.h,
+                height: 20.h,
               ),
-              Text("Answer",
-                style: TextStyle(color: Colors.blue),
+              // Text("Answer",
+              //   style: TextStyle(color: Colors.blue),
+              // ),
+              Icon(Icons.arrow_downward,size:80.h),
+              SizedBox(
+                height: 20.h,
               ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
