@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'admob_widget.dart';
@@ -61,13 +61,13 @@ class _GamePageState extends State<GamePage> {
   }
 
   late GameModel gameModel;
-
   void _onFinish() async {
     gameModel.isButtonsEnabled = false;
     _timer?.cancel();
     gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
+    _ap.stop();
     pushAndInitStateWhenPop();
   }
 
@@ -106,6 +106,8 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
+    startMusic();
+
     _init();
   }
 
@@ -114,8 +116,15 @@ class _GamePageState extends State<GamePage> {
     _highScore = (prefs.getInt('HighScore') ?? 0);
   }
 
+  void startMusic() async {
+    _ap = await _player.loop('audio/challange.mp3');
+  }
+  late AudioPlayer _ap;
+  AudioCache _player = AudioCache();
+
   @override
   Widget build(BuildContext context) {
+
     gameModel = Provider.of<GameModel>(context);
     getHighScore();
     return Scaffold(
