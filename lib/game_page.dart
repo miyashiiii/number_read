@@ -117,7 +117,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   void startMusic() async {
-    _ap = await _player.loop('audio/challange.mp3');
+    _ap = await _player.loop('audio/thinkingtime7.mp3');
   }
   late AudioPlayer _ap;
   AudioCache _player = AudioCache();
