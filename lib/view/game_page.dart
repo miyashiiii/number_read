@@ -142,20 +142,20 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ScoreCard(isHighScore: true),
-                      ScoreCard(isHighScore: false)
-                    ],
-                  ),
+                  ScoreCard(isHighScore: true),
+                  ScoreCard(isHighScore: false)
                 ],
               ),
-              //           Text("Question",
-              //               style: TextStyle(color: Colors.blue),
-              // ),
               SizedBox(
                 height: 50.h,
+              ),
+              Divider(
+                thickness: 2,
+                indent: 100.h,
+                endIndent: 100.h,
+              ),
+              SizedBox(
+                height: 20.h,
               ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
@@ -181,14 +181,14 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                 );
               }),
               SizedBox(
-                height: 20.h,
+                height: 10.h,
               ),
               // Text("Answer",
               //   style: TextStyle(color: Colors.blue),
               // ),
-              Icon(Icons.arrow_downward, size: 80.h),
+              Icon(Icons.arrow_downward, size: 60.h),
               SizedBox(
-                height: 20.h,
+                height: 10.h,
               ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
@@ -253,7 +253,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                 endIndent: 100.h,
               ),
               SizedBox(
-                height: 50.h,
+                height: 100.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -274,7 +274,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                 ],
               ),
               SizedBox(
-                height: 20.h,
+                height: 40.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -294,7 +294,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                 ],
               ),
               SizedBox(
-                height: 40.h,
+                height: 60.h,
               ),
               SizedBox(
                   height: 140.h,
