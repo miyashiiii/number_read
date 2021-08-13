@@ -87,9 +87,9 @@ class _FirstPageState extends State<FirstPage> {
                     width: 500.h,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/hint");
+                        Navigator.pushNamed(context, "/settings");
                       },
-                      child: Text('ヒント'),
+                      child: Text('設定'),
                     ),
                   ),
                   SizedBox(
