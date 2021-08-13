@@ -221,14 +221,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               SizedBox(
                 height: 50.h,
               ),
-              Divider(
-                thickness: 2,
-                indent: 100.h,
-                endIndent: 100.h,
-              ),
-              SizedBox(
-                height: 50.h,
-              ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
                   color: model.numberCardColor,
