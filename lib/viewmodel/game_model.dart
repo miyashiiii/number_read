@@ -29,10 +29,16 @@ class GameModel extends ChangeNotifier {
   int score = 0;
 
   GameModel() {
-    refresh();
+    gameInit();
   }
-
-  void refresh() {
+  void gameInit(){
+    score=0;
+    remainTime =-1;
+    isButtonsEnabled=true;
+    loadHighScore();
+    newQuestion();
+  }
+  void newQuestion() {
     answer = "";
     answerNumber = "";
     answerUnit = "";
@@ -42,7 +48,6 @@ class GameModel extends ChangeNotifier {
     _randomFirstNumber();
     _randomQuestionNumber();
     notifyListeners();
-    loadHighScore();
   }
   void loadHighScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

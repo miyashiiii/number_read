@@ -4,9 +4,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:sudoku/view/first_page.dart';
+import 'package:sudoku/view/result_page.dart';
 import 'package:sudoku/view/settings_page.dart';
 import 'package:sudoku/viewmodel/game_model.dart';
-import 'package:sudoku/view/result_page.dart';
+import 'package:sudoku/viewmodel/settings_model.dart';
 
 import 'view/game_page.dart';
 import 'view/hint_page.dart';
@@ -23,11 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const locale = Locale("ja", "JP");
 
-    return MultiProvider(
-    providers: [
-      ChangeNotifierProvider<GameModel>(create: (context) => GameModel()),
-    ],
-    child:MaterialApp(
+    return MaterialApp(
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -57,13 +54,15 @@ class MyApp extends StatelessWidget {
               );
             case '/settings':
               return PageTransition(
-                child: SettingsPage(),
+                child: ChangeNotifierProvider<SettingsModel>(
+                    create: (_) => SettingsModel(), child: SettingsPage()),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
             case '/game':
               return PageTransition(
-                    child: GamePage(),
+                child: ChangeNotifierProvider<GameModel>(
+                    create: (_) => GameModel(), child: GamePage()),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
@@ -76,7 +75,6 @@ class MyApp extends StatelessWidget {
             default:
               return null;
           }
-        })
-    );
+        });
   }
 }

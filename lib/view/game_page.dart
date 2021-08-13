@@ -42,7 +42,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   void _refresh() {
     updateTimer();
-    gameModel.refresh();
+    gameModel.newQuestion();
   }
 
   void updateTimer() {
@@ -73,11 +73,16 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
+    _audioPlayer.stop();
     pushAndInitStateWhenPop();
   }
 
   void pushAndInitStateWhenPop() async {
     await Navigator.pushNamed(context, "/result", arguments: gameModel.score);
+
+    gameModel.gameInit();
+    startMusic();
+    timeBarController=null;
   }
 
   void _judgeAnswerAndRefresh() async {
@@ -109,7 +114,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _audioPlayer.stop();
-    timeBarController!.dispose();
+    timeBarController?.dispose();
     super.dispose();
   }
 
