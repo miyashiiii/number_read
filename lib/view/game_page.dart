@@ -81,6 +81,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   }
 
   void _judgeAnswerAndRefresh() async {
+    gameModel.canAnswer=false;
     gameModel.showAnswer();
     var isCorrect = gameModel.questionNumber == gameModel.answer;
     print(gameModel.questionNumber);
