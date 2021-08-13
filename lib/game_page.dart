@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 
 import 'admob_widget.dart';
 import 'empty_app_bar.dart';
@@ -103,12 +104,25 @@ class _GamePageState extends State<GamePage> {
     }
   }
 
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    _ap.stop();
+    Navigator.pushNamedAndRemoveUntil(
+        context, "/first", (r) => false);
+    return true;
+  }
+
   @override
   void initState() {
     super.initState();
+    BackButtonInterceptor.add(myInterceptor);
     startMusic();
-
     _init();
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
   }
 
   void getHighScore() async {
@@ -119,6 +133,7 @@ class _GamePageState extends State<GamePage> {
   void startMusic() async {
     _ap = await _player.loop('audio/thinkingtime7.mp3');
   }
+
   late AudioPlayer _ap;
   AudioCache _player = AudioCache();
 
