@@ -72,7 +72,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   void _onTimeOver() async {
     gameModel.isButtonsEnabled = false;
-    _timer?.cancel();
     gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
@@ -89,10 +88,10 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     var isCorrect = gameModel.questionNumber == gameModel.answer;
     print(gameModel.questionNumber);
 
-    if (isCorrect) {
-      _timer?.cancel();
-      controller?.stop();
-    } else {}
+    _timer?.cancel();
+    controller?.stop();
+    // if (isCorrect) {
+    // } else {}
     await new Future.delayed(new Duration(milliseconds: 500));
     gameModel.changeCardColor(isCorrect);
     if (isCorrect) {
