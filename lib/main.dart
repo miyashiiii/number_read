@@ -23,8 +23,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const locale = Locale("ja", "JP");
 
-    return MaterialApp(
-        title: 'Flutter Demo',
+    return MultiProvider(
+    providers: [
+      ChangeNotifierProvider<GameModel>(create: (context) => GameModel()),
+    ],
+    child:MaterialApp(
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -60,8 +63,7 @@ class MyApp extends StatelessWidget {
               );
             case '/game':
               return PageTransition(
-                child: ChangeNotifierProvider<GameModel>(
-                    create: (_) => GameModel(), child: GamePage()),
+                    child: GamePage(),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
@@ -74,6 +76,7 @@ class MyApp extends StatelessWidget {
             default:
               return null;
           }
-        });
+        })
+    );
   }
 }
