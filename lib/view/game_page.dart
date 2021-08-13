@@ -20,10 +20,17 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   final Color baseColor = Colors.white;
 
   bool isFirst = true;
-  AnimationController? controller;
+  AnimationController? timeBarController;
 
-  void startProgress() {
-    controller = AnimationController(
+  late AudioPlayer _audioPlayer;
+  AudioCache _audioCache = AudioCache();
+
+  Timer? _timer;
+
+  late GameModel gameModel;
+
+  void startTimeBar() {
+    timeBarController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
     )
@@ -31,11 +38,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
         setState(() {});
       })
       ..forward();
-    // controller.repeat(reverse: true);
-  }
-
-  void _init() {
-    // initTimer();
   }
 
   void _refresh() {
@@ -43,13 +45,11 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     gameModel.refresh();
   }
 
-  Timer? _timer;
-
   void updateTimer() {
     _timer?.cancel();
     gameModel.remainTime = 5;
     initTimer();
-    startProgress();
+    startTimeBar();
   }
 
   void initTimer() {
@@ -68,8 +68,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     });
   }
 
-  late GameModel gameModel;
-
   void _onTimeOver() async {
     gameModel.isButtonsEnabled = false;
     gameModel.onFinish();
@@ -80,7 +78,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   void pushAndInitStateWhenPop() async {
     await Navigator.pushNamed(context, "/result", arguments: gameModel.score);
-    _init();
   }
 
   void _judgeAnswerAndRefresh() async {
@@ -89,9 +86,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     print(gameModel.questionNumber);
 
     _timer?.cancel();
-    controller?.stop();
-    // if (isCorrect) {
-    // } else {}
+    timeBarController?.stop();
     await new Future.delayed(new Duration(milliseconds: 500));
     gameModel.changeCardColor(isCorrect);
     if (isCorrect) {
@@ -108,27 +103,22 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     startMusic();
-    _init();
   }
 
   @override
   void dispose() {
-    _ap.stop();
-    controller!.dispose();
-
+    _audioPlayer.stop();
+    timeBarController!.dispose();
     super.dispose();
   }
 
   void startMusic() async {
-    _ap = await _player.loop('audio/thinkingtime7.mp3');
+    _audioPlayer = await _audioCache.loop('audio/thinkingtime7.mp3');
   }
-
-  late AudioPlayer _ap;
-  AudioCache _player = AudioCache();
 
   @override
   Widget build(BuildContext context) {
-    gameModel = Provider.of<GameModel>(context);
+    gameModel = Provider.of<GameModel>(context, listen: false);
     return Scaffold(
         appBar: EmptyAppBar(),
         body: Column(
@@ -236,7 +226,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                         child: LinearProgressIndicator(
                           backgroundColor: model.timeCardColor,
                           minHeight: 80.h,
-                          value: 1 - (controller?.value ?? 0),
+                          value: 1 - (timeBarController?.value ?? 0),
                           semanticsLabel: 'Linear progress indicator',
                         ),
                       ),
