@@ -145,59 +145,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Card(
-                        child: Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      "ハイスコア",
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
-                                    SizedBox(height: 15.h),
-                                    Consumer<GameModel>(
-                                        builder: (context, model, child) {
-                                      return Text(
-                                        model.highScoreView.toString(),
-                                        style: TextStyle(fontSize: 25),
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            width: 360.h,
-                            height: 160.h),
-                      ),
-                      Card(
-                        child: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    "正解数",
-                                    style: TextStyle(color: Colors.blue),
-                                  ),
-                                  SizedBox(height: 15.h),
-                                  Consumer<GameModel>(
-                                      builder: (context, model, child) {
-                                    return Text(
-                                      model.score.toString(),
-                                      style: TextStyle(fontSize: 25),
-                                    );
-                                  })
-                                ],
-                              ),
-                            ],
-                          ),
-                          width: 360.h,
-                          height: 160.h,
-                        ),
-                      ),
+                      ScoreCard(isHighScore: true),
+                      ScoreCard(isHighScore: false)
                     ],
                   ),
                 ],
@@ -367,6 +316,39 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
             AdmobBannerAdWidget(),
           ],
         ));
+  }
+}
+
+class ScoreCard extends StatelessWidget {
+  final bool isHighScore;
+
+  const ScoreCard({required this.isHighScore, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                isHighScore ? "ハイスコア" : "スコア",
+                style: TextStyle(color: Colors.blue),
+              ),
+              SizedBox(height: 15.h),
+              Consumer<GameModel>(builder: (context, model, child) {
+                return Text(
+                  isHighScore
+                      ? model.highScoreView.toString()
+                      : model.score.toString(),
+                  style: TextStyle(fontSize: 25),
+                );
+              }),
+            ],
+          ),
+          width: 360.h,
+          height: 160.h),
+    );
   }
 }
 
