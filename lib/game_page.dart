@@ -18,7 +18,7 @@ class GamePage extends StatefulWidget {
   _GamePageState createState() => _GamePageState();
 }
 
-class _GamePageState extends State<GamePage> {
+class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   late final int _highScore;
   int highScore = 0;
   int score = 0;
@@ -26,7 +26,17 @@ class _GamePageState extends State<GamePage> {
   final Color baseColor = Colors.white;
 
   bool isFirst=true;
+  AnimationController? controller;
+  void startProgress(){
 
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..addListener(() {
+      setState(() {});
+    })..forward();
+    // controller.repeat(reverse: true);
+  }
   void _init() {
     // initTimer();
 
@@ -43,6 +53,8 @@ class _GamePageState extends State<GamePage> {
     _timer?.cancel();
     gameModel.remainTime = 5;
     initTimer();
+    startProgress();
+
   }
 
   void initTimer() {
@@ -56,19 +68,18 @@ class _GamePageState extends State<GamePage> {
         _timer?.cancel();
         gameModel.onTimeOver();
 
-        _onFinish();
+        _onTimeOver();
       }
     });
   }
 
   late GameModel gameModel;
-  void _onFinish() async {
+  void _onTimeOver() async {
     gameModel.isButtonsEnabled = false;
     _timer?.cancel();
     gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
-    _ap.stop();
     pushAndInitStateWhenPop();
   }
 
@@ -79,18 +90,19 @@ class _GamePageState extends State<GamePage> {
 
   void _judgeAnswerAndRefresh() async {
     gameModel.showAnswer();
-    var result = gameModel.questionNumber == gameModel.answer;
+    var isCorrect = gameModel.questionNumber == gameModel.answer;
     print(gameModel.questionNumber);
 
     var addScore = 0;
     Color color;
-    if (result) {
+    if (isCorrect) {
       addScore = 1;
       _timer?.cancel();
+      controller?.stop();
     } else {}
     await new Future.delayed(new Duration(milliseconds: 500));
-    gameModel.changeCardColor(result);
-    if (result) {
+    gameModel.changeCardColor(isCorrect);
+    if (isCorrect) {
       await new Future.delayed(new Duration(milliseconds: 500));
       setState(() {
         score += addScore;
@@ -100,28 +112,23 @@ class _GamePageState extends State<GamePage> {
       });
       _refresh();
     } else {
-      _onFinish();
+      _onTimeOver();
     }
   }
 
-  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    _ap.stop();
-    Navigator.pushNamedAndRemoveUntil(
-        context, "/first", (r) => false);
-    return true;
-  }
 
   @override
   void initState() {
     super.initState();
-    BackButtonInterceptor.add(myInterceptor);
     startMusic();
     _init();
   }
 
   @override
   void dispose() {
-    BackButtonInterceptor.remove(myInterceptor);
+    _ap.stop();
+    controller!.dispose();
+
     super.dispose();
   }
 
@@ -154,7 +161,7 @@ class _GamePageState extends State<GamePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Card(
@@ -206,36 +213,6 @@ class _GamePageState extends State<GamePage> {
                       ),
                     ],
                   ),
-                  Consumer<GameModel>(builder: (context, model, child) {
-                    return Card(
-                      color: model.timeCardColor,
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "残り時間",
-                                  style: TextStyle(color: Colors.blue),
-                                ),
-                                SizedBox(
-                                  height: 30.h,
-                                ),
-                                Text(
-                                  model.remainTime>=0?model.remainTime.toString():"-",
-                                  // model.remainTime.toString(),
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        width: 400.h,
-                        height: 340.h,
-                      ),
-                    );
-                  })
                 ],
               ),
     //           Text("Question",
@@ -303,9 +280,39 @@ class _GamePageState extends State<GamePage> {
                   ),
                 );
               }),
-              SizedBox(
-                height: 120.h,
+              SizedBox( height: 50.h, ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("残り時間:",style:TextStyle(fontSize:15)),
+                  SizedBox( width: 50.h, ),
+                  Consumer<GameModel>(builder: (context, model, child) {
+                    return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: 700.h,
+                            child:
+                            LinearProgressIndicator(
+                              backgroundColor: model.timeCardColor,
+                              minHeight: 80.h,
+                              value: 1-(controller?.value ?? 0),
+                              semanticsLabel: 'Linear progress indicator',
+                            ),
+                          ),
+                          Text(
+                            model.remainTime>=0?model.remainTime.toString():"",
+                            // "5",
+                            style: TextStyle(fontSize:20),
+                          )
+                        ]
+                    );
+                  }),
+                ],
               ),
+              SizedBox( height: 50.h, ),
+              Divider(thickness:2,indent:100.h,endIndent: 100.h,),
+              SizedBox( height: 50.h, ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
