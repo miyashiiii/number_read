@@ -1,10 +1,7 @@
-import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'admob_widget.dart';
@@ -72,17 +69,21 @@ class _FirstPageState extends State<FirstPage> {
       body: Container(
         child: Center(
           child: Column(
-            mainAxisAlignment:MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 children: [
                   SizedBox(height: 400.h),
-                  SizedBox(child: Image(image: AssetImage('assets/images/sudoku_logo.png')),height:500.h,width:500.h),
+                  SizedBox(
+                      child: Image(
+                          image: AssetImage('assets/images/sudoku_logo.png')),
+                      height: 500.h,
+                      width: 500.h),
                   SizedBox(height: 200.h),
                   Text("ハイスコア: " + _highScore.toString()),
                   SizedBox(height: 100.h),
                   SizedBox(
-                    height:120.h,
+                    height: 120.h,
                     width: 500.h,
                     child: ElevatedButton(
                       onPressed: () {
@@ -91,9 +92,11 @@ class _FirstPageState extends State<FirstPage> {
                       child: Text('ヒント'),
                     ),
                   ),
-                  SizedBox(height: 50.h,),
                   SizedBox(
-                    height:120.h,
+                    height: 50.h,
+                  ),
+                  SizedBox(
+                    height: 120.h,
                     width: 500.h,
                     child: ElevatedButton(
                       onPressed: () {
@@ -104,7 +107,7 @@ class _FirstPageState extends State<FirstPage> {
                   ),
                 ],
               ),
-        AdmobBannerAdWidget(),
+              AdmobBannerAdWidget(),
             ],
           ),
         ),

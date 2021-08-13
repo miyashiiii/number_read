@@ -25,21 +25,23 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   final Color baseColor = Colors.white;
 
-  bool isFirst=true;
+  bool isFirst = true;
   AnimationController? controller;
-  void startProgress(){
 
+  void startProgress() {
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
-    )..addListener(() {
-      setState(() {});
-    })..forward();
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..forward();
     // controller.repeat(reverse: true);
   }
+
   void _init() {
     // initTimer();
-
   }
 
   void _refresh() {
@@ -54,7 +56,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     gameModel.remainTime = 5;
     initTimer();
     startProgress();
-
   }
 
   void initTimer() {
@@ -74,6 +75,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   }
 
   late GameModel gameModel;
+
   void _onTimeOver() async {
     gameModel.isButtonsEnabled = false;
     _timer?.cancel();
@@ -116,7 +118,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -146,7 +147,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     gameModel = Provider.of<GameModel>(context);
     getHighScore();
     return Scaffold(
@@ -175,7 +175,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                                       "ハイスコア",
                                       style: TextStyle(color: Colors.blue),
                                     ),
-                                    SizedBox(height:15.h),
+                                    SizedBox(height: 15.h),
                                     Text(
                                       "$highScore",
                                       style: TextStyle(fontSize: 25),
@@ -198,7 +198,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                                     "正解数",
                                     style: TextStyle(color: Colors.blue),
                                   ),
-                                  SizedBox(height:15.h),
+                                  SizedBox(height: 15.h),
                                   Text(
                                     score.toString(),
                                     style: TextStyle(fontSize: 25),
@@ -215,13 +215,17 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                   ),
                 ],
               ),
-    //           Text("Question",
-    //               style: TextStyle(color: Colors.blue),
-    // ),
+              //           Text("Question",
+              //               style: TextStyle(color: Colors.blue),
+              // ),
               SizedBox(
                 height: 50.h,
               ),
-              Divider(thickness:2,indent:100.h,endIndent: 100.h,),
+              Divider(
+                thickness: 2,
+                indent: 100.h,
+                endIndent: 100.h,
+              ),
               SizedBox(
                 height: 50.h,
               ),
@@ -254,7 +258,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               // Text("Answer",
               //   style: TextStyle(color: Colors.blue),
               // ),
-              Icon(Icons.arrow_downward,size:80.h),
+              Icon(Icons.arrow_downward, size: 80.h),
               SizedBox(
                 height: 20.h,
               ),
@@ -280,39 +284,49 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                   ),
                 );
               }),
-              SizedBox( height: 50.h, ),
+              SizedBox(
+                height: 50.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("残り時間:",style:TextStyle(fontSize:15)),
-                  SizedBox( width: 50.h, ),
+                  Text("残り時間:", style: TextStyle(fontSize: 15)),
+                  SizedBox(
+                    width: 50.h,
+                  ),
                   Consumer<GameModel>(builder: (context, model, child) {
-                    return Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 700.h,
-                            child:
-                            LinearProgressIndicator(
-                              backgroundColor: model.timeCardColor,
-                              minHeight: 80.h,
-                              value: 1-(controller?.value ?? 0),
-                              semanticsLabel: 'Linear progress indicator',
-                            ),
-                          ),
-                          Text(
-                            model.remainTime>=0?model.remainTime.toString():"",
-                            // "5",
-                            style: TextStyle(fontSize:20),
-                          )
-                        ]
-                    );
+                    return Stack(alignment: Alignment.center, children: [
+                      SizedBox(
+                        width: 700.h,
+                        child: LinearProgressIndicator(
+                          backgroundColor: model.timeCardColor,
+                          minHeight: 80.h,
+                          value: 1 - (controller?.value ?? 0),
+                          semanticsLabel: 'Linear progress indicator',
+                        ),
+                      ),
+                      Text(
+                        model.remainTime >= 0
+                            ? model.remainTime.toString()
+                            : "",
+                        // "5",
+                        style: TextStyle(fontSize: 20),
+                      )
+                    ]);
                   }),
                 ],
               ),
-              SizedBox( height: 50.h, ),
-              Divider(thickness:2,indent:100.h,endIndent: 100.h,),
-              SizedBox( height: 50.h, ),
+              SizedBox(
+                height: 50.h,
+              ),
+              Divider(
+                thickness: 2,
+                indent: 100.h,
+                endIndent: 100.h,
+              ),
+              SizedBox(
+                height: 50.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

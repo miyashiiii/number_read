@@ -19,8 +19,7 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
   BannerAd? anchoredBanner;
 
   /// adrequest object
-  static final AdRequest request = AdRequest(
-  );
+  static final AdRequest request = AdRequest();
 
   @override
   void initState() {
@@ -30,7 +29,7 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
   /// create banner ad
   Future<void> createAnchoredBanner(BuildContext context) async {
     final AnchoredAdaptiveBannerAdSize? size =
-    await AdSize.getAnchoredAdaptiveBannerAdSize(
+        await AdSize.getAnchoredAdaptiveBannerAdSize(
       Orientation.portrait,
       MediaQuery.of(context).size.width.truncate(),
     );
@@ -78,12 +77,12 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
       return Container(
         child: (anchoredBanner != null)
             ? Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          color: Colors.white,
-          width: anchoredBanner?.size.width.toDouble(),
-          height: anchoredBanner?.size.height.toDouble(),
-          child: AdWidget(ad: anchoredBanner!),
-        )
+                margin: EdgeInsets.symmetric(vertical: 10),
+                color: Colors.white,
+                width: anchoredBanner?.size.width.toDouble(),
+                height: anchoredBanner?.size.height.toDouble(),
+                child: AdWidget(ad: anchoredBanner!),
+              )
             : Container(),
       );
     });

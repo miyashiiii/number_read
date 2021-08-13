@@ -33,7 +33,7 @@ class GameModel extends ChangeNotifier {
     answerUnit = "";
     numberCardColor = Colors.white;
     timeCardColor = Colors.white;
-    canAnswer=false;
+    canAnswer = false;
     _randomFirstNumber();
     _randomQuestionNumber();
     notifyListeners();
