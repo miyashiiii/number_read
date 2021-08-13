@@ -170,6 +170,10 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                             Text(
                               model.questionNumber,
                               style: TextStyle(fontSize: 30),
+                              strutStyle: StrutStyle(
+                                fontSize: 30,
+                                height: 1.3,
+                              ),
                             ),
                           ],
                         ),
@@ -202,6 +206,10 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                             Text(
                               model.answer,
                               style: TextStyle(fontSize: 30),
+                              strutStyle: StrutStyle(
+                                fontSize: 30,
+                                height: 1.3,
+                              ),
                             ),
                           ],
                         ),
