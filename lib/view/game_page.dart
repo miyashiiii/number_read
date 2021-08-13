@@ -4,12 +4,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:back_button_interceptor/back_button_interceptor.dart';
 
+import '../viewmodel/game_model.dart';
 import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
-import '../viewmodel/game_model.dart';
 
 class GamePage extends StatefulWidget {
   GamePage({Key? key}) : super(key: key);
@@ -19,10 +17,6 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
-  late final int _highScore;
-  int highScore = 0;
-  int score = 0;
-
   final Color baseColor = Colors.white;
 
   bool isFirst = true;
@@ -86,7 +80,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   }
 
   void pushAndInitStateWhenPop() async {
-    await Navigator.pushNamed(context, "/result", arguments: score);
+    await Navigator.pushNamed(context, "/result", arguments: gameModel.score);
     _init();
   }
 
@@ -95,10 +89,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     var isCorrect = gameModel.questionNumber == gameModel.answer;
     print(gameModel.questionNumber);
 
-    var addScore = 0;
-    Color color;
     if (isCorrect) {
-      addScore = 1;
       _timer?.cancel();
       controller?.stop();
     } else {}
@@ -106,12 +97,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     gameModel.changeCardColor(isCorrect);
     if (isCorrect) {
       await new Future.delayed(new Duration(milliseconds: 500));
-      setState(() {
-        score += addScore;
-        if (score > _highScore) {
-          highScore = score;
-        }
-      });
+      gameModel.updateHighScore();
+
       _refresh();
     } else {
       _onTimeOver();
@@ -133,11 +120,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void getHighScore() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    _highScore = (prefs.getInt('HighScore') ?? 0);
-  }
-
   void startMusic() async {
     _ap = await _player.loop('audio/thinkingtime7.mp3');
   }
@@ -148,7 +130,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     gameModel = Provider.of<GameModel>(context);
-    getHighScore();
     return Scaffold(
         appBar: EmptyAppBar(),
         body: Column(
@@ -176,10 +157,13 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                                       style: TextStyle(color: Colors.blue),
                                     ),
                                     SizedBox(height: 15.h),
-                                    Text(
-                                      "$highScore",
-                                      style: TextStyle(fontSize: 25),
-                                    ),
+                                    Consumer<GameModel>(
+                                        builder: (context, model, child) {
+                                      return Text(
+                                        model.highScoreView.toString(),
+                                        style: TextStyle(fontSize: 25),
+                                      );
+                                    }),
                                   ],
                                 ),
                               ],
@@ -199,10 +183,13 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                                     style: TextStyle(color: Colors.blue),
                                   ),
                                   SizedBox(height: 15.h),
-                                  Text(
-                                    score.toString(),
-                                    style: TextStyle(fontSize: 25),
-                                  ),
+                                  Consumer<GameModel>(
+                                      builder: (context, model, child) {
+                                    return Text(
+                                      model.score.toString(),
+                                      style: TextStyle(fontSize: 25),
+                                    );
+                                  })
                                 ],
                               ),
                             ],

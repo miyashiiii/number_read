@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GameModel extends ChangeNotifier {
   String firstNumber = "";
@@ -23,6 +24,10 @@ class GameModel extends ChangeNotifier {
   final Color correctColor = Colors.lightGreen;
   final Color incorrectColor = Colors.red.shade300;
 
+  late final int highScoreSaved;
+  int highScoreView = 0;
+  int score = 0;
+
   GameModel() {
     refresh();
   }
@@ -37,8 +42,14 @@ class GameModel extends ChangeNotifier {
     _randomFirstNumber();
     _randomQuestionNumber();
     notifyListeners();
+    loadHighScore();
   }
-
+  void loadHighScore() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    highScoreSaved = (prefs.getInt('HighScore') ?? 0);
+    highScoreView=highScoreSaved;
+    notifyListeners();
+  }
   void onFinish() {
     canAnswer = false;
   }
@@ -106,5 +117,14 @@ class GameModel extends ChangeNotifier {
   void changeCardColor(bool result) {
     numberCardColor = result ? correctColor : incorrectColor;
     notifyListeners();
+  }
+
+  void updateHighScore() {
+    score++;
+    if (score > highScoreSaved) {
+      highScoreView = score;
+      print("highScoreSaved: " + highScoreSaved.toString());
+      print("highScoreView: " + highScoreView.toString());
+    }
   }
 }
