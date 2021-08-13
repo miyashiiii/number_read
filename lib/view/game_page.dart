@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
-import 'admob_widget.dart';
-import 'empty_app_bar.dart';
-import 'game_model.dart';
+import 'common/admob_widget.dart';
+import 'common/empty_app_bar.dart';
+import '../viewmodel/game_model.dart';
 
 class GamePage extends StatefulWidget {
   GamePage({Key? key}) : super(key: key);

@@ -3,12 +3,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:sudoku/first_page.dart';
-import 'package:sudoku/game_model.dart';
-import 'package:sudoku/result_page.dart';
+import 'package:sudoku/view/first_page.dart';
+import 'package:sudoku/viewmodel/game_model.dart';
+import 'package:sudoku/view/result_page.dart';
 
-import 'game_page.dart';
-import 'hint_page.dart';
+import 'view/game_page.dart';
+import 'view/hint_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

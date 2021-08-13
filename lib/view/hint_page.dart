@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'admob_widget.dart';
-import 'empty_app_bar.dart';
+import 'common/admob_widget.dart';
+import 'common/empty_app_bar.dart';
 
 class HintPage extends StatelessWidget {
   Divider createDivider(index) {

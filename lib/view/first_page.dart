@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'admob_widget.dart';
-import 'empty_app_bar.dart';
+import 'common/admob_widget.dart';
+import 'common/empty_app_bar.dart';
 
 class FirstPage extends StatefulWidget {
   @override
