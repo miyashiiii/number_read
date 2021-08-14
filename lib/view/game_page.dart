@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:sudoku/viewmodel/settings_model.dart';
 
 import '../viewmodel/game_model.dart';
 import 'common/admob_widget.dart';
@@ -22,12 +23,13 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   bool isFirst = true;
   AnimationController? timeBarController;
 
-  late AudioPlayer _audioPlayer;
+  AudioPlayer? _audioPlayer;
   AudioCache _audioCache = AudioCache();
 
   Timer? _timer;
 
   late GameModel gameModel;
+  late SettingsModel settingsModel;
 
   void startTimeBar() {
     timeBarController = AnimationController(
@@ -73,7 +75,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
-    _audioPlayer.stop();
+    _audioPlayer?.stop();
     pushAndInitStateWhenPop();
   }
 
@@ -113,18 +115,21 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _audioPlayer.stop();
+    _audioPlayer?.stop();
     timeBarController?.dispose();
     super.dispose();
   }
 
   void startMusic() async {
-    _audioPlayer = await _audioCache.loop('audio/thinkingtime7.mp3');
+    _audioPlayer = await _audioCache.loop('audio/thinkingtime7.mp3')
+    ..setVolume(settingsModel.soundVolume);
+    print(settingsModel.soundVolume);
   }
 
   @override
   Widget build(BuildContext context) {
     gameModel = Provider.of<GameModel>(context, listen: false);
+    settingsModel = Provider.of<SettingsModel>(context, listen: false);
     return Scaffold(
         appBar: EmptyAppBar(),
         body: Column(

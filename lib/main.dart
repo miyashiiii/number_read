@@ -24,57 +24,62 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const locale = Locale("ja", "JP");
 
-    return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        locale: locale,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<SettingsModel>(
+            create: (context) => SettingsModel(),
+          ),
         ],
-        supportedLocales: const [
-          locale,
-        ],
-        initialRoute: '/first',
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case '/first':
-              return PageTransition(
-                child: FirstPage(),
-                type: PageTransitionType.fade,
-                settings: settings,
-              );
-            case '/hint':
-              return PageTransition(
-                child: HintPage(),
-                type: PageTransitionType.fade,
-                settings: settings,
-              );
-            case '/settings':
-              return PageTransition(
-                child: ChangeNotifierProvider<SettingsModel>(
-                    create: (_) => SettingsModel(), child: SettingsPage()),
-                type: PageTransitionType.fade,
-                settings: settings,
-              );
-            case '/game':
-              return PageTransition(
-                child: ChangeNotifierProvider<GameModel>(
-                    create: (_) => GameModel(), child: GamePage()),
-                type: PageTransitionType.fade,
-                settings: settings,
-              );
-            case '/result':
-              return PageTransition(
-                child: ResultPage(),
-                type: PageTransitionType.fade,
-                settings: settings,
-              );
-            default:
-              return null;
-          }
-        });
+        child: MaterialApp(
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+            locale: locale,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              locale,
+            ],
+            initialRoute: '/first',
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case '/first':
+                  return PageTransition(
+                    child: FirstPage(),
+                    type: PageTransitionType.fade,
+                    settings: settings,
+                  );
+                case '/hint':
+                  return PageTransition(
+                    child: HintPage(),
+                    type: PageTransitionType.fade,
+                    settings: settings,
+                  );
+                case '/settings':
+                  return PageTransition(
+                    child: SettingsPage(),
+                    type: PageTransitionType.fade,
+                    settings: settings,
+                  );
+                case '/game':
+                  return PageTransition(
+                    child: ChangeNotifierProvider<GameModel>(
+                        create: (_) => GameModel(), child: GamePage()),
+                    type: PageTransitionType.fade,
+                    settings: settings,
+                  );
+                case '/result':
+                  return PageTransition(
+                    child: ResultPage(),
+                    type: PageTransitionType.fade,
+                    settings: settings,
+                  );
+                default:
+                  return null;
+              }
+            }));
   }
 }
