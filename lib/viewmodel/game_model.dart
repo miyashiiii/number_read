@@ -31,13 +31,15 @@ class GameModel extends ChangeNotifier {
   GameModel() {
     gameInit();
   }
-  void gameInit(){
-    score=0;
-    remainTime =-1;
-    isButtonsEnabled=true;
+
+  void gameInit() {
+    score = 0;
+    remainTime = -1;
+    isButtonsEnabled = true;
     loadHighScore();
     newQuestion();
   }
+
   void newQuestion() {
     answer = "";
     answerNumber = "";
@@ -49,12 +51,14 @@ class GameModel extends ChangeNotifier {
     _randomQuestionNumber();
     notifyListeners();
   }
+
   void loadHighScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     highScoreSaved = (prefs.getInt('HighScore') ?? 0);
-    highScoreView=highScoreSaved;
+    highScoreView = highScoreSaved;
     notifyListeners();
   }
+
   void onFinish() {
     canAnswer = false;
   }

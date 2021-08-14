@@ -84,11 +84,11 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
     gameModel.gameInit();
     startMusic();
-    timeBarController=null;
+    timeBarController = null;
   }
 
   void _judgeAnswerAndRefresh() async {
-    gameModel.canAnswer=false;
+    gameModel.canAnswer = false;
     gameModel.showAnswer();
     var isCorrect = gameModel.questionNumber == gameModel.answer;
     print(gameModel.questionNumber);
@@ -122,7 +122,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   void startMusic() async {
     _audioPlayer = await _audioCache.loop('audio/thinkingtime7.mp3')
-    ..setVolume(settingsModel.soundVolume);
+      ..setVolume(settingsModel.soundVolume);
     print(settingsModel.soundVolume);
   }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku/analytics.dart';
 
 import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ResultPage extends StatelessWidget {
   int _highScore = 0;
