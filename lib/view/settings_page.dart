@@ -103,7 +103,7 @@ class SettingsPage extends StatelessWidget {
       }
       return _menuItem(context, title, icon, onTap: () {
         model.toggleSound();
-      });
+      }, isFirst: true);
     });
   }
 }
