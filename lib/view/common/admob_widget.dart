@@ -40,7 +40,7 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
     final BannerAd banner = BannerAd(
       size: size,
       request: request,
-      adUnitId: "ca-app-pub-3940256099942544/6300978111",
+      adUnitId: "ca-app-pub-9200665008350535/3051188375",
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
           print('$BannerAd loaded.');
