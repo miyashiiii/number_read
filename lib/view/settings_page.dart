@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:sudoku/viewmodel/settings_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,10 +12,16 @@ class SettingsPage extends StatelessWidget {
   final String googleFormURL =
       "https://docs.google.com/forms/d/e/1FAIpQLSf0WsAufMiUA0SWyNo_pZfXd39kWZOIH50pjGFMP78nRNr7AQ/viewform";
   late SettingsModel settingsModel;
+  late PackageInfo packageInfo;
+
+  Future<void> loadPackageInfo() async {
+    packageInfo = await PackageInfo.fromPlatform();
+  }
 
   @override
   Widget build(BuildContext context) {
     settingsModel = Provider.of<SettingsModel>(context, listen: false);
+    loadPackageInfo();
     print("volume: " + settingsModel.soundVolume.toString());
     return MaterialApp(
       home: Scaffold(
@@ -32,12 +39,18 @@ class SettingsPage extends StatelessWidget {
               _menuItem(context, "お問い合わせフォーム", Icon(Icons.mail),
                   url: googleFormURL),
               _menuItem(context, "", null),
-              _menuItem(context, "権利表記", Icon(Icons.edit)),
-              Container(
-                child: Text("version"),
-                height: 200.h,
-                alignment: Alignment.center,
-              ),
+              _menuItem(context, "バージョン情報", Icon(Icons.info), onTap: () {
+                showAboutDialog(
+                  context: context,
+                  applicationName: packageInfo.appName,
+                  // アプリの名前
+                  applicationVersion: packageInfo.version,
+                  // バージョン
+                  applicationIcon: MyAppIcon(),
+                  // アプリのアイコン Widget
+                  applicationLegalese: "© 2021 miyashiiii game studio", // 権利情報
+                );
+              }),
             ]),
             AdmobBannerAdWidget(),
           ],
@@ -92,5 +105,21 @@ class SettingsPage extends StatelessWidget {
         model.toggleSound();
       });
     });
+  }
+}
+
+class MyAppIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: SizedBox(
+          width: 200.h,
+          height: 200.h,
+          child: Image(image: AssetImage('assets/images/sudoku_logo.png')),
+        ),
+      ),
+    );
   }
 }
