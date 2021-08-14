@@ -4,7 +4,9 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku/viewmodel/settings_model.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../viewmodel/game_model.dart';
 import 'common/admob_widget.dart';
@@ -30,6 +32,14 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   late GameModel gameModel;
   late SettingsModel settingsModel;
+
+  late TutorialCoachMark tutorialCoachMark;
+  List<TargetFocus> targets = <TargetFocus>[];
+
+  GlobalKey keyButtonQuestion = GlobalKey();
+  GlobalKey keyButtonAnswer = GlobalKey();
+  GlobalKey keyButtonKeyBoard = GlobalKey();
+  GlobalKey keyTimeIndicator = GlobalKey();
 
   void startTimeBar() {
     timeBarController = AnimationController(
@@ -106,11 +116,20 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
       _onTimeOver();
     }
   }
-
+  _checkIsDoneTutorial() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isDoneTutorial = prefs.getBool('isDoneTutorial') ?? false;
+    if(!isDoneTutorial){
+      showTutorial();
+    }
+    // Future.delayed(Duration.zero, showTutorial);
+    await prefs.setBool('isDoneTutorial', true);
+  }
   @override
   void initState() {
     super.initState();
     startMusic();
+    _checkIsDoneTutorial();
   }
 
   @override
@@ -159,6 +178,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
+                  key: keyButtonQuestion,
                   color: model.numberCardColor,
                   // Question
                   child: Container(
@@ -196,6 +216,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               ),
               Consumer<GameModel>(builder: (context, model, child) {
                 return Card(
+                  key: keyButtonAnswer,
                   color: model.numberCardColor,
                   child: Container(
                     child: Column(
@@ -223,34 +244,38 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               SizedBox(
                 height: 50.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("残り時間:", style: TextStyle(fontSize: 15)),
-                  SizedBox(
-                    width: 50.h,
-                  ),
-                  Consumer<GameModel>(builder: (context, model, child) {
-                    return Stack(alignment: Alignment.center, children: [
-                      SizedBox(
-                        width: 700.h,
-                        child: LinearProgressIndicator(
-                          backgroundColor: model.timeCardColor,
-                          minHeight: 80.h,
-                          value: 1 - (timeBarController?.value ?? 0),
-                          semanticsLabel: 'Linear progress indicator',
+              SizedBox(
+                width: 950.h,
+                key: keyTimeIndicator,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("残り時間:", style: TextStyle(fontSize: 15)),
+                    SizedBox(
+                      width: 50.h,
+                    ),
+                    Consumer<GameModel>(builder: (context, model, child) {
+                      return Stack(alignment: Alignment.center, children: [
+                        SizedBox(
+                          width: 700.h,
+                          child: LinearProgressIndicator(
+                            backgroundColor: model.timeCardColor,
+                            minHeight: 80.h,
+                            value: 1 - (timeBarController?.value ?? 0),
+                            semanticsLabel: 'Linear progress indicator',
+                          ),
                         ),
-                      ),
-                      Text(
-                        model.remainTime >= 0
-                            ? model.remainTime.toString()
-                            : "",
-                        // "5",
-                        style: TextStyle(fontSize: 20),
-                      )
-                    ]);
-                  }),
-                ],
+                        Text(
+                          model.remainTime >= 0
+                              ? model.remainTime.toString()
+                              : "",
+                          // "5",
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ]);
+                    }),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 50.h,
@@ -263,67 +288,179 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
               SizedBox(
                 height: 100.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  NumberButton(zeros: "000"),
-                  SizedBox(
-                    width: 40.h,
-                  ),
-                  NumberButton(zeros: "00"),
-                  SizedBox(
-                    width: 40.h,
-                  ),
-                  NumberButton(zeros: "0"),
-                  SizedBox(
-                    width: 40.h,
-                  ),
-                  NumberButton(zeros: ""),
-                ],
-              ),
               SizedBox(
-                height: 40.h,
+                width: 900.h,
+                child: Column(
+                  key: keyButtonKeyBoard,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        NumberButton(zeros: "000"),
+                        SizedBox(
+                          width: 40.h,
+                        ),
+                        NumberButton(zeros: "00"),
+                        SizedBox(
+                          width: 40.h,
+                        ),
+                        NumberButton(zeros: "0"),
+                        SizedBox(
+                          width: 40.h,
+                        ),
+                        NumberButton(zeros: ""),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 40.h,
+                        ),
+                        UnitButton(unit: "億"),
+                        SizedBox(
+                          width: 40.h,
+                        ),
+                        UnitButton(unit: "万"),
+                        SizedBox(
+                          width: 40.h,
+                        ),
+                        UnitButton(unit: "")
+                      ],
+                    ),
+                    SizedBox(
+                      height: 60.h,
+                    ),
+                    SizedBox(
+                        height: 140.h,
+                        width: 300.h,
+                        child: Consumer<GameModel>(
+                            builder: (context, model, child) {
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 15),
+                            ),
+                            onPressed: !model.canAnswer
+                                ? null
+                                : () {
+                                    _judgeAnswerAndRefresh();
+                                  },
+                            child: const Text('OK'),
+                          );
+                        })),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 40.h,
-                  ),
-                  UnitButton(unit: "億"),
-                  SizedBox(
-                    width: 40.h,
-                  ),
-                  UnitButton(unit: "万"),
-                  SizedBox(
-                    width: 40.h,
-                  ),
-                  UnitButton(unit: "")
-                ],
-              ),
-              SizedBox(
-                height: 60.h,
-              ),
-              SizedBox(
-                  height: 140.h,
-                  width: 300.h,
-                  child: Consumer<GameModel>(builder: (context, model, child) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 15),
-                      ),
-                      onPressed: !model.canAnswer
-                          ? null
-                          : () {
-                              _judgeAnswerAndRefresh();
-                            },
-                      child: const Text('OK'),
-                    );
-                  })),
             ]),
             AdmobBannerAdWidget(),
           ],
         ));
+  }
+
+  void showTutorial() {
+    initTargets();
+    tutorialCoachMark = TutorialCoachMark(
+      context,
+      targets: targets,
+      colorShadow: Colors.blue,
+      textSkip: "SKIP",
+      paddingFocus: 10,
+      opacityShadow: 0.8,
+      onFinish: () {
+        print("finish");
+      },
+      onClickTarget: (target) {
+        print('onClickTarget: $target');
+      },
+      onSkip: () {
+        print("skip");
+      },
+      onClickOverlay: (target) {
+        print('onClickOverlay: $target');
+      },
+    )..show();
+  }
+
+  void initTargets() {
+    targets.clear();
+    addTarget(
+      "question",
+      keyButtonQuestion,
+      ContentAlign.bottom,
+      "ここに数字が表示されます。",
+      isFirst:true
+    );
+    addTarget(
+      "keyBoard",
+      keyButtonKeyBoard,
+      ContentAlign.top,
+      "キーボードを使って読みを入力します。",
+    );
+    addTarget(
+      "Answer",
+      keyButtonAnswer,
+      ContentAlign.bottom,
+      "入力した数字はここに表示されます。",
+    );
+    addTarget(
+      "time",
+      keyTimeIndicator,
+      ContentAlign.top,
+      "残り時間に注意しながら、\n連続正解を目指しましょう！\n※1問目は制限時間がありません。",
+    );
+  }
+
+  Future<void> addTarget(
+      String identify, GlobalKey key, ContentAlign textPos, String text, {bool isFirst=false}) async {
+    targets.add(
+      TargetFocus(
+        identify: identify,
+        keyTarget: key,
+        color: Colors.blue,
+        shape: ShapeLightFocus.RRect,
+        radius: 5,
+        enableOverlayTab: true,
+        contents: [
+          TargetContent(
+            align: textPos,
+            builder: (context, controller) {
+              return Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      text,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+                    Visibility(
+                      visible: !isFirst,
+                      child:ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white)),
+                        onPressed: () {
+                          controller.previous();
+                        },
+                        child: Icon(Icons.chevron_left, color: Colors.blue),
+                      ),
+
+                    )
+                  ],
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
   }
 }
 

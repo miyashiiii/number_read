@@ -29,13 +29,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.19.1"
-  back_button_interceptor:
-    dependency: "direct main"
-    description:
-      name: back_button_interceptor
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -446,6 +439,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
+  tutorial_coach_mark:
+    dependency: "direct main"
+    description:
+      name: tutorial_coach_mark
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   typed_data:
     dependency: transitive
     description:
