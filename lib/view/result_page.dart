@@ -6,16 +6,24 @@ import 'package:sudoku/analytics.dart';
 import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
-class ResultPage extends StatelessWidget {
-  int _highScore = 0;
+class ResultPage extends StatefulWidget {
+  ResultPage({Key? key}) : super(key: key);
+
+  @override
+  _ResultPageState createState() => _ResultPageState();
+}
+
+class _ResultPageState extends State<ResultPage> {
   bool _isHighScore = false;
 
   void checkHighScore(int score) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    _highScore = (prefs.getInt('HighScore') ?? 0);
-    if (score > _highScore) {
+    int highScore = (prefs.getInt('HighScore') ?? 0);
+    if (score > highScore) {
       Analytics.analytics.logPostScore(score: score);
-      _isHighScore = true;
+      setState(() {
+        _isHighScore = true;
+      });
       await prefs.setInt('HighScore', score);
     }
   }
