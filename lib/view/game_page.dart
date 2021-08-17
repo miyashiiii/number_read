@@ -43,6 +43,26 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
   GlobalKey keyButtonKeyBoard = GlobalKey();
   GlobalKey keyTimeIndicator = GlobalKey();
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('state = $state');
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("onResumed");
+        _audioPlayer.play();
+        break;
+      case AppLifecycleState.inactive:
+        print("onInActive");
+        break;
+      case AppLifecycleState.paused:
+        print("onPaused");
+        _audioPlayer.pause();
+        break;
+      case AppLifecycleState.detached:
+        print("onDetached");
+        break;
+    }
+  }
   void startTimeBar() {
     timeBarController = AnimationController(
       vsync: this,
@@ -130,6 +150,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addObserver(this);
     startMusic();
     _checkIsDoneTutorial();
   }
