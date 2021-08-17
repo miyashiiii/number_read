@@ -1,6 +1,5 @@
 import 'dart:async';
 
-// import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
@@ -26,8 +25,6 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
   bool isFirst = true;
   AnimationController? timeBarController;
 
-  // AudioPlayer? _audioPlayer;
-  // AudioCache _audioCache = AudioCache();
   final _audioPlayer = AudioPlayer();
 
   Timer? _timer;
@@ -164,13 +161,12 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
   }
 
   void startMusic() async {
-    // _audioPlayer = await _audioCache.loop('audio/thinkingtime7.mp3')
-    //   ..setVolume(settingsModel.soundVolume);
-    // print(settingsModel.soundVolume);
-    // await _audioPlayer.setAsset('audio/thinkingtime7.mp3');
     await _audioPlayer.setAsset('assets/audio/thinkingtime7.mp3');
     await _audioPlayer.setLoopMode(LoopMode.one);
-    _audioPlayer.play();
+    await _audioPlayer.setVolume(settingsModel.soundVolume);
+    if(settingsModel.isPlaySound){
+      await _audioPlayer.play();
+    }
   }
 
   @override
