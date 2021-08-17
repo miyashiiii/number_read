@@ -248,19 +248,16 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                 width: 950.h,
                 key: keyTimeIndicator,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("残り時間:", style: TextStyle(fontSize: 15)),
-                    SizedBox(
-                      width: 50.h,
-                    ),
+                    Text("残り時間:", style: TextStyle(fontSize: 40.h)),
                     Consumer<GameModel>(builder: (context, model, child) {
                       return Stack(alignment: Alignment.center, children: [
                         SizedBox(
                           width: 700.h,
                           child: LinearProgressIndicator(
                             backgroundColor: model.timeCardColor,
-                            minHeight: 80.h,
+                            minHeight: 70.h,
                             value: 1 - (timeBarController?.value ?? 0),
                             semanticsLabel: 'Linear progress indicator',
                           ),
@@ -294,20 +291,20 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
                   key: keyButtonKeyBoard,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         NumberButton(zeros: "000"),
-                        SizedBox(
-                          width: 40.h,
-                        ),
+                        // SizedBox(
+                        //   width: 40.h,
+                        // ),
                         NumberButton(zeros: "00"),
-                        SizedBox(
-                          width: 40.h,
-                        ),
+                        // SizedBox(
+                        //   width: 40.h,
+                        // ),
                         NumberButton(zeros: "0"),
-                        SizedBox(
-                          width: 40.h,
-                        ),
+                        // SizedBox(
+                        //   width: 40.h,
+                        // ),
                         NumberButton(zeros: ""),
                       ],
                     ),
@@ -478,7 +475,7 @@ class ScoreCard extends StatelessWidget {
             children: [
               Text(
                 isHighScore ? "ハイスコア" : "スコア",
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: Colors.blue,fontSize: 40.h),
               ),
               SizedBox(height: 15.h),
               Consumer<GameModel>(builder: (context, model, child) {
@@ -486,7 +483,7 @@ class ScoreCard extends StatelessWidget {
                   isHighScore
                       ? model.highScoreView.toString()
                       : model.score.toString(),
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 60.h),
                 );
               }),
             ],
@@ -506,11 +503,12 @@ class NumberButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 140.h,
+        width:200.h,
         child: Consumer<GameModel>(
           builder: (context, model, child) {
             return ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 15)),
+                  textStyle: TextStyle(fontSize: 50.h)),
               onPressed: !model.isButtonsEnabled
                   ? null
                   : () {
@@ -530,13 +528,15 @@ class UnitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
         height: 140.h,
+        width: 200.h,
         child: Consumer<GameModel>(
           builder: (context, model, child) {
             return ElevatedButton(
               style: ElevatedButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 15),
+                textStyle: TextStyle(fontSize: unit != ""  ? 50.h : 40.h),
               ),
               onPressed: !model.isButtonsEnabled
                   ? null
