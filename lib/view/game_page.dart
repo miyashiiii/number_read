@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku/viewmodel/settings_model.dart';
@@ -19,14 +20,15 @@ class GamePage extends StatefulWidget {
   _GamePageState createState() => _GamePageState();
 }
 
-class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
+class _GamePageState extends State<GamePage> with TickerProviderStateMixin, WidgetsBindingObserver {
   final Color baseColor = Colors.white;
 
   bool isFirst = true;
   AnimationController? timeBarController;
 
-  AudioPlayer? _audioPlayer;
-  AudioCache _audioCache = AudioCache();
+  // AudioPlayer? _audioPlayer;
+  // AudioCache _audioCache = AudioCache();
+  final _audioPlayer = AudioPlayer();
 
   Timer? _timer;
 
@@ -85,7 +87,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
     gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
-    _audioPlayer?.stop();
+    _audioPlayer.stop();
     pushAndInitStateWhenPop();
   }
 
@@ -134,16 +136,20 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _audioPlayer?.stop();
+    _audioPlayer.stop();
     timeBarController?.dispose();
     tutorialCoachMark.finish();
     super.dispose();
   }
 
   void startMusic() async {
-    _audioPlayer = await _audioCache.loop('audio/thinkingtime7.mp3')
-      ..setVolume(settingsModel.soundVolume);
-    print(settingsModel.soundVolume);
+    // _audioPlayer = await _audioCache.loop('audio/thinkingtime7.mp3')
+    //   ..setVolume(settingsModel.soundVolume);
+    // print(settingsModel.soundVolume);
+    // await _audioPlayer.setAsset('audio/thinkingtime7.mp3');
+    await _audioPlayer.setAsset('assets/audio/thinkingtime7.mp3');
+    await _audioPlayer.setLoopMode(LoopMode.one);
+    _audioPlayer.play();
   }
 
   @override
