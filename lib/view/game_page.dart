@@ -136,6 +136,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   void dispose() {
     _audioPlayer?.stop();
     timeBarController?.dispose();
+    tutorialCoachMark.finish();
     super.dispose();
   }
 
