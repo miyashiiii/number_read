@@ -104,7 +104,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
     gameModel.onFinish();
 
     await new Future.delayed(new Duration(milliseconds: 2000));
-    _audioPlayer.stop();
+    _audioPlayer.dispose();
     pushAndInitStateWhenPop();
   }
 
@@ -154,7 +154,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
 
   @override
   void dispose() {
-    _audioPlayer.stop();
+    _audioPlayer.dispose();
     timeBarController?.dispose();
     tutorialCoachMark.finish();
     super.dispose();
