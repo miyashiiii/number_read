@@ -35,63 +35,60 @@ class _ResultPageState extends State<ResultPage> {
 
     return Scaffold(
       appBar: const EmptyAppBar(),
-      body: Container(
-        // padding: EdgeInsets.all(32.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 300.h,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  height: 300.h,
+                ),
+                const Text(
+                  '結果発表!',
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(
+                  height: 100.h,
+                ),
+                Visibility(
+                  visible: _isHighScore,
+                  child: const Text('ハイスコア更新！'),
+                ),
+                Text('正解数: $score',
+                    style: const TextStyle(fontSize: 20),),
+                SizedBox(
+                  height: 300.h,
+                ),
+                SizedBox(
+                  height: 120.h,
+                  width: 500.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Navigator.pop(context);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/game', ModalRoute.withName('/first'),);
+                    },
+                    child: const Text('リトライ'),
                   ),
-                  const Text(
-                    '結果発表!',
-                    style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(height: 50.h),
+                SizedBox(
+                  height: 120.h,
+                  width: 500.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/first', (r) => false,);
+                    },
+                    child: const Text('トップに戻る'),
                   ),
-                  SizedBox(
-                    height: 100.h,
-                  ),
-                  Visibility(
-                    visible: _isHighScore,
-                    child: const Text('ハイスコア更新！'),
-                  ),
-                  Text('正解数: $score',
-                      style: const TextStyle(fontSize: 20),),
-                  SizedBox(
-                    height: 300.h,
-                  ),
-                  SizedBox(
-                    height: 120.h,
-                    width: 500.h,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.pop(context);
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/game', ModalRoute.withName('/first'),);
-                      },
-                      child: const Text('リトライ'),
-                    ),
-                  ),
-                  SizedBox(height: 50.h),
-                  SizedBox(
-                    height: 120.h,
-                    width: 500.h,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/first', (r) => false,);
-                      },
-                      child: const Text('トップに戻る'),
-                    ),
-                  ),
-                ],
-              ),
-              const AdmobBannerAdWidget(),
-            ],
-          ),
+                ),
+              ],
+            ),
+            const AdmobBannerAdWidget(),
+          ],
         ),
       ),
     );

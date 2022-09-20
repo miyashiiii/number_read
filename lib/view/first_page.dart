@@ -39,52 +39,50 @@ class _FirstPageState extends State<FirstPage> {
     checkHighScore();
     return Scaffold(
       appBar: const  EmptyAppBar(),
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  SizedBox(height: 400.h),
-                  SizedBox(
-                    height: 500.h,
-                    width: 500.h,
-                    child: const Image(
-                      image: AssetImage('assets/images/sudoku_logo.png'),
-                    ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 400.h),
+                SizedBox(
+                  height: 500.h,
+                  width: 500.h,
+                  child: const Image(
+                    image: AssetImage('assets/images/sudoku_logo.png'),
                   ),
-                  SizedBox(height: 200.h),
-                  Text('ハイスコア: $_highScore'),
-                  SizedBox(height: 100.h),
-                  SizedBox(
-                    height: 120.h,
-                    width: 500.h,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/settings');
-                      },
-                      child: const Text('設定'),
-                    ),
+                ),
+                SizedBox(height: 200.h),
+                Text('ハイスコア: $_highScore'),
+                SizedBox(height: 100.h),
+                SizedBox(
+                  height: 120.h,
+                  width: 500.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/settings');
+                    },
+                    child: const Text('設定'),
                   ),
-                  SizedBox(
-                    height: 50.h,
+                ),
+                SizedBox(
+                  height: 50.h,
+                ),
+                SizedBox(
+                  height: 120.h,
+                  width: 500.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/game');
+                    },
+                    child: const Text('ゲーム開始'),
                   ),
-                  SizedBox(
-                    height: 120.h,
-                    width: 500.h,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/game');
-                      },
-                      child: const Text('ゲーム開始'),
-                    ),
-                  ),
-                ],
-              ),
-              const AdmobBannerAdWidget(),
-            ],
-          ),
+                ),
+              ],
+            ),
+            const AdmobBannerAdWidget(),
+          ],
         ),
       ),
     );

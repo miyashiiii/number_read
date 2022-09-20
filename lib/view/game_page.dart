@@ -466,34 +466,32 @@ class _GamePageState extends State<GamePage>
           TargetContent(
             align: textPos,
             builder: (context, controller) {
-              return Container(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      text,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    text,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
                     ),
-                    SizedBox(height: 30.h),
-                    Visibility(
-                      visible: !isFirst,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                        ),
-                        onPressed: () {
-                          controller.previous();
-                        },
-                        child:
-                            const Icon(Icons.chevron_left, color: Colors.blue),
+                  ),
+                  SizedBox(height: 30.h),
+                  Visibility(
+                    visible: !isFirst,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                    )
-                  ],
-                ),
+                      onPressed: () {
+                        controller.previous();
+                      },
+                      child:
+                          const Icon(Icons.chevron_left, color: Colors.blue),
+                    ),
+                  )
+                ],
               );
             },
           )
