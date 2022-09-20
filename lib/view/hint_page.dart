@@ -42,56 +42,63 @@ class HintPage extends StatelessWidget {
     };
     return MaterialApp(
       home: Scaffold(
-          appBar: EmptyAppBar(),
-          body: Column(children: [
+        appBar: EmptyAppBar(),
+        body: Column(
+          children: [
             Expanded(
-                child: ListView.separated(
-                    padding: const EdgeInsets.all(8),
-                    itemCount: map.length + 1,
-                    separatorBuilder: (context, index) {
-                      return createDivider(index);
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index == map.length) {
-                        return createDivider(index);
-                      }
-                      final isHeader = index == 0;
-                      final String key = map.keys.elementAt(index);
-                      var topMargin = 0.h;
-                      if (index % 4 == 1) {
-                        topMargin = 30.h;
-                      }
-                      return Container(
-                          height: 100.h + topMargin,
-                          padding: EdgeInsets.only(top: topMargin),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                  alignment: Alignment.centerRight,
-                                  width: 60,
-                                  child: Text(
-                                    key,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),),
-                              Container(
-                                  alignment: Alignment.center,
-                                  width: 60,
-                                  child: Text(isHeader ? '' : '→'),),
-                              Container(
-                                  alignment: Alignment.centerRight,
-                                  width: 120,
-                                  child: Text(
-                                    map[key],
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),),
-                            ],
-                          ),);
-                    },),),
+              child: ListView.separated(
+                padding: const EdgeInsets.all(8),
+                itemCount: map.length + 1,
+                separatorBuilder: (context, index) {
+                  return createDivider(index);
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == map.length) {
+                    return createDivider(index);
+                  }
+                  final isHeader = index == 0;
+                  final String key = map.keys.elementAt(index);
+                  var topMargin = 0.h;
+                  if (index % 4 == 1) {
+                    topMargin = 30.h;
+                  }
+                  return Container(
+                    height: 100.h + topMargin,
+                    padding: EdgeInsets.only(top: topMargin),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerRight,
+                          width: 60,
+                          child: Text(
+                            key,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          width: 60,
+                          child: Text(isHeader ? '' : '→'),
+                        ),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          width: 120,
+                          child: Text(
+                            map[key],
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -100,7 +107,9 @@ class HintPage extends StatelessWidget {
             ),
             SizedBox(height: 50.h),
             const AdmobBannerAdWidget(),
-          ],),),
+          ],
+        ),
+      ),
     );
   }
 }

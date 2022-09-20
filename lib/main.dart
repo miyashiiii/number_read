@@ -21,14 +21,17 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runZonedGuarded(() {
-    MobileAds.instance.initialize();
-    SystemChrome.setPreferredOrientations(
-            [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],)
-        .then((_) {
-      runApp(MyApp());
-    });
-  }, FirebaseCrashlytics.instance.recordError,);
+  runZonedGuarded(
+    () {
+      MobileAds.instance.initialize();
+      SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+      ).then((_) {
+        runApp(MyApp());
+      });
+    },
+    FirebaseCrashlytics.instance.recordError,
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -40,61 +43,65 @@ class MyApp extends StatelessWidget {
     const locale = Locale('ja', 'JP');
 
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<SettingsModel>(
-            create: (context) => SettingsModel(),
-          ),
+      providers: [
+        ChangeNotifierProvider<SettingsModel>(
+          create: (context) => SettingsModel(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        locale: locale,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
         ],
-        child: MaterialApp(
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            locale: locale,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              locale,
-            ],
-            initialRoute: '/first',
-            onGenerateRoute: (settings) {
-              switch (settings.name) {
-                case '/first':
-                  return PageTransition(
-                    child: FirstPage(),
-                    type: PageTransitionType.fade,
-                    settings: settings,
-                  );
-                case '/hint':
-                  return PageTransition(
-                    child: HintPage(),
-                    type: PageTransitionType.fade,
-                    settings: settings,
-                  );
-                case '/settings':
-                  return PageTransition(
-                    child: SettingsPage(),
-                    type: PageTransitionType.fade,
-                    settings: settings,
-                  );
-                case '/game':
-                  return PageTransition(
-                    child: ChangeNotifierProvider<GameModel>(
-                        create: (_) => GameModel(), child: const GamePage(),),
-                    type: PageTransitionType.fade,
-                    settings: settings,
-                  );
-                case '/result':
-                  return PageTransition(
-                    child: const ResultPage(),
-                    type: PageTransitionType.fade,
-                    settings: settings,
-                  );
-                default:
-                  return null;
-              }
-            },),);
+        supportedLocales: const [
+          locale,
+        ],
+        initialRoute: '/first',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/first':
+              return PageTransition(
+                child: FirstPage(),
+                type: PageTransitionType.fade,
+                settings: settings,
+              );
+            case '/hint':
+              return PageTransition(
+                child: HintPage(),
+                type: PageTransitionType.fade,
+                settings: settings,
+              );
+            case '/settings':
+              return PageTransition(
+                child: SettingsPage(),
+                type: PageTransitionType.fade,
+                settings: settings,
+              );
+            case '/game':
+              return PageTransition(
+                child: ChangeNotifierProvider<GameModel>(
+                  create: (_) => GameModel(),
+                  child: const GamePage(),
+                ),
+                type: PageTransitionType.fade,
+                settings: settings,
+              );
+            case '/result':
+              return PageTransition(
+                child: const ResultPage(),
+                type: PageTransitionType.fade,
+                settings: settings,
+              );
+            default:
+              return null;
+          }
+        },
+      ),
+    );
   }
 }
