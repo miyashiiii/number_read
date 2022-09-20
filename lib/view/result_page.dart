@@ -10,7 +10,7 @@ class ResultPage extends StatefulWidget {
   const ResultPage({super.key});
 
   @override
-  State<ResultPage>  createState() => _ResultPageState();
+  State<ResultPage> createState() => _ResultPageState();
 }
 
 class _ResultPageState extends State<ResultPage> {
@@ -54,10 +54,17 @@ class _ResultPageState extends State<ResultPage> {
                 ),
                 Visibility(
                   visible: _isHighScore,
-                  child: const Text('ハイスコア更新！'),
+                  child: const Text(
+                    'ハイスコア更新！',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
                 ),
-                Text('正解数: $score',
-                    style: const TextStyle(fontSize: 20),),
+                Text(
+                  '正解数: $score',
+                  style: const TextStyle(fontSize: 20),
+                ),
                 SizedBox(
                   height: 300.h,
                 ),
@@ -68,7 +75,9 @@ class _ResultPageState extends State<ResultPage> {
                     onPressed: () {
                       // Navigator.pop(context);
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/game', ModalRoute.withName('/first'),);
+                        '/game',
+                        ModalRoute.withName('/first'),
+                      );
                     },
                     child: const Text('リトライ'),
                   ),
@@ -80,7 +89,10 @@ class _ResultPageState extends State<ResultPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamedAndRemoveUntil(
-                          context, '/first', (r) => false,);
+                        context,
+                        '/first',
+                        (r) => false,
+                      );
                     },
                     child: const Text('トップに戻る'),
                   ),
