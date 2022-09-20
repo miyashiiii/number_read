@@ -27,7 +27,7 @@ Future<void> main() async {
       SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
       ).then((_) {
-        runApp(MyApp());
+        runApp(const MyApp());
       });
     },
     FirebaseCrashlytics.instance.recordError,
@@ -66,13 +66,13 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/first':
               return PageTransition(
-                child: FirstPage(),
+                child: const FirstPage(),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
             case '/hint':
               return PageTransition(
-                child: HintPage(),
+                child: const HintPage(),
                 type: PageTransitionType.fade,
                 settings: settings,
               );

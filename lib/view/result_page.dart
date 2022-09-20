@@ -34,7 +34,7 @@ class _ResultPageState extends State<ResultPage> {
     checkHighScore(score);
 
     return Scaffold(
-      appBar: EmptyAppBar(),
+      appBar: const EmptyAppBar(),
       body: Container(
         // padding: EdgeInsets.all(32.0),
         child: Center(

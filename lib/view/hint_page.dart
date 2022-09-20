@@ -42,7 +42,7 @@ class HintPage extends StatelessWidget {
     };
     return MaterialApp(
       home: Scaffold(
-        appBar: EmptyAppBar(),
+        appBar: const EmptyAppBar(),
         body: Column(
           children: [
             Expanded(

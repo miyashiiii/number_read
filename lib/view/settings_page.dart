@@ -34,7 +34,7 @@ class SettingsPage extends StatelessWidget {
     debugPrint('volume: ${settingsModel.soundVolume}');
     return MaterialApp(
       home: Scaffold(
-        appBar: EmptyAppBar(),
+        appBar: const EmptyAppBar(),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -76,7 +76,7 @@ class SettingsPage extends StatelessWidget {
                       context: context,
                       applicationName: packageInfo.appName,
                       applicationVersion: packageInfo.version,
-                      applicationIcon: MyAppIcon(),
+                      applicationIcon: const MyAppIcon(),
                       applicationLegalese: '© 2021 miyashiiii game studio',
                     );
                   },

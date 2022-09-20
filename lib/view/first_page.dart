@@ -38,7 +38,7 @@ class _FirstPageState extends State<FirstPage> {
     );
     checkHighScore();
     return Scaffold(
-      appBar: EmptyAppBar(),
+      appBar: const  EmptyAppBar(),
       body: Container(
         child: Center(
           child: Column(

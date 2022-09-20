@@ -178,7 +178,7 @@ class _GamePageState extends State<GamePage>
     gameModel = Provider.of<GameModel>(context, listen: false);
     settingsModel = Provider.of<SettingsModel>(context, listen: false);
     return Scaffold(
-      appBar: EmptyAppBar(),
+      appBar: const EmptyAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
