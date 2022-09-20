@@ -18,11 +18,13 @@ class SettingsPage extends StatelessWidget {
   Future<void> loadPackageInfo() async {
     packageInfo = await PackageInfo.fromPlatform();
   }
+
   pushTutorial(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDoneTutorial', false);
     Navigator.pushNamed(context, "/game");
   }
+
   @override
   Widget build(BuildContext context) {
     settingsModel = Provider.of<SettingsModel>(context, listen: false);
@@ -39,7 +41,10 @@ class SettingsPage extends StatelessWidget {
               soundMenuItem(context, "音声オン", "音声オフ", Icon(Icons.volume_up),
                   Icon(Icons.volume_off),
                   isFirst: true),
-              _menuItem(context, "操作チュートリアル", Icon(Icons.videogame_asset),onTap:(){pushTutorial(context);}),
+              _menuItem(context, "操作チュートリアル", Icon(Icons.videogame_asset),
+                  onTap: () {
+                pushTutorial(context);
+              }),
               _menuItem(context, "ヒント", Icon(Icons.lightbulb), route: "/hint"),
               _menuItem(context, "お問い合わせフォーム", Icon(Icons.mail),
                   url: googleFormURL),

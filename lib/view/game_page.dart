@@ -19,7 +19,8 @@ class GamePage extends StatefulWidget {
   _GamePageState createState() => _GamePageState();
 }
 
-class _GamePageState extends State<GamePage> with TickerProviderStateMixin, WidgetsBindingObserver {
+class _GamePageState extends State<GamePage>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   final Color baseColor = Colors.white;
 
   bool isFirst = true;
@@ -60,6 +61,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
         break;
     }
   }
+
   void startTimeBar() {
     timeBarController = AnimationController(
       vsync: this,
@@ -135,15 +137,17 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
       _onTimeOver();
     }
   }
+
   _checkIsDoneTutorial() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isDoneTutorial = prefs.getBool('isDoneTutorial') ?? false;
-    if(!isDoneTutorial){
+    if (!isDoneTutorial) {
       showTutorial();
     }
     // Future.delayed(Duration.zero, showTutorial);
     await prefs.setBool('isDoneTutorial', true);
   }
+
   @override
   void initState() {
     super.initState();
@@ -164,7 +168,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
     await _audioPlayer.setAsset('assets/audio/thinkingtime7.mp3');
     await _audioPlayer.setLoopMode(LoopMode.one);
     await _audioPlayer.setVolume(settingsModel.soundVolume);
-    if(settingsModel.isPlaySound){
+    if (settingsModel.isPlaySound) {
       await _audioPlayer.play();
     }
   }
@@ -408,12 +412,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
   void initTargets() {
     targets.clear();
     addTarget(
-      "question",
-      keyButtonQuestion,
-      ContentAlign.bottom,
-      "ここに数字が表示されます。",
-      isFirst:true
-    );
+        "question", keyButtonQuestion, ContentAlign.bottom, "ここに数字が表示されます。",
+        isFirst: true);
     addTarget(
       "keyBoard",
       keyButtonKeyBoard,
@@ -435,7 +435,8 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
   }
 
   Future<void> addTarget(
-      String identify, GlobalKey key, ContentAlign textPos, String text, {bool isFirst=false}) async {
+      String identify, GlobalKey key, ContentAlign textPos, String text,
+      {bool isFirst = false}) async {
     targets.add(
       TargetFocus(
         identify: identify,
@@ -463,16 +464,15 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
                     SizedBox(height: 30.h),
                     Visibility(
                       visible: !isFirst,
-                      child:ElevatedButton(
+                      child: ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white)),
+                                MaterialStateProperty.all<Color>(Colors.white)),
                         onPressed: () {
                           controller.previous();
                         },
                         child: Icon(Icons.chevron_left, color: Colors.blue),
                       ),
-
                     )
                   ],
                 ),
@@ -499,7 +499,7 @@ class ScoreCard extends StatelessWidget {
             children: [
               Text(
                 isHighScore ? "ハイスコア" : "スコア",
-                style: TextStyle(color: Colors.blue,fontSize: 40.h),
+                style: TextStyle(color: Colors.blue, fontSize: 40.h),
               ),
               SizedBox(height: 15.h),
               Consumer<GameModel>(builder: (context, model, child) {
@@ -527,7 +527,7 @@ class NumberButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 140.h,
-        width:200.h,
+        width: 200.h,
         child: Consumer<GameModel>(
           builder: (context, model, child) {
             return ElevatedButton(
@@ -552,7 +552,6 @@ class UnitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
         height: 140.h,
         width: 200.h,
@@ -560,7 +559,7 @@ class UnitButton extends StatelessWidget {
           builder: (context, model, child) {
             return ElevatedButton(
               style: ElevatedButton.styleFrom(
-                textStyle: TextStyle(fontSize: unit != ""  ? 50.h : 40.h),
+                textStyle: TextStyle(fontSize: unit != "" ? 50.h : 40.h),
               ),
               onPressed: !model.isButtonsEnabled
                   ? null

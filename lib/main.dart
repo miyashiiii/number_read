@@ -23,13 +23,12 @@ Future<void> main() async {
 
   runZonedGuarded(() {
     MobileAds.instance.initialize();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]).then((_) {
+    SystemChrome.setPreferredOrientations(
+            [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+        .then((_) {
       runApp(new MyApp());
     });
-    }, FirebaseCrashlytics.instance.recordError);
+  }, FirebaseCrashlytics.instance.recordError);
 }
 
 class MyApp extends StatelessWidget {
