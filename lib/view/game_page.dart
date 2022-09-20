@@ -147,7 +147,7 @@ class _GamePageState extends State<GamePage> with TickerProviderStateMixin, Widg
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     startMusic();
     _checkIsDoneTutorial();
   }
