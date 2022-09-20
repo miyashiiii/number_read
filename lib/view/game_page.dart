@@ -556,9 +556,9 @@ class NumberButton extends StatelessWidget {
             onPressed: !model.isButtonsEnabled
                 ? null
                 : () {
-                    model.updateNumber("${model.firstNumber}$zeros");
+                    model.updateNumber('${model.firstNumber}$zeros');
                   },
-            child: Text("${model.firstNumber}$zeros"),
+            child: Text('${model.firstNumber}$zeros'),
           );
         },
       ),
