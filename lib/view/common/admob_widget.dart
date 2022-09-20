@@ -26,14 +26,13 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
 
   /// create banner ad
   Future<void> createAnchoredBanner(BuildContext context) async {
-    final size =
-        await AdSize.getAnchoredAdaptiveBannerAdSize(
+    final size = await AdSize.getAnchoredAdaptiveBannerAdSize(
       Orientation.portrait,
       MediaQuery.of(context).size.width.truncate(),
     );
 
     if (size == null) {
-      print('Unable to get height of anchored banner.');
+      debugPrint('Unable to get height of anchored banner.');
       return;
     }
 
@@ -43,17 +42,17 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
       adUnitId: 'ca-app-pub-9200665008350535/3051188375',
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
-          print('$BannerAd loaded.');
+          debugPrint('$BannerAd loaded.');
           setState(() {
             anchoredBanner = ad as BannerAd?;
           });
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('$BannerAd failedToLoad: $error');
+          debugPrint('$BannerAd failedToLoad: $error');
           ad.dispose();
         },
-        onAdOpened: (Ad ad) => print('$BannerAd onAdOpened.'),
-        onAdClosed: (Ad ad) => print('$BannerAd onAdClosed.'),
+        onAdOpened: (Ad ad) => debugPrint('$BannerAd onAdOpened.'),
+        onAdClosed: (Ad ad) => debugPrint('$BannerAd onAdClosed.'),
       ),
     );
     return banner.load();
@@ -67,22 +66,24 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
-      if (!loadingAnchoredBanner) {
-        createAnchoredBanner(context);
-        loadingAnchoredBanner = true;
-      }
-      return Container(
-        child: (anchoredBanner != null)
-            ? Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                color: Colors.white,
-                width: anchoredBanner?.size.width.toDouble(),
-                height: anchoredBanner?.size.height.toDouble(),
-                child: AdWidget(ad: anchoredBanner!),
-              )
-            : Container(),
-      );
-    },);
+    return Builder(
+      builder: (BuildContext context) {
+        if (!loadingAnchoredBanner) {
+          createAnchoredBanner(context);
+          loadingAnchoredBanner = true;
+        }
+        return Container(
+          child: (anchoredBanner != null)
+              ? Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  color: Colors.white,
+                  width: anchoredBanner?.size.width.toDouble(),
+                  height: anchoredBanner?.size.height.toDouble(),
+                  child: AdWidget(ad: anchoredBanner!),
+                )
+              : Container(),
+        );
+      },
+    );
   }
 }

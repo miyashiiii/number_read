@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GameModel extends ChangeNotifier {
-
   GameModel() {
     gameInit();
   }
@@ -81,7 +80,7 @@ class GameModel extends ChangeNotifier {
       // weightsの各要素とそのindexを取得
       l += List.filled(weight, idx); // 長さ:weight, 全要素がidxの作成してlに連結していく
     });
-    //print(l); // ["0", "1", "1", "2", "2", "2", "3", "3", "3", "3", ]
+    //debugPrint(l); // ["0", "1", "1", "2", "2", "2", "3", "3", "3", "3", ]
 
     // 上記で生成した配列から1つ選ぶことで、重みつきのchoiceを実行
     final random = Random();
@@ -91,7 +90,7 @@ class GameModel extends ChangeNotifier {
   final List<String> units = ['', '万', '億'];
 
   void showAnswer() {
-    print(questionNumber);
+    debugPrint(questionNumber);
 
     final digits = questionNumber.replaceAll(',', '').length - 1;
     final number = digits % 4;
@@ -99,7 +98,7 @@ class GameModel extends ChangeNotifier {
     final unit = units[unitIdx];
     if (digits > 0) {}
     questionNumber = firstNumber.toString() + '0' * number + unit;
-    print(questionNumber);
+    debugPrint(questionNumber);
     notifyListeners();
   }
 
@@ -132,8 +131,8 @@ class GameModel extends ChangeNotifier {
     score++;
     if (score > highScoreSaved) {
       highScoreView = score;
-      print('highScoreSaved: $highScoreSaved');
-      print('highScoreView: $highScoreView');
+      debugPrint('highScoreSaved: $highScoreSaved');
+      debugPrint('highScoreView: $highScoreView');
     }
   }
 }

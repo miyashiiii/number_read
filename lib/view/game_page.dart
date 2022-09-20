@@ -43,21 +43,21 @@ class _GamePageState extends State<GamePage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print('state = $state');
+    debugPrint('state = $state');
     switch (state) {
       case AppLifecycleState.resumed:
-        print('onResumed');
+        debugPrint('onResumed');
         _audioPlayer.play();
         break;
       case AppLifecycleState.inactive:
-        print('onInActive');
+        debugPrint('onInActive');
         break;
       case AppLifecycleState.paused:
-        print('onPaused');
+        debugPrint('onPaused');
         _audioPlayer.pause();
         break;
       case AppLifecycleState.detached:
-        print('onDetached');
+        debugPrint('onDetached');
         break;
     }
   }
@@ -122,7 +122,7 @@ class _GamePageState extends State<GamePage>
     gameModel.canAnswer = false;
     gameModel.showAnswer();
     final isCorrect = gameModel.questionNumber == gameModel.answer;
-    print(gameModel.questionNumber);
+    debugPrint(gameModel.questionNumber);
 
     _timer?.cancel();
     timeBarController?.stop();
@@ -178,11 +178,12 @@ class _GamePageState extends State<GamePage>
     gameModel = Provider.of<GameModel>(context, listen: false);
     settingsModel = Provider.of<SettingsModel>(context, listen: false);
     return Scaffold(
-        appBar: EmptyAppBar(),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(children: [
+      appBar: EmptyAppBar(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
               SizedBox(
                 height: 100.h,
               ),
@@ -204,34 +205,36 @@ class _GamePageState extends State<GamePage>
               SizedBox(
                 height: 20.h,
               ),
-              Consumer<GameModel>(builder: (context, model, child) {
-                return Card(
-                  key: keyButtonQuestion,
-                  color: model.numberCardColor,
-                  // Question
-                  child: SizedBox(
-                    width: 800.h,
-                    height: 200.h,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              model.questionNumber,
-                              style: const TextStyle(fontSize: 30),
-                              strutStyle: const StrutStyle(
-                                fontSize: 30,
-                                height: 1.3,
+              Consumer<GameModel>(
+                builder: (context, model, child) {
+                  return Card(
+                    key: keyButtonQuestion,
+                    color: model.numberCardColor,
+                    // Question
+                    child: SizedBox(
+                      width: 800.h,
+                      height: 200.h,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                model.questionNumber,
+                                style: const TextStyle(fontSize: 30),
+                                strutStyle: const StrutStyle(
+                                  fontSize: 30,
+                                  height: 1.3,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },),
+                  );
+                },
+              ),
               SizedBox(
                 height: 10.h,
               ),
@@ -242,33 +245,35 @@ class _GamePageState extends State<GamePage>
               SizedBox(
                 height: 10.h,
               ),
-              Consumer<GameModel>(builder: (context, model, child) {
-                return Card(
-                  key: keyButtonAnswer,
-                  color: model.numberCardColor,
-                  child: SizedBox(
-                    width: 800.h,
-                    height: 200.h,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              model.answer,
-                              style: const TextStyle(fontSize: 30),
-                              strutStyle: const StrutStyle(
-                                fontSize: 30,
-                                height: 1.3,
+              Consumer<GameModel>(
+                builder: (context, model, child) {
+                  return Card(
+                    key: keyButtonAnswer,
+                    color: model.numberCardColor,
+                    child: SizedBox(
+                      width: 800.h,
+                      height: 200.h,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                model.answer,
+                                style: const TextStyle(fontSize: 30),
+                                strutStyle: const StrutStyle(
+                                  fontSize: 30,
+                                  height: 1.3,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },),
+                  );
+                },
+              ),
               SizedBox(
                 height: 50.h,
               ),
@@ -279,26 +284,31 @@ class _GamePageState extends State<GamePage>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('残り時間:', style: TextStyle(fontSize: 40.h)),
-                    Consumer<GameModel>(builder: (context, model, child) {
-                      return Stack(alignment: Alignment.center, children: [
-                        SizedBox(
-                          width: 700.h,
-                          child: LinearProgressIndicator(
-                            backgroundColor: model.timeCardColor,
-                            minHeight: 70.h,
-                            value: 1 - (timeBarController?.value ?? 0),
-                            semanticsLabel: 'Linear progress indicator',
-                          ),
-                        ),
-                        Text(
-                          model.remainTime >= 0
-                              ? model.remainTime.toString()
-                              : '',
-                          // "5",
-                          style: const TextStyle(fontSize: 20),
-                        )
-                      ],);
-                    },),
+                    Consumer<GameModel>(
+                      builder: (context, model, child) {
+                        return Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              width: 700.h,
+                              child: LinearProgressIndicator(
+                                backgroundColor: model.timeCardColor,
+                                minHeight: 70.h,
+                                value: 1 - (timeBarController?.value ?? 0),
+                                semanticsLabel: 'Linear progress indicator',
+                              ),
+                            ),
+                            Text(
+                              model.remainTime >= 0
+                                  ? model.remainTime.toString()
+                                  : '',
+                              // "5",
+                              style: const TextStyle(fontSize: 20),
+                            )
+                          ],
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -360,10 +370,10 @@ class _GamePageState extends State<GamePage>
                       height: 60.h,
                     ),
                     SizedBox(
-                        height: 140.h,
-                        width: 300.h,
-                        child: Consumer<GameModel>(
-                            builder: (context, model, child) {
+                      height: 140.h,
+                      width: 300.h,
+                      child: Consumer<GameModel>(
+                        builder: (context, model, child) {
                           return ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               textStyle: const TextStyle(fontSize: 15),
@@ -373,14 +383,18 @@ class _GamePageState extends State<GamePage>
                                 : _judgeAnswerAndRefresh,
                             child: const Text('OK'),
                           );
-                        },),),
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ],),
-            const AdmobBannerAdWidget(),
-          ],
-        ),);
+            ],
+          ),
+          const AdmobBannerAdWidget(),
+        ],
+      ),
+    );
   }
 
   void showTutorial() {
@@ -390,16 +404,16 @@ class _GamePageState extends State<GamePage>
       targets: targets,
       colorShadow: Colors.blue,
       onFinish: () {
-        print('finish');
+        debugPrint('finish');
       },
       onClickTarget: (target) {
-        print('onClickTarget: $target');
+        debugPrint('onClickTarget: $target');
       },
       onSkip: () {
-        print('skip');
+        debugPrint('skip');
       },
       onClickOverlay: (target) {
-        print('onClickOverlay: $target');
+        debugPrint('onClickOverlay: $target');
       },
     )..show();
   }
@@ -407,8 +421,12 @@ class _GamePageState extends State<GamePage>
   void initTargets() {
     targets.clear();
     addTarget(
-        'question', keyButtonQuestion, ContentAlign.bottom, 'ここに数字が表示されます。',
-        isFirst: true,);
+      'question',
+      keyButtonQuestion,
+      ContentAlign.bottom,
+      'ここに数字が表示されます。',
+      isFirst: true,
+    );
     addTarget(
       'keyBoard',
       keyButtonKeyBoard,
@@ -430,8 +448,12 @@ class _GamePageState extends State<GamePage>
   }
 
   Future<void> addTarget(
-      String identify, GlobalKey key, ContentAlign textPos, String text,
-      {bool isFirst = false,}) async {
+    String identify,
+    GlobalKey key,
+    ContentAlign textPos,
+    String text, {
+    bool isFirst = false,
+  }) async {
     targets.add(
       TargetFocus(
         identify: identify,
@@ -460,12 +482,14 @@ class _GamePageState extends State<GamePage>
                       visible: !isFirst,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                        ),
                         onPressed: () {
                           controller.previous();
                         },
-                        child: const Icon(Icons.chevron_left, color: Colors.blue),
+                        child:
+                            const Icon(Icons.chevron_left, color: Colors.blue),
                       ),
                     )
                   ],
@@ -480,7 +504,6 @@ class _GamePageState extends State<GamePage>
 }
 
 class ScoreCard extends StatelessWidget {
-
   const ScoreCard({required this.isHighScore, Key? key}) : super(key: key);
   final bool isHighScore;
 
@@ -488,82 +511,86 @@ class ScoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-          width: 360.h,
-          height: 160.h,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                isHighScore ? 'ハイスコア' : 'スコア',
-                style: TextStyle(color: Colors.blue, fontSize: 40.h),
-              ),
-              SizedBox(height: 15.h),
-              Consumer<GameModel>(builder: (context, model, child) {
+        width: 360.h,
+        height: 160.h,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              isHighScore ? 'ハイスコア' : 'スコア',
+              style: TextStyle(color: Colors.blue, fontSize: 40.h),
+            ),
+            SizedBox(height: 15.h),
+            Consumer<GameModel>(
+              builder: (context, model, child) {
                 return Text(
                   isHighScore
                       ? model.highScoreView.toString()
                       : model.score.toString(),
                   style: TextStyle(fontSize: 60.h),
                 );
-              },),
-            ],
-          ),),
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class NumberButton extends StatelessWidget {
-
   const NumberButton({required this.zeros, Key? key}) : super(key: key);
   final String zeros;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 140.h,
-        width: 200.h,
-        child: Consumer<GameModel>(
-          builder: (context, model, child) {
-            return ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(fontSize: 50.h),),
-              onPressed: !model.isButtonsEnabled
-                  ? null
-                  : () {
-                      model.updateNumber("${model.firstNumber}$zeros");
-                    },
-              child: Text("${model.firstNumber}$zeros"),
-            );
-          },
-        ),);
+      height: 140.h,
+      width: 200.h,
+      child: Consumer<GameModel>(
+        builder: (context, model, child) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(fontSize: 50.h),
+            ),
+            onPressed: !model.isButtonsEnabled
+                ? null
+                : () {
+                    model.updateNumber("${model.firstNumber}$zeros");
+                  },
+            child: Text("${model.firstNumber}$zeros"),
+          );
+        },
+      ),
+    );
   }
 }
 
 class UnitButton extends StatelessWidget {
-
   const UnitButton({required this.unit, Key? key}) : super(key: key);
   final String unit;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 140.h,
-        width: 200.h,
-        child: Consumer<GameModel>(
-          builder: (context, model, child) {
-            return ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                textStyle: TextStyle(fontSize: unit != '' ? 50.h : 40.h),
-              ),
-              onPressed: !model.isButtonsEnabled
-                  ? null
-                  : () {
-                      model.updateUnit(unit);
-                    },
-              child: child,
-            );
-          },
-          child: Text(unit != '' ? unit : '(なし)'),
-        ),);
+      height: 140.h,
+      width: 200.h,
+      child: Consumer<GameModel>(
+        builder: (context, model, child) {
+          return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(fontSize: unit != '' ? 50.h : 40.h),
+            ),
+            onPressed: !model.isButtonsEnabled
+                ? null
+                : () {
+                    model.updateUnit(unit);
+                  },
+            child: child,
+          );
+        },
+        child: Text(unit != '' ? unit : '(なし)'),
+      ),
+    );
   }
 }
