@@ -102,8 +102,9 @@ class _GamePageState extends State<GamePage>
   }
 
   Future<void> _onTimeOver() async {
-    gameModel.isButtonsEnabled = false;
-    gameModel.onFinish();
+    gameModel
+      ..isButtonsEnabled = false
+      ..onFinish();
 
     await Future.delayed(const Duration(milliseconds: 2000));
     await _audioPlayer.dispose();
@@ -119,8 +120,9 @@ class _GamePageState extends State<GamePage>
   }
 
   Future<void> _judgeAnswerAndRefresh() async {
-    gameModel.canAnswer = false;
-    gameModel.showAnswer();
+    gameModel
+      ..canAnswer = false
+      ..showAnswer();
     final isCorrect = gameModel.questionNumber == gameModel.answer;
     debugPrint(gameModel.questionNumber);
 
@@ -487,8 +489,7 @@ class _GamePageState extends State<GamePage>
                       onPressed: () {
                         controller.previous();
                       },
-                      child:
-                          const Icon(Icons.chevron_left, color: Colors.blue),
+                      child: const Icon(Icons.chevron_left, color: Colors.blue),
                     ),
                   )
                 ],
