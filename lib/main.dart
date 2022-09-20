@@ -65,25 +65,25 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/first':
-              return PageTransition(
+              return PageTransition<void>(
                 child: const FirstPage(),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
             case '/hint':
-              return PageTransition(
+              return PageTransition<void>(
                 child: const HintPage(),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
             case '/settings':
-              return PageTransition(
+              return PageTransition<void>(
                 child: SettingsPage(),
                 type: PageTransitionType.fade,
                 settings: settings,
               );
             case '/game':
-              return PageTransition(
+              return PageTransition<void>(
                 child: ChangeNotifierProvider<GameModel>(
                   create: (_) => GameModel(),
                   child: const GamePage(),
@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
                 settings: settings,
               );
             case '/result':
-              return PageTransition(
+              return PageTransition<void>(
                 child: const ResultPage(),
                 type: PageTransitionType.fade,
                 settings: settings,
