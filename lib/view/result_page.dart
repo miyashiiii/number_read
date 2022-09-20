@@ -10,7 +10,7 @@ class ResultPage extends StatefulWidget {
   const ResultPage({super.key});
 
   @override
-  _ResultPageState createState() => _ResultPageState();
+  State<ResultPage>  createState() => _ResultPageState();
 }
 
 class _ResultPageState extends State<ResultPage> {
@@ -30,7 +30,7 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    final score = ModalRoute.of(context)!.settings.arguments as int;
+    final score = ModalRoute.of(context)!.settings.arguments! as int;
     checkHighScore(score);
 
     return Scaffold(

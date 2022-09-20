@@ -7,11 +7,11 @@ import 'common/empty_app_bar.dart';
 class HintPage extends StatelessWidget {
   const HintPage({super.key});
 
-  Divider createDivider(index) {
-    var dividerThickness = 1;
+  Divider createDivider(int index) {
+    var dividerThickness = 1.0;
     var dividerColor = Colors.black12;
     if (index % 4 == 0) {
-      dividerThickness = 2;
+      dividerThickness = 2.0;
       dividerColor = Colors.black26;
     }
     return Divider(
@@ -25,7 +25,7 @@ class HintPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map map = {
+    const map = {
       '読み': '数字',
       '1': '1',
       '10': '10',
@@ -57,7 +57,7 @@ class HintPage extends StatelessWidget {
                     return createDivider(index);
                   }
                   final isHeader = index == 0;
-                  final String key = map.keys.elementAt(index);
+                  final key = map.keys.elementAt(index);
                   var topMargin = 0.h;
                   if (index % 4 == 1) {
                     topMargin = 30.h;
@@ -87,7 +87,7 @@ class HintPage extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           width: 120,
                           child: Text(
-                            map[key],
+                            map[key]!,
                             style: const TextStyle(
                               fontSize: 16,
                             ),

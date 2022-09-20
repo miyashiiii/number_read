@@ -5,11 +5,11 @@ class EmptyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return const ColoredBox(
       color: Colors.blue,
     );
   }
 
   @override
-  Size get preferredSize => const Size(0, 0);
+  Size get preferredSize =>  Size.zero;
 }

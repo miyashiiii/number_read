@@ -12,8 +12,9 @@ import 'common/empty_app_bar.dart';
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
 
-  final String googleFormURL =
-      'https://docs.google.com/forms/d/e/1FAIpQLSf0WsAufMiUA0SWyNo_pZfXd39kWZOIH50pjGFMP78nRNr7AQ/viewform';
+  Uri googleFormURL = Uri.parse(
+    'https://docs.google.com/forms/d/e/1FAIpQLSf0WsAufMiUA0SWyNo_pZfXd39kWZOIH50pjGFMP78nRNr7AQ/viewform',
+  );
   late SettingsModel settingsModel;
   late PackageInfo packageInfo;
 
@@ -21,7 +22,7 @@ class SettingsPage extends StatelessWidget {
     packageInfo = await PackageInfo.fromPlatform();
   }
 
-  pushTutorial(context) async {
+  Future<void> pushTutorial(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDoneTutorial', false);
     await Navigator.pushNamed(context, '/game');
@@ -94,20 +95,21 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Future<void> _launchURL(url) async =>
-      await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
+  Future<void> _launchURL(Uri url) async => await canLaunchUrl(url)
+      ? await launchUrl(url)
+      : throw Exception('Could not launch $url');
 
   Widget _menuItem(
     BuildContext context,
     String title,
     Icon? icon, {
     String? route,
-    String? url,
+    Uri? url,
     Function? onTap,
     bool isFirst = false,
   }) {
     const borderSide = BorderSide(color: Colors.grey);
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         border: Border(
           top: isFirst ? borderSide : BorderSide.none,

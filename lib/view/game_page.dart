@@ -16,7 +16,7 @@ class GamePage extends StatefulWidget {
   const GamePage({super.key});
 
   @override
-  _GamePageState createState() => _GamePageState();
+  State<GamePage> createState() => _GamePageState();
 }
 
 class _GamePageState extends State<GamePage>

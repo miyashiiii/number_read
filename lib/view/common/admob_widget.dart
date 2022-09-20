@@ -6,7 +6,7 @@ class AdmobBannerAdWidget extends StatefulWidget {
   const AdmobBannerAdWidget({super.key});
 
   @override
-  _AdmobBannerAdWidgetState createState() => _AdmobBannerAdWidgetState();
+  State<AdmobBannerAdWidget>  createState() => _AdmobBannerAdWidgetState();
 }
 
 class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
