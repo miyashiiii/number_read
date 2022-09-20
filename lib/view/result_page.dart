@@ -7,7 +7,7 @@ import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
 class ResultPage extends StatefulWidget {
-  ResultPage({Key? key}) : super(key: key);
+  const ResultPage({Key? key}) : super(key: key);
 
   @override
   _ResultPageState createState() => _ResultPageState();
@@ -16,11 +16,11 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   bool _isHighScore = false;
 
-  void checkHighScore(int score) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    int highScore = (prefs.getInt('HighScore') ?? 0);
+  Future<void> checkHighScore(int score) async {
+    final prefs = await SharedPreferences.getInstance();
+    final highScore = prefs.getInt('HighScore') ?? 0;
     if (score > highScore) {
-      Analytics.analytics.logPostScore(score: score);
+      await Analytics.analytics.logPostScore(score: score);
       setState(() {
         _isHighScore = true;
       });
@@ -47,19 +47,19 @@ class _ResultPageState extends State<ResultPage> {
                   SizedBox(
                     height: 300.h,
                   ),
-                  Text(
-                    "結果発表!",
+                  const Text(
+                    '結果発表!',
                     style: TextStyle(fontSize: 20),
                   ),
                   SizedBox(
                     height: 100.h,
                   ),
                   Visibility(
-                    child: Text('ハイスコア更新！'),
                     visible: _isHighScore,
+                    child: const Text('ハイスコア更新！'),
                   ),
-                  Text("正解数: " + score.toString(),
-                      style: TextStyle(fontSize: 20)),
+                  Text('正解数: $score',
+                      style: const TextStyle(fontSize: 20),),
                   SizedBox(
                     height: 300.h,
                   ),
@@ -70,9 +70,9 @@ class _ResultPageState extends State<ResultPage> {
                       onPressed: () {
                         // Navigator.pop(context);
                         Navigator.of(context).pushNamedAndRemoveUntil(
-                            "/game", ModalRoute.withName("/first"));
+                            '/game', ModalRoute.withName('/first'),);
                       },
-                      child: Text("リトライ"),
+                      child: const Text('リトライ'),
                     ),
                   ),
                   SizedBox(height: 50.h),
@@ -82,14 +82,14 @@ class _ResultPageState extends State<ResultPage> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(
-                            context, "/first", (r) => false);
+                            context, '/first', (r) => false,);
                       },
-                      child: Text('トップに戻る'),
+                      child: const Text('トップに戻る'),
                     ),
                   ),
                 ],
               ),
-              AdmobBannerAdWidget(),
+              const AdmobBannerAdWidget(),
             ],
           ),
         ),

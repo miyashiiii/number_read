@@ -5,12 +5,16 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GameModel extends ChangeNotifier {
-  String firstNumber = "";
-  String questionNumber = "";
 
-  String answer = "";
-  String answerNumber = "";
-  String answerUnit = "";
+  GameModel() {
+    gameInit();
+  }
+  String firstNumber = '';
+  String questionNumber = '';
+
+  String answer = '';
+  String answerNumber = '';
+  String answerUnit = '';
 
   bool canAnswer = false;
 
@@ -28,10 +32,6 @@ class GameModel extends ChangeNotifier {
   int highScoreView = 0;
   int score = 0;
 
-  GameModel() {
-    gameInit();
-  }
-
   void gameInit() {
     score = 0;
     remainTime = -1;
@@ -41,9 +41,9 @@ class GameModel extends ChangeNotifier {
   }
 
   void newQuestion() {
-    answer = "";
-    answerNumber = "";
-    answerUnit = "";
+    answer = '';
+    answerNumber = '';
+    answerUnit = '';
     numberCardColor = Colors.white;
     timeCardColor = Colors.white;
     canAnswer = false;
@@ -52,9 +52,9 @@ class GameModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadHighScore() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    highScoreSaved = (prefs.getInt('HighScore') ?? 0);
+  Future<void> loadHighScore() async {
+    final prefs = await SharedPreferences.getInstance();
+    highScoreSaved = prefs.getInt('HighScore') ?? 0;
     highScoreView = highScoreSaved;
     notifyListeners();
   }
@@ -64,19 +64,19 @@ class GameModel extends ChangeNotifier {
   }
 
   void _randomFirstNumber() {
-    var random = Random();
+    final random = Random();
     firstNumber = (1 + random.nextInt(9 - 1)).toString();
   }
 
   void _randomQuestionNumber() {
-    var zeros = _weightedChoice([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-    var questionNumStr = firstNumber + "0" * zeros;
-    final formatter = NumberFormat("#,###");
+    final zeros = _weightedChoice([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    final questionNumStr = firstNumber + '0' * zeros;
+    final formatter = NumberFormat('#,###');
     questionNumber = formatter.format(int.parse(questionNumStr));
   }
 
   int _weightedChoice(List<int> weights) {
-    List<int> l = [];
+    var l = <int>[];
     weights.asMap().forEach((int idx, int weight) {
       // weightsの各要素とそのindexを取得
       l += List.filled(weight, idx); // 長さ:weight, 全要素がidxの作成してlに連結していく
@@ -84,21 +84,21 @@ class GameModel extends ChangeNotifier {
     //print(l); // ["0", "1", "1", "2", "2", "2", "3", "3", "3", "3", ]
 
     // 上記で生成した配列から1つ選ぶことで、重みつきのchoiceを実行
-    var _random = Random();
-    return l[_random.nextInt(l.length)];
+    final random = Random();
+    return l[random.nextInt(l.length)];
   }
 
-  final List<String> units = ["", "万", "億"];
+  final List<String> units = ['', '万', '億'];
 
   void showAnswer() {
     print(questionNumber);
 
-    var digits = questionNumber.replaceAll(",", "").length - 1;
-    var number = digits % 4;
-    var unitIdx = digits ~/ 4;
-    var unit = units[unitIdx];
+    final digits = questionNumber.replaceAll(',', '').length - 1;
+    final number = digits % 4;
+    final unitIdx = digits ~/ 4;
+    final unit = units[unitIdx];
     if (digits > 0) {}
-    questionNumber = firstNumber.toString() + "0" * number + unit;
+    questionNumber = firstNumber.toString() + '0' * number + unit;
     print(questionNumber);
     notifyListeners();
   }
@@ -132,8 +132,8 @@ class GameModel extends ChangeNotifier {
     score++;
     if (score > highScoreSaved) {
       highScoreView = score;
-      print("highScoreSaved: " + highScoreSaved.toString());
-      print("highScoreView: " + highScoreView.toString());
+      print('highScoreSaved: $highScoreSaved');
+      print('highScoreView: $highScoreView');
     }
   }
 }

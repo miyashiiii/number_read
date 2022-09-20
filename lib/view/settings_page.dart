@@ -11,7 +11,7 @@ import 'common/empty_app_bar.dart';
 
 class SettingsPage extends StatelessWidget {
   final String googleFormURL =
-      "https://docs.google.com/forms/d/e/1FAIpQLSf0WsAufMiUA0SWyNo_pZfXd39kWZOIH50pjGFMP78nRNr7AQ/viewform";
+      'https://docs.google.com/forms/d/e/1FAIpQLSf0WsAufMiUA0SWyNo_pZfXd39kWZOIH50pjGFMP78nRNr7AQ/viewform';
   late SettingsModel settingsModel;
   late PackageInfo packageInfo;
 
@@ -20,16 +20,16 @@ class SettingsPage extends StatelessWidget {
   }
 
   pushTutorial(context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isDoneTutorial', false);
-    Navigator.pushNamed(context, "/game");
+    await Navigator.pushNamed(context, '/game');
   }
 
   @override
   Widget build(BuildContext context) {
     settingsModel = Provider.of<SettingsModel>(context, listen: false);
     loadPackageInfo();
-    print("volume: " + settingsModel.soundVolume.toString());
+    print('volume: ${settingsModel.soundVolume}');
     return MaterialApp(
       home: Scaffold(
         appBar: EmptyAppBar(),
@@ -38,49 +38,49 @@ class SettingsPage extends StatelessWidget {
           children: [
             ListView(shrinkWrap: true, children: [
               SizedBox(height: 100.h),
-              soundMenuItem(context, "音声オン", "音声オフ", Icon(Icons.volume_up),
-                  Icon(Icons.volume_off),
-                  isFirst: true),
-              _menuItem(context, "操作チュートリアル", Icon(Icons.videogame_asset),
+              soundMenuItem(context, '音声オン', '音声オフ', const Icon(Icons.volume_up),
+                  const Icon(Icons.volume_off),
+                  isFirst: true,),
+              _menuItem(context, '操作チュートリアル', const Icon(Icons.videogame_asset),
                   onTap: () {
                 pushTutorial(context);
-              }),
-              _menuItem(context, "ヒント", Icon(Icons.lightbulb), route: "/hint"),
-              _menuItem(context, "お問い合わせフォーム", Icon(Icons.mail),
-                  url: googleFormURL),
-              _menuItem(context, "", null),
-              _menuItem(context, "バージョン情報", Icon(Icons.info), onTap: () {
+              },),
+              _menuItem(context, 'ヒント', const Icon(Icons.lightbulb), route: '/hint'),
+              _menuItem(context, 'お問い合わせフォーム', const Icon(Icons.mail),
+                  url: googleFormURL,),
+              _menuItem(context, '', null),
+              _menuItem(context, 'バージョン情報', const Icon(Icons.info), onTap: () {
                 showAboutDialog(
                   context: context,
                   applicationName: packageInfo.appName,
                   applicationVersion: packageInfo.version,
                   applicationIcon: MyAppIcon(),
-                  applicationLegalese: "© 2021 miyashiiii game studio",
+                  applicationLegalese: '© 2021 miyashiiii game studio',
                 );
-              }),
-            ]),
-            AdmobBannerAdWidget(),
+              },),
+            ],),
+            const AdmobBannerAdWidget(),
           ],
         ),
       ),
     );
   }
 
-  void _launchURL(url) async =>
+  Future<void> _launchURL(url) async =>
       await canLaunch(url) ? await launch(url) : throw 'Could not launch $url';
 
   Widget _menuItem(BuildContext context, String title, Icon? icon,
-      {String? route, String? url, Function? onTap, bool isFirst = false}) {
-    BorderSide borderSide = BorderSide(width: 1.0, color: Colors.grey);
+      {String? route, String? url, Function? onTap, bool isFirst = false,}) {
+    const borderSide = BorderSide(color: Colors.grey);
     return Container(
       decoration: BoxDecoration(
           border: Border(
-              top: isFirst ? borderSide : BorderSide.none, bottom: borderSide)),
+              top: isFirst ? borderSide : BorderSide.none, bottom: borderSide,),),
       child: ListTile(
           leading: icon,
           title: Text(
             title,
-            style: TextStyle(color: Colors.black, fontSize: 18.0),
+            style: const TextStyle(color: Colors.black, fontSize: 18),
           ),
           onTap: () {
             if (route != null) {
@@ -90,14 +90,14 @@ class SettingsPage extends StatelessWidget {
             } else if (onTap != null) {
               onTap();
             }
-          } // タップ
+          }, // タップ
           ),
     );
   }
 
   Widget soundMenuItem(BuildContext context, String titleOn, String titleOff,
       Icon iconOn, Icon iconOff,
-      {String? route, String? url, bool isFirst = false}) {
+      {String? route, String? url, bool isFirst = false,}) {
     return Consumer<SettingsModel>(builder: (context, model, child) {
       String title;
       Icon icon;
@@ -110,8 +110,8 @@ class SettingsPage extends StatelessWidget {
       }
       return _menuItem(context, title, icon, onTap: () {
         model.toggleSound();
-      }, isFirst: true);
-    });
+      }, isFirst: true,);
+    },);
   }
 }
 
@@ -120,11 +120,11 @@ class MyAppIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: SizedBox(
           width: 200.h,
           height: 200.h,
-          child: Image(image: AssetImage('assets/images/sudoku_logo.png')),
+          child: const Image(image: AssetImage('assets/images/sudoku_logo.png')),
         ),
       ),
     );

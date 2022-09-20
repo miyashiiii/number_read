@@ -18,21 +18,22 @@ class _FirstPageState extends State<FirstPage> {
     super.initState();
   }
 
-  void checkHighScore() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<void> checkHighScore() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _highScore = (prefs.getInt('HighScore') ?? 0);
+      _highScore = prefs.getInt('HighScore') ?? 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
-        BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
-        designSize: Size(1080, 2160),
-        orientation: Orientation.portrait);
+      BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width,
+        maxHeight: MediaQuery.of(context).size.height,
+      ),
+      designSize: const Size(1080, 2160),
+    );
     checkHighScore();
     return Scaffold(
       appBar: EmptyAppBar(),
@@ -45,21 +46,23 @@ class _FirstPageState extends State<FirstPage> {
                 children: [
                   SizedBox(height: 400.h),
                   SizedBox(
-                      child: Image(
-                          image: AssetImage('assets/images/sudoku_logo.png')),
-                      height: 500.h,
-                      width: 500.h),
+                    height: 500.h,
+                    width: 500.h,
+                    child: const Image(
+                      image: AssetImage('assets/images/sudoku_logo.png'),
+                    ),
+                  ),
                   SizedBox(height: 200.h),
-                  Text("ハイスコア: " + _highScore.toString()),
+                  Text('ハイスコア: $_highScore'),
                   SizedBox(height: 100.h),
                   SizedBox(
                     height: 120.h,
                     width: 500.h,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/settings");
+                        Navigator.pushNamed(context, '/settings');
                       },
-                      child: Text('設定'),
+                      child: const Text('設定'),
                     ),
                   ),
                   SizedBox(
@@ -70,14 +73,14 @@ class _FirstPageState extends State<FirstPage> {
                     width: 500.h,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/game");
+                        Navigator.pushNamed(context, '/game');
                       },
-                      child: Text('ゲーム開始'),
+                      child: const Text('ゲーム開始'),
                     ),
                   ),
                 ],
               ),
-              AdmobBannerAdWidget(),
+              const AdmobBannerAdWidget(),
             ],
           ),
         ),

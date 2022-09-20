@@ -13,7 +13,7 @@ import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
 class GamePage extends StatefulWidget {
-  GamePage({Key? key}) : super(key: key);
+  const GamePage({Key? key}) : super(key: key);
 
   @override
   _GamePageState createState() => _GamePageState();
@@ -46,18 +46,18 @@ class _GamePageState extends State<GamePage>
     print('state = $state');
     switch (state) {
       case AppLifecycleState.resumed:
-        print("onResumed");
+        print('onResumed');
         _audioPlayer.play();
         break;
       case AppLifecycleState.inactive:
-        print("onInActive");
+        print('onInActive');
         break;
       case AppLifecycleState.paused:
-        print("onPaused");
+        print('onPaused');
         _audioPlayer.pause();
         break;
       case AppLifecycleState.detached:
-        print("onDetached");
+        print('onDetached');
         break;
     }
   }
@@ -88,7 +88,7 @@ class _GamePageState extends State<GamePage>
   void initTimer() {
     _timer = Timer.periodic(
         // 定期実行する間隔の設定.
-        Duration(seconds: 1),
+        const Duration(seconds: 1),
         // 定期実行関数.
         (Timer t) {
       gameModel.remainTime -= 1;
@@ -101,46 +101,46 @@ class _GamePageState extends State<GamePage>
     });
   }
 
-  void _onTimeOver() async {
+  Future<void> _onTimeOver() async {
     gameModel.isButtonsEnabled = false;
     gameModel.onFinish();
 
-    await Future.delayed(Duration(milliseconds: 2000));
-    _audioPlayer.dispose();
-    pushAndInitStateWhenPop();
+    await Future.delayed(const Duration(milliseconds: 2000));
+    await _audioPlayer.dispose();
+    await pushAndInitStateWhenPop();
   }
 
-  void pushAndInitStateWhenPop() async {
-    await Navigator.pushNamed(context, "/result", arguments: gameModel.score);
+  Future<void> pushAndInitStateWhenPop() async {
+    await Navigator.pushNamed(context, '/result', arguments: gameModel.score);
 
     gameModel.gameInit();
-    startMusic();
+    await startMusic();
     timeBarController = null;
   }
 
-  void _judgeAnswerAndRefresh() async {
+  Future<void> _judgeAnswerAndRefresh() async {
     gameModel.canAnswer = false;
     gameModel.showAnswer();
-    var isCorrect = gameModel.questionNumber == gameModel.answer;
+    final isCorrect = gameModel.questionNumber == gameModel.answer;
     print(gameModel.questionNumber);
 
     _timer?.cancel();
     timeBarController?.stop();
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     gameModel.changeCardColor(isCorrect);
     if (isCorrect) {
-      await Future.delayed(Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 500));
       gameModel.updateHighScore();
 
       _refresh();
     } else {
-      _onTimeOver();
+      await _onTimeOver();
     }
   }
 
   _checkIsDoneTutorial() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isDoneTutorial = prefs.getBool('isDoneTutorial') ?? false;
+    final prefs = await SharedPreferences.getInstance();
+    final isDoneTutorial = prefs.getBool('isDoneTutorial') ?? false;
     if (!isDoneTutorial) {
       showTutorial();
     }
@@ -164,7 +164,7 @@ class _GamePageState extends State<GamePage>
     super.dispose();
   }
 
-  void startMusic() async {
+  Future<void> startMusic() async {
     await _audioPlayer.setAsset('assets/audio/thinkingtime7.mp3');
     await _audioPlayer.setLoopMode(LoopMode.one);
     await _audioPlayer.setVolume(settingsModel.soundVolume);
@@ -188,7 +188,7 @@ class _GamePageState extends State<GamePage>
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   ScoreCard(isHighScore: true),
                   ScoreCard(isHighScore: false)
                 ],
@@ -209,7 +209,9 @@ class _GamePageState extends State<GamePage>
                   key: keyButtonQuestion,
                   color: model.numberCardColor,
                   // Question
-                  child: Container(
+                  child: SizedBox(
+                    width: 800.h,
+                    height: 200.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -217,8 +219,8 @@ class _GamePageState extends State<GamePage>
                           children: [
                             Text(
                               model.questionNumber,
-                              style: TextStyle(fontSize: 30),
-                              strutStyle: StrutStyle(
+                              style: const TextStyle(fontSize: 30),
+                              strutStyle: const StrutStyle(
                                 fontSize: 30,
                                 height: 1.3,
                               ),
@@ -227,11 +229,9 @@ class _GamePageState extends State<GamePage>
                         ),
                       ],
                     ),
-                    width: 800.h,
-                    height: 200.h,
                   ),
                 );
-              }),
+              },),
               SizedBox(
                 height: 10.h,
               ),
@@ -246,7 +246,9 @@ class _GamePageState extends State<GamePage>
                 return Card(
                   key: keyButtonAnswer,
                   color: model.numberCardColor,
-                  child: Container(
+                  child: SizedBox(
+                    width: 800.h,
+                    height: 200.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -254,8 +256,8 @@ class _GamePageState extends State<GamePage>
                           children: [
                             Text(
                               model.answer,
-                              style: TextStyle(fontSize: 30),
-                              strutStyle: StrutStyle(
+                              style: const TextStyle(fontSize: 30),
+                              strutStyle: const StrutStyle(
                                 fontSize: 30,
                                 height: 1.3,
                               ),
@@ -264,11 +266,9 @@ class _GamePageState extends State<GamePage>
                         ),
                       ],
                     ),
-                    width: 800.h,
-                    height: 200.h,
                   ),
                 );
-              }),
+              },),
               SizedBox(
                 height: 50.h,
               ),
@@ -278,7 +278,7 @@ class _GamePageState extends State<GamePage>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("残り時間:", style: TextStyle(fontSize: 40.h)),
+                    Text('残り時間:', style: TextStyle(fontSize: 40.h)),
                     Consumer<GameModel>(builder: (context, model, child) {
                       return Stack(alignment: Alignment.center, children: [
                         SizedBox(
@@ -293,12 +293,12 @@ class _GamePageState extends State<GamePage>
                         Text(
                           model.remainTime >= 0
                               ? model.remainTime.toString()
-                              : "",
+                              : '',
                           // "5",
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                         )
-                      ]);
-                    }),
+                      ],);
+                    },),
                   ],
                 ),
               ),
@@ -320,20 +320,20 @@ class _GamePageState extends State<GamePage>
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        NumberButton(zeros: "000"),
+                      children: const [
+                        NumberButton(zeros: '000'),
                         // SizedBox(
                         //   width: 40.h,
                         // ),
-                        NumberButton(zeros: "00"),
+                        NumberButton(zeros: '00'),
                         // SizedBox(
                         //   width: 40.h,
                         // ),
-                        NumberButton(zeros: "0"),
+                        NumberButton(zeros: '0'),
                         // SizedBox(
                         //   width: 40.h,
                         // ),
-                        NumberButton(zeros: ""),
+                        NumberButton(zeros: ''),
                       ],
                     ),
                     SizedBox(
@@ -345,15 +345,15 @@ class _GamePageState extends State<GamePage>
                         SizedBox(
                           width: 40.h,
                         ),
-                        UnitButton(unit: "億"),
+                        const UnitButton(unit: '億'),
                         SizedBox(
                           width: 40.h,
                         ),
-                        UnitButton(unit: "万"),
+                        const UnitButton(unit: '万'),
                         SizedBox(
                           width: 40.h,
                         ),
-                        UnitButton(unit: "")
+                        const UnitButton(unit: '')
                       ],
                     ),
                     SizedBox(
@@ -370,19 +370,17 @@ class _GamePageState extends State<GamePage>
                             ),
                             onPressed: !model.canAnswer
                                 ? null
-                                : () {
-                                    _judgeAnswerAndRefresh();
-                                  },
+                                : _judgeAnswerAndRefresh,
                             child: const Text('OK'),
                           );
-                        })),
+                        },),),
                   ],
                 ),
               ),
-            ]),
-            AdmobBannerAdWidget(),
+            ],),
+            const AdmobBannerAdWidget(),
           ],
-        ));
+        ),);
   }
 
   void showTutorial() {
@@ -391,17 +389,14 @@ class _GamePageState extends State<GamePage>
       context,
       targets: targets,
       colorShadow: Colors.blue,
-      textSkip: "SKIP",
-      paddingFocus: 10,
-      opacityShadow: 0.8,
       onFinish: () {
-        print("finish");
+        print('finish');
       },
       onClickTarget: (target) {
         print('onClickTarget: $target');
       },
       onSkip: () {
-        print("skip");
+        print('skip');
       },
       onClickOverlay: (target) {
         print('onClickOverlay: $target');
@@ -412,31 +407,31 @@ class _GamePageState extends State<GamePage>
   void initTargets() {
     targets.clear();
     addTarget(
-        "question", keyButtonQuestion, ContentAlign.bottom, "ここに数字が表示されます。",
-        isFirst: true);
+        'question', keyButtonQuestion, ContentAlign.bottom, 'ここに数字が表示されます。',
+        isFirst: true,);
     addTarget(
-      "keyBoard",
+      'keyBoard',
       keyButtonKeyBoard,
       ContentAlign.top,
-      "キーボードを使って読みを入力します。",
+      'キーボードを使って読みを入力します。',
     );
     addTarget(
-      "Answer",
+      'Answer',
       keyButtonAnswer,
       ContentAlign.bottom,
-      "入力した数字はここに表示されます。",
+      '入力した数字はここに表示されます。',
     );
     addTarget(
-      "time",
+      'time',
       keyTimeIndicator,
       ContentAlign.top,
-      "残り時間に注意しながら、\n連続正解を目指しましょう！\n※1問目は制限時間がありません。",
+      '残り時間に注意しながら、\n連続正解を目指しましょう！\n※1問目は制限時間がありません。',
     );
   }
 
   Future<void> addTarget(
       String identify, GlobalKey key, ContentAlign textPos, String text,
-      {bool isFirst = false}) async {
+      {bool isFirst = false,}) async {
     targets.add(
       TargetFocus(
         identify: identify,
@@ -452,13 +447,12 @@ class _GamePageState extends State<GamePage>
               return Container(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       text,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 20.0,
+                        fontSize: 20,
                       ),
                     ),
                     SizedBox(height: 30.h),
@@ -467,11 +461,11 @@ class _GamePageState extends State<GamePage>
                       child: ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white)),
+                                MaterialStateProperty.all<Color>(Colors.white),),
                         onPressed: () {
                           controller.previous();
                         },
-                        child: Icon(Icons.chevron_left, color: Colors.blue),
+                        child: const Icon(Icons.chevron_left, color: Colors.blue),
                       ),
                     )
                   ],
@@ -486,19 +480,21 @@ class _GamePageState extends State<GamePage>
 }
 
 class ScoreCard extends StatelessWidget {
-  final bool isHighScore;
 
   const ScoreCard({required this.isHighScore, Key? key}) : super(key: key);
+  final bool isHighScore;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
+      child: SizedBox(
+          width: 360.h,
+          height: 160.h,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                isHighScore ? "ハイスコア" : "スコア",
+                isHighScore ? 'ハイスコア' : 'スコア',
                 style: TextStyle(color: Colors.blue, fontSize: 40.h),
               ),
               SizedBox(height: 15.h),
@@ -509,19 +505,17 @@ class ScoreCard extends StatelessWidget {
                       : model.score.toString(),
                   style: TextStyle(fontSize: 60.h),
                 );
-              }),
+              },),
             ],
-          ),
-          width: 360.h,
-          height: 160.h),
+          ),),
     );
   }
 }
 
 class NumberButton extends StatelessWidget {
-  final String zeros;
 
   const NumberButton({required this.zeros, Key? key}) : super(key: key);
+  final String zeros;
 
   @override
   Widget build(BuildContext context) {
@@ -532,7 +526,7 @@ class NumberButton extends StatelessWidget {
           builder: (context, model, child) {
             return ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(fontSize: 50.h)),
+                  textStyle: TextStyle(fontSize: 50.h),),
               onPressed: !model.isButtonsEnabled
                   ? null
                   : () {
@@ -541,14 +535,14 @@ class NumberButton extends StatelessWidget {
               child: Text("${model.firstNumber}$zeros"),
             );
           },
-        ));
+        ),);
   }
 }
 
 class UnitButton extends StatelessWidget {
-  final String unit;
 
   const UnitButton({required this.unit, Key? key}) : super(key: key);
+  final String unit;
 
   @override
   Widget build(BuildContext context) {
@@ -559,7 +553,7 @@ class UnitButton extends StatelessWidget {
           builder: (context, model, child) {
             return ElevatedButton(
               style: ElevatedButton.styleFrom(
-                textStyle: TextStyle(fontSize: unit != "" ? 50.h : 40.h),
+                textStyle: TextStyle(fontSize: unit != '' ? 50.h : 40.h),
               ),
               onPressed: !model.isButtonsEnabled
                   ? null
@@ -569,7 +563,7 @@ class UnitButton extends StatelessWidget {
               child: child,
             );
           },
-          child: Text(unit != "" ? unit : "(なし)"),
-        ));
+          child: Text(unit != '' ? unit : '(なし)'),
+        ),);
   }
 }

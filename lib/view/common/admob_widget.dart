@@ -3,7 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// returns the admob banner ad widget if it is ready
 class AdmobBannerAdWidget extends StatefulWidget {
-  AdmobBannerAdWidget({Key? key}) : super(key: key);
+  const AdmobBannerAdWidget({Key? key}) : super(key: key);
 
   @override
   _AdmobBannerAdWidgetState createState() => _AdmobBannerAdWidgetState();
@@ -17,7 +17,7 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
   BannerAd? anchoredBanner;
 
   /// adrequest object
-  static final AdRequest request = AdRequest();
+  static const AdRequest request = AdRequest();
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
 
   /// create banner ad
   Future<void> createAnchoredBanner(BuildContext context) async {
-    final AnchoredAdaptiveBannerAdSize? size =
+    final size =
         await AdSize.getAnchoredAdaptiveBannerAdSize(
       Orientation.portrait,
       MediaQuery.of(context).size.width.truncate(),
@@ -37,10 +37,10 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
       return;
     }
 
-    final BannerAd banner = BannerAd(
+    final banner = BannerAd(
       size: size,
       request: request,
-      adUnitId: "ca-app-pub-9200665008350535/3051188375",
+      adUnitId: 'ca-app-pub-9200665008350535/3051188375',
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
           print('$BannerAd loaded.');
@@ -75,7 +75,7 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
       return Container(
         child: (anchoredBanner != null)
             ? Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 color: Colors.white,
                 width: anchoredBanner?.size.width.toDouble(),
                 height: anchoredBanner?.size.height.toDouble(),
@@ -83,6 +83,6 @@ class _AdmobBannerAdWidgetState extends State<AdmobBannerAdWidget> {
               )
             : Container(),
       );
-    });
+    },);
   }
 }

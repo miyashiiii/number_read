@@ -24,18 +24,18 @@ Future<void> main() async {
   runZonedGuarded(() {
     MobileAds.instance.initialize();
     SystemChrome.setPreferredOrientations(
-            [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+            [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],)
         .then((_) {
       runApp(MyApp());
     });
-  }, FirebaseCrashlytics.instance.recordError);
+  }, FirebaseCrashlytics.instance.recordError,);
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    const locale = Locale("ja", "JP");
+    const locale = Locale('ja', 'JP');
 
     return MultiProvider(
         providers: [
@@ -80,19 +80,19 @@ class MyApp extends StatelessWidget {
                 case '/game':
                   return PageTransition(
                     child: ChangeNotifierProvider<GameModel>(
-                        create: (_) => GameModel(), child: GamePage()),
+                        create: (_) => GameModel(), child: const GamePage(),),
                     type: PageTransitionType.fade,
                     settings: settings,
                   );
                 case '/result':
                   return PageTransition(
-                    child: ResultPage(),
+                    child: const ResultPage(),
                     type: PageTransitionType.fade,
                     settings: settings,
                   );
                 default:
                   return null;
               }
-            }));
+            },),);
   }
 }

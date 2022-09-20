@@ -6,8 +6,8 @@ import 'common/empty_app_bar.dart';
 
 class HintPage extends StatelessWidget {
   Divider createDivider(index) {
-    double dividerThickness = 1;
-    Color dividerColor = Colors.black12;
+    var dividerThickness = 1;
+    var dividerColor = Colors.black12;
     if (index % 4 == 0) {
       dividerThickness = 2;
       dividerColor = Colors.black26;
@@ -23,7 +23,7 @@ class HintPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map map = {
+    final Map map = {
       '読み': '数字',
       '1': '1',
       '10': '10',
@@ -53,8 +53,8 @@ class HintPage extends StatelessWidget {
                       if (index == map.length) {
                         return createDivider(index);
                       }
-                      bool isHeader = index == 0;
-                      String key = map.keys.elementAt(index);
+                      final isHeader = index == 0;
+                      final String key = map.keys.elementAt(index);
                       var topMargin = 0.h;
                       if (index % 4 == 1) {
                         topMargin = 30.h;
@@ -70,35 +70,35 @@ class HintPage extends StatelessWidget {
                                   width: 60,
                                   child: Text(
                                     key,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                     ),
-                                  )),
+                                  ),),
                               Container(
                                   alignment: Alignment.center,
                                   width: 60,
-                                  child: Text(isHeader ? "" : "→")),
+                                  child: Text(isHeader ? '' : '→'),),
                               Container(
                                   alignment: Alignment.centerRight,
                                   width: 120,
                                   child: Text(
                                     map[key],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                     ),
-                                  )),
+                                  ),),
                             ],
-                          ));
-                    })),
+                          ),);
+                    },),),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('戻る'),
+              child: const Text('戻る'),
             ),
             SizedBox(height: 50.h),
-            AdmobBannerAdWidget(),
-          ])),
+            const AdmobBannerAdWidget(),
+          ],),),
     );
   }
 }
