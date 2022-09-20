@@ -402,7 +402,6 @@ class _GamePageState extends State<GamePage>
   void showTutorial() {
     initTargets();
     tutorialCoachMark = TutorialCoachMark(
-      context,
       targets: targets,
       colorShadow: Colors.blue,
       onFinish: () {
@@ -417,7 +416,7 @@ class _GamePageState extends State<GamePage>
       onClickOverlay: (target) {
         debugPrint('onClickOverlay: $target');
       },
-    )..show();
+    )..show(context:context);
   }
 
   void initTargets() {
