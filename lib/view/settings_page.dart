@@ -58,8 +58,12 @@ class SettingsPage extends StatelessWidget {
                     pushTutorial(context);
                   },
                 ),
-                _menuItem(context, 'ヒント', const Icon(Icons.lightbulb),
-                    route: '/hint'),
+                _menuItem(
+                  context,
+                  'ヒント',
+                  const Icon(Icons.lightbulb),
+                  route: '/hint',
+                ),
                 _menuItem(
                   context,
                   'お問い合わせフォーム',
