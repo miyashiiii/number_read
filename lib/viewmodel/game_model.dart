@@ -122,8 +122,8 @@ class GameModel extends ChangeNotifier {
     showAnswer();
   }
 
-  void changeCardColor(bool result) {
-    numberCardColor = result ? correctColor : incorrectColor;
+  void changeCardColor({required bool isCorrect}) {
+    numberCardColor = isCorrect ? correctColor : incorrectColor;
     notifyListeners();
   }
 

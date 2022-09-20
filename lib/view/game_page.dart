@@ -127,7 +127,7 @@ class _GamePageState extends State<GamePage>
     _timer?.cancel();
     timeBarController?.stop();
     await Future.delayed(const Duration(milliseconds: 500));
-    gameModel.changeCardColor(isCorrect);
+    gameModel.changeCardColor(isCorrect: isCorrect);
     if (isCorrect) {
       await Future.delayed(const Duration(milliseconds: 500));
       gameModel.updateHighScore();
