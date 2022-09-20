@@ -69,7 +69,7 @@ class GameModel extends ChangeNotifier {
 
   void _randomQuestionNumber() {
     final zeros = _weightedChoice([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-    final questionNumStr = firstNumber + '0' * zeros;
+    final questionNumStr = '$firstNumber${'0' * zeros}';
     final formatter = NumberFormat('#,###');
     questionNumber = formatter.format(int.parse(questionNumStr));
   }
@@ -97,7 +97,7 @@ class GameModel extends ChangeNotifier {
     final unitIdx = digits ~/ 4;
     final unit = units[unitIdx];
     if (digits > 0) {}
-    questionNumber = firstNumber.toString() + '0' * number + unit;
+    questionNumber = '$firstNumber${'0' * number}$unit';
     debugPrint(questionNumber);
     notifyListeners();
   }
