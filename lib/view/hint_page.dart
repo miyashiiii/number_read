@@ -5,6 +5,8 @@ import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
 class HintPage extends StatelessWidget {
+  const HintPage({super.key});
+
   Divider createDivider(index) {
     var dividerThickness = 1;
     var dividerColor = Colors.black12;

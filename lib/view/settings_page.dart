@@ -10,6 +10,8 @@ import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
 class SettingsPage extends StatelessWidget {
+  SettingsPage({super.key});
+
   final String googleFormURL =
       'https://docs.google.com/forms/d/e/1FAIpQLSf0WsAufMiUA0SWyNo_pZfXd39kWZOIH50pjGFMP78nRNr7AQ/viewform';
   late SettingsModel settingsModel;
@@ -163,6 +165,8 @@ class SettingsPage extends StatelessWidget {
 }
 
 class MyAppIcon extends StatelessWidget {
+  const MyAppIcon({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(

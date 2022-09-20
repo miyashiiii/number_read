@@ -7,7 +7,7 @@ import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
 class ResultPage extends StatefulWidget {
-  const ResultPage({Key? key}) : super(key: key);
+  const ResultPage({super.key});
 
   @override
   _ResultPageState createState() => _ResultPageState();

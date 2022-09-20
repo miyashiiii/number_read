@@ -3,7 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// returns the admob banner ad widget if it is ready
 class AdmobBannerAdWidget extends StatefulWidget {
-  const AdmobBannerAdWidget({Key? key}) : super(key: key);
+  const AdmobBannerAdWidget({super.key});
 
   @override
   _AdmobBannerAdWidgetState createState() => _AdmobBannerAdWidgetState();

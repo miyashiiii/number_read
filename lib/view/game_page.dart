@@ -13,7 +13,7 @@ import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
 class GamePage extends StatefulWidget {
-  const GamePage({Key? key}) : super(key: key);
+  const GamePage({super.key});
 
   @override
   _GamePageState createState() => _GamePageState();
@@ -504,7 +504,7 @@ class _GamePageState extends State<GamePage>
 }
 
 class ScoreCard extends StatelessWidget {
-  const ScoreCard({required this.isHighScore, Key? key}) : super(key: key);
+  const ScoreCard({required this.isHighScore, super.key});
   final bool isHighScore;
 
   @override
@@ -539,7 +539,7 @@ class ScoreCard extends StatelessWidget {
 }
 
 class NumberButton extends StatelessWidget {
-  const NumberButton({required this.zeros, Key? key}) : super(key: key);
+  const NumberButton({required this.zeros, super.key});
   final String zeros;
 
   @override
@@ -567,7 +567,7 @@ class NumberButton extends StatelessWidget {
 }
 
 class UnitButton extends StatelessWidget {
-  const UnitButton({required this.unit, Key? key}) : super(key: key);
+  const UnitButton({required this.unit, super.key});
   final String unit;
 
   @override

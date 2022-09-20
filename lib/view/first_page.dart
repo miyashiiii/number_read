@@ -6,6 +6,8 @@ import 'common/admob_widget.dart';
 import 'common/empty_app_bar.dart';
 
 class FirstPage extends StatefulWidget {
+  const FirstPage({super.key});
+
   @override
   _FirstPageState createState() => _FirstPageState();
 }
