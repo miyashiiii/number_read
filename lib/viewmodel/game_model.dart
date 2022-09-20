@@ -64,7 +64,7 @@ class GameModel extends ChangeNotifier {
   }
 
   void _randomFirstNumber() {
-    var random = new Random();
+    var random = Random();
     firstNumber = (1 + random.nextInt(9 - 1)).toString();
   }
 
@@ -84,7 +84,7 @@ class GameModel extends ChangeNotifier {
     //print(l); // ["0", "1", "1", "2", "2", "2", "3", "3", "3", "3", ]
 
     // 上記で生成した配列から1つ選ぶことで、重みつきのchoiceを実行
-    var _random = new Random();
+    var _random = Random();
     return l[_random.nextInt(l.length)];
   }
 

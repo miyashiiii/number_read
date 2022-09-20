@@ -105,7 +105,7 @@ class _GamePageState extends State<GamePage>
     gameModel.isButtonsEnabled = false;
     gameModel.onFinish();
 
-    await new Future.delayed(new Duration(milliseconds: 2000));
+    await Future.delayed(Duration(milliseconds: 2000));
     _audioPlayer.dispose();
     pushAndInitStateWhenPop();
   }
@@ -126,10 +126,10 @@ class _GamePageState extends State<GamePage>
 
     _timer?.cancel();
     timeBarController?.stop();
-    await new Future.delayed(new Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 500));
     gameModel.changeCardColor(isCorrect);
     if (isCorrect) {
-      await new Future.delayed(new Duration(milliseconds: 500));
+      await Future.delayed(Duration(milliseconds: 500));
       gameModel.updateHighScore();
 
       _refresh();

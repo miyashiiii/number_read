@@ -73,8 +73,8 @@ class SettingsPage extends StatelessWidget {
       {String? route, String? url, Function? onTap, bool isFirst = false}) {
     BorderSide borderSide = BorderSide(width: 1.0, color: Colors.grey);
     return Container(
-      decoration: new BoxDecoration(
-          border: new Border(
+      decoration: BoxDecoration(
+          border: Border(
               top: isFirst ? borderSide : BorderSide.none, bottom: borderSide)),
       child: ListTile(
           leading: icon,
